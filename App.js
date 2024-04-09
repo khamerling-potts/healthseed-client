@@ -1,33 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View, Button } from "react-native";
+import { Link, NativeRouter, Route, Routes } from "react-router-native";
+import RoutesComponent from "./routes";
+import styles from "./styles";
+import Home from "./src/screens/Home";
+import Profile from "./src/screens/Profile";
+import { UserProvider } from "./src/context/user";
 
 export default function App() {
-  const [users, setUsers] = useState([]);
-  usersToDisplay = users.map((user) => <Text key={user.id}>{user.name}</Text>);
-
-  useEffect(() => {
-    fetch(
-      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/users"
-    ).then((r) => {
-      if (r.ok) {
-        r.json().then((data) => setUsers(data));
-      }
-    });
-  }, []);
   return (
-    <View style={styles.container}>
-      {usersToDisplay ? usersToDisplay : "No users"}
-      <StatusBar style="auto" />
-    </View>
+    <NativeRouter>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <Link to="/">
+          <Text style={styles.link}>Home</Text>
+        </Link>
+        <Link to="/profile">
+          <Text style={styles.link}>Profile</Text>
+        </Link>
+        <UserProvider>
+          <RoutesComponent />
+        </UserProvider>
+      </View>
+    </NativeRouter>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

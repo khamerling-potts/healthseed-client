@@ -1,11 +1,19 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
+import { Link } from "react-router-native";
+import styles from "../../styles";
 
 function Profile() {
   return (
-    <View>
+    <SafeAreaView>
+      <Link to="/">
+        <Text style={styles.link}>Home</Text>
+      </Link>
+      <Link to="/profile">
+        <Text style={styles.link}>Profile</Text>
+      </Link>
       <Text>This is the Profile screen</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

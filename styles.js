@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     color: "blue",
     margin: 10,
   },
+  loginForm: {
+    margin: 10,
+    borderWidth: 1,
+    borderColor: "grey",
+  },
 });
 
 export default styles;

@@ -14,17 +14,14 @@ function Home() {
 
   console.log(user);
 
-  //   useEffect(() => {
-  //     fetch("http://127.0.0.1:5555/users").then((r) => {
-  //       if (r.ok) {
-  //         r.json().then((data) => setUsers(data));
-  //       }
-  //     });
-  //   }, []);
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5555/users").then((r) => {
+  //     if (r.ok) {
+  //       r.json().then((data) => setUsers(data));
+  //     }
+  //   });
+  // }, []);
 
-  //   if(user) return (
-
-  //   )
   return (
     <>
       {user ? (
@@ -35,6 +32,9 @@ function Home() {
           </Link>
           <Link to="/profile">
             <Text style={styles.link}>Profile</Text>
+          </Link>
+          <Link to="/conditions">
+            <Text style={styles.link}>Conditions</Text>
           </Link>
           <View>
             <Text>This is the Home screen</Text>

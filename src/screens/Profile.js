@@ -5,12 +5,12 @@ import styles from "../../styles";
 
 function Profile() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Link to="/">
         <Text style={styles.link}>Home</Text>
       </Link>
-      <Link to="/profile">
-        <Text style={styles.link}>Profile</Text>
+      <Link to="/conditions">
+        <Text style={styles.link}>Conditions</Text>
       </Link>
       <Text>This is the Profile screen</Text>
     </SafeAreaView>

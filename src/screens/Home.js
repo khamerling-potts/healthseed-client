@@ -12,8 +12,6 @@ function Home() {
   const [users, setUsers] = useState([]);
   usersToDisplay = users.map((user) => <Text key={user.id}>{user.name}</Text>);
 
-  console.log(user);
-
   // useEffect(() => {
   //   fetch("http://127.0.0.1:5555/users").then((r) => {
   //     if (r.ok) {

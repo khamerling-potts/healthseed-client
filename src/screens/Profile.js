@@ -8,14 +8,15 @@ function Profile() {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function handleLogout() {
-    fetch("http://127.0.0.1:5555/logout", { method: "DELETE" })
-      .then((r) => r.json())
-      .then((data) => {
+  function handleLogout(e) {
+    fetch("http://127.0.0.1:5555/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
         setUser(null);
         // navigate("/");
-      });
+      }
+    });
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <Link to="/">

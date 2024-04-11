@@ -13,7 +13,7 @@ function Profile() {
       .then((r) => r.json())
       .then((data) => {
         setUser(null);
-        navigate("/");
+        // navigate("/");
       });
   }
   return (

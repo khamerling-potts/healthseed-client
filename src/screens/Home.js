@@ -5,6 +5,7 @@ import { UserContext, UserProvider } from "../context/user";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
 import LoginForm from "../components/LoginForm";
+// import BottomNav from "../components/BottomNav";
 // import RoutesComponent from "../../routes";
 
 function Home() {
@@ -21,36 +22,18 @@ function Home() {
   // }, []);
 
   return (
-    <>
-      {user ? (
-        <View style={styles.container}>
-          {/* <StatusBar style="auto" /> */}
-          <Link to="/">
-            <Text style={styles.link}>Home</Text>
-          </Link>
-          <Link to="/profile">
-            <Text style={styles.link}>Profile</Text>
-          </Link>
-          <Link to="/conditions">
-            <Text style={styles.link}>Conditions</Text>
-          </Link>
-          <View>
-            <Text>This is the Home screen</Text>
-            <Text>
-              Users from database:{" "}
-              {usersToDisplay ? usersToDisplay : "No users"}
-            </Text>
-          </View>
-          {/* <UserProvider> */}
-          {/* <RoutesComponent /> */}
-          {/* </UserProvider> */}
-        </View>
-      ) : (
-        // <UserProvider>
-        <LoginForm />
-        // </UserProvider>
-      )}
-    </>
+    <View style={styles.container}>
+      <Link to="/profile">
+        <Text style={styles.link}>Profile</Text>
+      </Link>
+      <Link to="/conditions">
+        <Text style={styles.link}>Conditions</Text>
+      </Link>
+      <Text>This is the Home screen</Text>
+      <Text>
+        Users from database: {usersToDisplay ? usersToDisplay : "No users"}
+      </Text>
+    </View>
   );
 }
 

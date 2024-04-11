@@ -20,7 +20,7 @@ function AppWrapper() {
           {/* <View style={styles.container}>
             <RoutesComponent />
           </View> */}
-          <BottomNav style={{ backgroundColor: "green" }} />
+          <BottomNav />
         </>
       ) : (
         <LoginForm />

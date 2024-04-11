@@ -11,7 +11,7 @@ function BottomNav() {
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#e91e63"
-      barStyle={{ backgroundColor: "tomato" }}
+      barStyle={{ backgroundColor: "#fff380" }}
     >
       <Tab.Screen
         name="Home"
@@ -29,7 +29,7 @@ function BottomNav() {
         options={{
           tabBarLabel: "Conditions",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <MaterialCommunityIcons name="heart-plus" color={color} size={26} />
           ),
         }}
       />

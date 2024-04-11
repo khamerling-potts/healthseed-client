@@ -12,19 +12,20 @@ function Profile() {
     fetch("http://127.0.0.1:5555/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
-        // navigate("/");
+        // if I uncomment navigate, it'll save the route we were on before.
+        navigate("/");
       }
     });
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Link to="/">
+      {/* <Link to="/">
         <Text style={styles.link}>Home</Text>
       </Link>
       <Link to="/conditions">
         <Text style={styles.link}>Conditions</Text>
-      </Link>
+      </Link> */}
       <Text>This is the Profile screen</Text>
       <Button
         onPress={handleLogout}

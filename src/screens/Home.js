@@ -23,12 +23,12 @@ function Home() {
 
   return (
     <View style={styles.container}>
-      <Link to="/profile">
+      {/* <Link to="/profile">
         <Text style={styles.link}>Profile</Text>
       </Link>
       <Link to="/conditions">
         <Text style={styles.link}>Conditions</Text>
-      </Link>
+      </Link> */}
       <Text>This is the Home screen</Text>
       <Text>
         Users from database: {usersToDisplay ? usersToDisplay : "No users"}

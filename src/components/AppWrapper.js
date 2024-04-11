@@ -15,10 +15,13 @@ function AppWrapper() {
   return (
     <>
       {user ? (
-        <View style={styles.container}>
-          <RoutesComponent />
-          <View />
-        </View>
+        <>
+          {/* uncomment below if you want react router back */}
+          {/* <View style={styles.container}>
+            <RoutesComponent />
+          </View> */}
+          <BottomNav style={{ backgroundColor: "green" }} />
+        </>
       ) : (
         <LoginForm />
       )}

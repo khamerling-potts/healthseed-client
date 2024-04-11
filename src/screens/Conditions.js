@@ -15,12 +15,12 @@ function Conditions() {
     <SafeAreaView style={styles.container}>
       <Text>This is the conditions page</Text>
       {conditions}
-      <Link to="/">
+      {/* <Link to="/">
         <Text style={styles.link}>Home</Text>
       </Link>
       <Link to="/profile">
         <Text style={styles.link}>Profile</Text>
-      </Link>
+      </Link> */}
     </SafeAreaView>
   );
 }

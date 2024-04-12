@@ -9,9 +9,12 @@ import Home from "../screens/Home";
 import BottomNav from "../components/BottomNav";
 import RoutesComponent from "../../routes";
 import SignUpForm from "./SignUpForm";
+import SideNav from "./SideNav";
+import { createStackNavigator } from "@react-navigation/stack";
 
 function AppWrapper() {
   const { user, setUser } = useContext(UserContext);
+  const Stack = createStackNavigator();
 
   return (
     <>
@@ -21,7 +24,9 @@ function AppWrapper() {
           {/* <View style={styles.container}>
             <RoutesComponent />
           </View> */}
-          <BottomNav />
+          <SideNav />
+
+          {/* <BottomNav /> */}
         </>
       ) : (
         <>

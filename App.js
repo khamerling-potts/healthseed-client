@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState, useContext } from "react";
 import { Text, View, Button, SafeAreaView } from "react-native";
@@ -19,11 +20,11 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <NativeRouter>
-          <UserProvider>
-            <AppWrapper />
-          </UserProvider>
-        </NativeRouter>
+        {/* <NativeRouter> */}
+        <UserProvider>
+          <AppWrapper />
+        </UserProvider>
+        {/* </NativeRouter> */}
       </NavigationContainer>
     </SafeAreaProvider>
   );

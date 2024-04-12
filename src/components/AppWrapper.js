@@ -8,6 +8,7 @@ import LoginForm from "../components/LoginForm";
 import Home from "../screens/Home";
 import BottomNav from "../components/BottomNav";
 import RoutesComponent from "../../routes";
+import SignUpForm from "./SignUpForm";
 
 function AppWrapper() {
   const { user, setUser } = useContext(UserContext);
@@ -23,7 +24,10 @@ function AppWrapper() {
           <BottomNav />
         </>
       ) : (
-        <LoginForm />
+        <>
+          <LoginForm />
+          <SignUpForm />
+        </>
       )}
     </>
   );

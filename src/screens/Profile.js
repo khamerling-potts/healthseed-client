@@ -5,7 +5,7 @@ import styles from "../../styles";
 import { UserContext } from "../context/user";
 
 function Profile() {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleLogout(e) {
@@ -27,6 +27,7 @@ function Profile() {
         <Text style={styles.link}>Conditions</Text>
       </Link> */}
       <Text>This is the Profile screen</Text>
+      <Text>Hi, {user.name}</Text>
       <Button
         onPress={handleLogout}
         style={styles.buttonContainer}

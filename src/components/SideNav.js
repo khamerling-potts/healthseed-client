@@ -10,7 +10,7 @@ function SideNav() {
   return (
     <>
       <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={BottomNav} />
+        <Drawer.Screen name="Healthseed" component={BottomNav} />
         <Drawer.Screen name="Providers" component={Providers} />
       </Drawer.Navigator>
     </>

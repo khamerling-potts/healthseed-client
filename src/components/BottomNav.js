@@ -3,7 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Home from "../screens/Home";
 import Conditions from "../screens/Conditions";
 import Profile from "../screens/Profile";
-import Providers from "../screens/Providers";
+// import Providers from "../screens/Providers";
 import { useRoute } from "@react-navigation/native";
 
 const Tab = createMaterialBottomTabNavigator();

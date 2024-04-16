@@ -21,9 +21,28 @@ import {
   Menu,
   PaperProvider,
 } from "react-native-paper";
+import { ConditionsContext } from "../context/conditions";
 
 function ConditionCard({ condition }) {
   const [menuVisible, setMenuVisible] = useState(false);
+  const { conditions, setConditions } = useContext(ConditionsContext);
+  const id = condition.id;
+
+  //   function editCondition(){
+
+  //   }
+
+  function deleteCondition() {
+    fetch(`http://127.0.0.1:5555/conditions/${condition.id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        setConditions(conditions.filter((condition) => condition.id !== id));
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
+  }
 
   return (
     <Card style={styles.card}>
@@ -45,7 +64,7 @@ function ConditionCard({ condition }) {
               }
             >
               <Menu.Item onPress={() => {}} title="Edit" />
-              <Menu.Item onPress={() => {}} title="Delete" />
+              <Menu.Item onPress={() => deleteCondition()} title="Delete" />
             </Menu>
           )}
         />

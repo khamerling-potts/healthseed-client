@@ -20,10 +20,11 @@ import {
   IconButton,
 } from "react-native-paper";
 import ConditionCard from "../components/ConditionCard";
+import { ConditionsContext } from "../context/conditions";
 
 function Conditions() {
   const { user } = useContext(UserContext);
-  const [conditions, setConditions] = useState([]);
+  const { conditions, setConditions } = useContext(ConditionsContext);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/conditions").then((r) => {
@@ -35,9 +36,11 @@ function Conditions() {
     });
   }, []);
 
-  const conditionsToDisplay = conditions.map((condition) => (
-    <ConditionCard condition={condition} key={condition.id} />
-  ));
+  const conditionsToDisplay = conditions
+    .sort((a, b) => a.id - b.id)
+    .map((condition) => (
+      <ConditionCard condition={condition} key={condition.id} />
+    ));
 
   const formik = useFormik({
     initialValues: {

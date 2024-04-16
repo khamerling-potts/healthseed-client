@@ -1,11 +1,25 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TextComponent,
+} from "react-native";
 import { UserContext, UserProvider } from "../context/user";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
+import {
+  TextInput,
+  Button,
+  Card,
+  Avatar,
+  IconButton,
+} from "react-native-paper";
+import ConditionCard from "../components/ConditionCard";
 
 function Conditions() {
   const { user } = useContext(UserContext);
@@ -22,7 +36,7 @@ function Conditions() {
   }, []);
 
   const conditionsToDisplay = conditions.map((condition) => (
-    <Text key={condition.id}>{condition.description}</Text>
+    <ConditionCard condition={condition} key={condition.id} />
   ));
 
   const formik = useFormik({
@@ -56,7 +70,9 @@ function Conditions() {
   return (
     <SafeAreaView style={styles.container}>
       <Text>This is the conditions page</Text>
-      {conditionsToDisplay}
+
+      <ScrollView>{conditionsToDisplay}</ScrollView>
+
       <TextInput
         onChangeText={formik.handleChange("description")}
         onBlur={formik.handleBlur("description")}
@@ -64,7 +80,7 @@ function Conditions() {
         placeholder="Enter condition description here"
         style={styles.loginForm}
       ></TextInput>
-      <Button onPress={formik.handleSubmit} title="Add" />
+      <Button onPress={formik.handleSubmit}>Add</Button>
     </SafeAreaView>
   );
 }

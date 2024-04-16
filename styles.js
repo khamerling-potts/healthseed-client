@@ -18,6 +18,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "grey",
   },
+  card: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    alignContent: "center",
+  },
+  cardContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  cardTitle: {
+    flexShrink: 1,
+    margin: "auto",
+    textAlign: "center",
+  },
 });
 
 export default styles;

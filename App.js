@@ -13,19 +13,22 @@ import BottomNav from "./src/components/BottomNav";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import AppWrapper from "./src/components/AppWrapper";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   // const { user, setUser } = useContext(UserContext);
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        {/* <NativeRouter> */}
-        <UserProvider>
-          <AppWrapper />
-        </UserProvider>
-        {/* </NativeRouter> */}
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <PaperProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          {/* <NativeRouter> */}
+          <UserProvider>
+            <AppWrapper />
+          </UserProvider>
+          {/* </NativeRouter> */}
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </PaperProvider>
   );
 }

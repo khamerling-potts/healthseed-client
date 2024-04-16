@@ -16,15 +16,16 @@ import {
   TextInput,
   Button,
   Card,
-  Avatar,
   IconButton,
   Menu,
-  PaperProvider,
+  Modal,
+  Portal,
 } from "react-native-paper";
 import { ConditionsContext } from "../context/conditions";
 
 function ConditionCard({ condition }) {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { conditions, setConditions } = useContext(ConditionsContext);
   const id = condition.id;
 
@@ -45,31 +46,38 @@ function ConditionCard({ condition }) {
   }
 
   return (
-    <Card style={styles.card}>
-      <Card.Content style={styles.cardContent}>
-        <Card.Title
-          title={condition.description}
-          right={(props) => (
-            <Menu
-              visible={menuVisible}
-              onDismiss={() => setMenuVisible(false)}
-              anchor={
-                <IconButton
-                  {...props}
-                  icon="dots-vertical"
-                  onPress={() => {
-                    setMenuVisible(true);
-                  }}
-                />
-              }
-            >
-              <Menu.Item onPress={() => {}} title="Edit" />
-              <Menu.Item onPress={() => deleteCondition()} title="Delete" />
-            </Menu>
-          )}
-        />
-      </Card.Content>
-    </Card>
+    <>
+      {/* <Portal>
+        <Modal visible={modalVisible} onDismiss={setModalVisible(false)}>
+          <TextInput placeholder={condition.description} />
+        </Modal>
+      </Portal> */}
+      <Card style={styles.card}>
+        <Card.Content style={styles.cardContent}>
+          <Card.Title
+            title={condition.description}
+            right={(props) => (
+              <Menu
+                visible={menuVisible}
+                onDismiss={() => setMenuVisible(false)}
+                anchor={
+                  <IconButton
+                    {...props}
+                    icon="dots-vertical"
+                    onPress={() => {
+                      setMenuVisible(true);
+                    }}
+                  />
+                }
+              >
+                <Menu.Item onPress={() => setModalVisible(true)} title="Edit" />
+                <Menu.Item onPress={() => deleteCondition()} title="Delete" />
+              </Menu>
+            )}
+          />
+        </Card.Content>
+      </Card>
+    </>
   );
 }
 

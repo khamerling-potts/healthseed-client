@@ -1,16 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  TextComponent,
-} from "react-native";
-import { UserContext, UserProvider } from "../context/user";
-import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
   TextInput,
@@ -20,40 +11,45 @@ import {
   Menu,
   Modal,
   Portal,
+  Text,
 } from "react-native-paper";
-import { ConditionsContext } from "../context/conditions";
+import { ProvidersContext } from "../context/providers";
 
-function ConditionCard({ condition }) {
+function ProviderCard({ provider }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { conditions, setConditions } = useContext(ConditionsContext);
-  const id = condition.id;
+  const { providers, setProviders } = useContext(ProvidersContext);
+  const id = provider.id;
 
-  function deleteCondition() {
-    fetch(`http://127.0.0.1:5555/conditions/${condition.id}`, {
+  function deleteProvider() {
+    fetch(`http://127.0.0.1:5555/providers/${provider.id}`, {
       method: "DELETE",
     }).then((r) => {
       if (r.ok) {
-        setConditions(conditions.filter((condition) => condition.id !== id));
+        setProviders(providers.filter((provider) => provider.id !== id));
       } else {
         r.json().then((err) => console.log(err));
       }
     });
   }
 
-  function handleEditCondition(editedCondition) {
-    const updatedConditions = conditions.filter(
-      (condition) => condition.id !== editedCondition.id
+  function handleEditProvider(editedProvider) {
+    const updatedProviders = providers.filter(
+      (provider) => provider.id !== editedProvider.id
     );
-    setConditions([...updatedConditions, editedCondition]);
+    setProviders([...updatedProviders, editedProvider]);
   }
 
   const formik = useFormik({
     initialValues: {
-      description: condition.description,
+      name: provider.name,
+      address: provider.address,
+      phone: provider.phone,
+      countryCode: "",
     },
     validationSchema: Yup.object({
-      description: Yup.string().required("Description required"),
+      //Add phone validation here
+      name: Yup.string().required("Name required"),
     }),
     onSubmit: (values) => {
       const configObj = {
@@ -63,12 +59,12 @@ function ConditionCard({ condition }) {
         },
         body: JSON.stringify(values, null, 2),
       };
-      fetch(`http://127.0.0.1:5555/conditions/${condition.id}`, configObj).then(
+      fetch(`http://127.0.0.1:5555/providers/${provider.id}`, configObj).then(
         (r) => {
           if (r.ok) {
-            r.json().then((condition) => {
-              console.log(condition);
-              handleEditCondition(condition);
+            r.json().then((provider) => {
+              console.log(provider);
+              handleEditProvider(provider);
               setModalVisible(false);
             });
           } else {
@@ -88,9 +84,25 @@ function ConditionCard({ condition }) {
           contentContainerStyle={styles.formModal}
         >
           <TextInput
-            onChangeText={formik.handleChange("description")}
-            onBlur={formik.handleBlur("description")}
-            value={formik.values.description}
+            onChangeText={formik.handleChange("name")}
+            onBlur={formik.handleBlur("name")}
+            value={formik.values.name}
+          />
+          <TextInput
+            onChangeText={formik.handleChange("address")}
+            onBlur={formik.handleBlur("address")}
+            value={formik.values.address}
+          />
+          <TextInput
+            onChangeText={formik.handleChange("countryCode")}
+            onBlur={formik.handleBlur("countryCode")}
+            value={formik.values.countryCode}
+            left={<TextInput.Icon icon="plus" />}
+          />
+          <TextInput
+            onChangeText={formik.handleChange("phone")}
+            onBlur={formik.handleBlur("phone")}
+            value={formik.values.phone}
           />
           <Button onPress={formik.handleSubmit}>Save</Button>
         </Modal>
@@ -98,7 +110,9 @@ function ConditionCard({ condition }) {
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <Card.Title
-            title={condition.description}
+            title={provider.name}
+            subtitle={`${provider.phone}\n${provider.address}`}
+            subtitleNumberOfLines={2}
             right={(props) => (
               <Menu
                 visible={menuVisible}
@@ -120,7 +134,7 @@ function ConditionCard({ condition }) {
                   }}
                   title="Edit"
                 />
-                <Menu.Item onPress={() => deleteCondition()} title="Delete" />
+                <Menu.Item onPress={() => deleteProvider()} title="Delete" />
               </Menu>
             )}
           />
@@ -130,4 +144,4 @@ function ConditionCard({ condition }) {
   );
 }
 
-export default ConditionCard;
+export default ProviderCard;

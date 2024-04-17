@@ -48,7 +48,14 @@ function Providers() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values, null, 2),
+        body: JSON.stringify(
+          {
+            ...values,
+            phone: "+" + values.countryCode + values.phone,
+          },
+          null,
+          2
+        ),
       };
       fetch("http://127.0.0.1:5555/providers", configObj).then((r) => {
         if (r.ok) {
@@ -87,6 +94,7 @@ function Providers() {
         onBlur={formik.handleBlur("countryCode")}
         value={formik.values.countryCode}
         left={<TextInput.Icon icon="plus" />}
+        placeholder="Country Code"
       />
       <TextInput
         onChangeText={formik.handleChange("phone")}

@@ -45,13 +45,60 @@ function ConditionCard({ condition }) {
     });
   }
 
+  function handleEditCondition(editedCondition) {
+    const updatedConditions = conditions.filter(
+      (condition) => condition.id !== editedCondition.id
+    );
+    setConditions([...updatedConditions, editedCondition]);
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      description: condition.description,
+    },
+    validationSchema: Yup.object({
+      description: Yup.string().required("Description required"),
+    }),
+    onSubmit: (values) => {
+      const configObj = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values, null, 2),
+      };
+      fetch(`http://127.0.0.1:5555/conditions/${condition.id}`, configObj).then(
+        (r) => {
+          if (r.ok) {
+            r.json().then((condition) => {
+              console.log(condition);
+              handleEditCondition(condition);
+              setModalVisible(false);
+            });
+          } else {
+            r.json().then((err) => console.log(err));
+          }
+        }
+      );
+    },
+  });
+
   return (
     <>
-      {/* <Portal>
-        <Modal visible={modalVisible} onDismiss={setModalVisible(false)}>
-          <TextInput placeholder={condition.description} />
+      <Portal>
+        <Modal
+          visible={modalVisible}
+          onDismiss={() => setModalVisible(false)}
+          contentContainerStyle={styles.formModal}
+        >
+          <TextInput
+            onChangeText={formik.handleChange("description")}
+            onBlur={formik.handleBlur("description")}
+            value={formik.values.description}
+          />
+          <Button onPress={formik.handleSubmit}>Save</Button>
         </Modal>
-      </Portal> */}
+      </Portal>
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <Card.Title
@@ -70,7 +117,13 @@ function ConditionCard({ condition }) {
                   />
                 }
               >
-                <Menu.Item onPress={() => setModalVisible(true)} title="Edit" />
+                <Menu.Item
+                  onPress={() => {
+                    setModalVisible(true);
+                    setMenuVisible(false);
+                  }}
+                  title="Edit"
+                />
                 <Menu.Item onPress={() => deleteCondition()} title="Delete" />
               </Menu>
             )}

@@ -34,6 +34,17 @@ const styles = StyleSheet.create({
     margin: "auto",
     textAlign: "center",
   },
+  formModal: {
+    backgroundColor: "white",
+    padding: 20,
+    width: "80%",
+    height: "40%",
+    borderWidth: 1,
+    borderColor: "grey",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
 });
 
 export default styles;

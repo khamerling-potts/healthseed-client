@@ -13,6 +13,11 @@ import * as Yup from "yup";
 import { TextInput, Button } from "react-native-paper";
 import ProviderCard from "../components/ProviderCard";
 import { ProvidersContext } from "../context/providers";
+import {
+  parsePhoneNumber,
+  isPossiblePhoneNumber,
+  isValidPhoneNumber,
+} from "libphonenumber-js";
 
 function Providers() {
   const { providers, setProviders } = useContext(ProvidersContext);

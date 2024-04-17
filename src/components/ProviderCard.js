@@ -14,12 +14,19 @@ import {
   Text,
 } from "react-native-paper";
 import { ProvidersContext } from "../context/providers";
+import {
+  parsePhoneNumber,
+  isPossiblePhoneNumber,
+  isValidPhoneNumber,
+} from "libphonenumber-js";
 
 function ProviderCard({ provider }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { providers, setProviders } = useContext(ProvidersContext);
   const id = provider.id;
+
+  console.log(parsePhoneNumber(provider.phone).countryCallingCode);
 
   function deleteProvider() {
     fetch(`http://127.0.0.1:5555/providers/${provider.id}`, {
@@ -44,8 +51,8 @@ function ProviderCard({ provider }) {
     initialValues: {
       name: provider.name,
       address: provider.address,
-      phone: provider.phone,
-      countryCode: "",
+      countryCode: parsePhoneNumber(provider.phone).countryCallingCode,
+      phone: parsePhoneNumber(provider.phone).nationalNumber,
     },
     validationSchema: Yup.object({
       //Add phone validation here
@@ -57,7 +64,14 @@ function ProviderCard({ provider }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values, null, 2),
+        body: JSON.stringify(
+          {
+            ...values,
+            phone: "+" + values.countryCode + values.phone,
+          },
+          null,
+          2
+        ),
       };
       fetch(`http://127.0.0.1:5555/providers/${provider.id}`, configObj).then(
         (r) => {

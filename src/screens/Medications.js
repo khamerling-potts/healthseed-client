@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   TextComponent,
+  KeyboardAvoidingView,
 } from "react-native";
 import styles from "../../styles";
 import { useFormik } from "formik";
@@ -68,38 +69,48 @@ function Medications() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>This is the Medications screen</Text>
-      <ScrollView>{medicationsToDisplay}</ScrollView>
-      <AnimatedFAB
-        icon={FABExtended ? "plus" : "minus"}
-        label="New medication"
-        extended={FABExtended}
-        onPress={() => {
-          if (FABExtended) {
-            setFABExtended(false);
-            setAddFormVisible(true);
-          } else {
-            setFABExtended(true);
-            setAddFormVisible(false);
-          }
-        }}
-        // visible={visible}
-        animateFrom={"right"}
-        iconMode={"dynamic"}
-        style={styles.addFAB}
-      />
-      {addFormVisible ? (
-        <>
-          <TextInput
-            onChangeText={formik.handleChange("name")}
-            onBlur={formik.handleBlur("name")}
-            value={formik.values.name}
-            placeholder="Enter medication name here"
-            style={styles.loginForm}
-          ></TextInput>
-          <Button onPress={formik.handleSubmit}>Add</Button>
-        </>
-      ) : null}
+      <KeyboardAvoidingView
+        style={{ borderWidth: 2, flex: 1 }}
+        behavior="padding"
+        keyboardVerticalOffset={64}
+      >
+        <Text>This is the Medications screen</Text>
+
+        <ScrollView nestedScrollEnabled={true} style={{ borderWidth: 1 }}>
+          {medicationsToDisplay}
+        </ScrollView>
+        <AnimatedFAB
+          icon={FABExtended ? "plus" : "minus"}
+          label="New medication"
+          extended={FABExtended}
+          onPress={() => {
+            if (FABExtended) {
+              setFABExtended(false);
+              setAddFormVisible(true);
+            } else {
+              setFABExtended(true);
+              setAddFormVisible(false);
+            }
+          }}
+          // visible={visible}
+          animateFrom={"right"}
+          iconMode={"dynamic"}
+          style={styles.addFAB}
+        />
+        {addFormVisible ? (
+          <>
+            <TextInput
+              onChangeText={formik.handleChange("name")}
+              onBlur={formik.handleBlur("name")}
+              value={formik.values.name}
+              placeholder="Enter medication name here"
+              style={styles.loginForm}
+            ></TextInput>
+            <TextInput placeholder="test" style={styles.loginForm}></TextInput>
+            <Button onPress={formik.handleSubmit}>Add</Button>
+          </>
+        ) : null}
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

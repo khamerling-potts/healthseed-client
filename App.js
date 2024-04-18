@@ -1,7 +1,13 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState, useContext } from "react";
-import { Text, View, Button, SafeAreaView } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import RoutesComponent from "./routes";
 import styles from "./styles";

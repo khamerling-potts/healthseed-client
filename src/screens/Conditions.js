@@ -49,7 +49,7 @@ function Conditions() {
     validationSchema: Yup.object({
       description: Yup.string().required("Description required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const configObj = {
         method: "POST",
         headers: {
@@ -67,6 +67,7 @@ function Conditions() {
           r.json().then((err) => console.log(err));
         }
       });
+      resetForm();
     },
   });
 

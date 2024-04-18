@@ -26,8 +26,6 @@ function ProviderCard({ provider }) {
   const { providers, setProviders } = useContext(ProvidersContext);
   const id = provider.id;
 
-  console.log(parsePhoneNumber(provider.phone).countryCallingCode);
-
   function deleteProvider() {
     fetch(`http://127.0.0.1:5555/providers/${provider.id}`, {
       method: "DELETE",

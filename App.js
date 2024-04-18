@@ -16,6 +16,7 @@ import AppWrapper from "./src/components/AppWrapper";
 import { PaperProvider } from "react-native-paper";
 import { ConditionsProvider } from "./src/context/conditions";
 import { ProvidersProvider } from "./src/context/providers";
+import { MedicationsProvider } from "./src/context/medications";
 
 export default function App() {
   // const { user, setUser } = useContext(UserContext);
@@ -28,7 +29,9 @@ export default function App() {
           <UserProvider>
             <ConditionsProvider>
               <ProvidersProvider>
-                <AppWrapper />
+                <MedicationsProvider>
+                  <AppWrapper />
+                </MedicationsProvider>
               </ProvidersProvider>
             </ConditionsProvider>
           </UserProvider>

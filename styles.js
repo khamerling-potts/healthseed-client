@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
+  addFAB: {
+    bottom: 20,
+    right: 20,
+    position: "absolute",
+  },
 });
 
 export default styles;

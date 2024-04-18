@@ -47,7 +47,7 @@ function Providers() {
       // add phone validation here
       name: Yup.string().required("Name required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const configObj = {
         method: "POST",
         headers: {
@@ -72,6 +72,7 @@ function Providers() {
           r.json().then((err) => console.log(err));
         }
       });
+      resetForm();
     },
   });
 

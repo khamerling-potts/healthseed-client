@@ -38,17 +38,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     width: "80%",
-    height: "40%",
+    height: "80%",
     borderWidth: 1,
     borderColor: "grey",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
   },
+  medicationsPage: {
+    flex: 1,
+    // justifyContent: "center",
+    alignItems: "center",
+  },
   addFAB: {
     bottom: 20,
     right: 20,
     position: "absolute",
+  },
+  medicationsScrollView: {
+    maxHeight: "95%",
+    borderWidth: 1,
   },
 });
 

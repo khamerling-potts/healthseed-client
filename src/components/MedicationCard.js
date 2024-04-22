@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "../../styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { View } from "react-native";
 import {
   TextInput,
   Button,
@@ -13,13 +14,22 @@ import {
   Portal,
   Text,
 } from "react-native-paper";
-import { MedicationsContext } from "../context/medications";
+import {
+  MedicationsContext,
+  MedicationsProvider,
+} from "../context/medications";
+import MedicationForm from "./MedicationForm";
+import InstructionChip from "./InstructionChip";
 
 function MedicationCard({ medication }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
   const id = medication.id;
+
+  const instructionChips = medication.instructions.map((instruction) => (
+    <InstructionChip key={instruction.id} instruction={instruction} />
+  ));
 
   function deleteMedication() {
     fetch(`http://127.0.0.1:5555/medications/${medication.id}`, {
@@ -35,45 +45,6 @@ function MedicationCard({ medication }) {
     });
   }
 
-  function handleEditMedication(editedMedication) {
-    const updatedMedications = medications.filter(
-      (medication) => medication.id !== editedMedication.id
-    );
-    setMedications([...updatedMedications, editedMedication]);
-  }
-
-  const formik = useFormik({
-    initialValues: {
-      name: medication.name,
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name required"),
-    }),
-    onSubmit: (values) => {
-      const configObj = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values, null, 2),
-      };
-      fetch(
-        `http://127.0.0.1:5555/medications/${medication.id}`,
-        configObj
-      ).then((r) => {
-        if (r.ok) {
-          r.json().then((medication) => {
-            console.log(medication);
-            handleEditMedication(medication);
-            setModalVisible(false);
-          });
-        } else {
-          r.json().then((err) => console.log(err));
-        }
-      });
-    },
-  });
-
   return (
     <>
       <Portal>
@@ -82,12 +53,20 @@ function MedicationCard({ medication }) {
           onDismiss={() => setModalVisible(false)}
           contentContainerStyle={styles.formModal}
         >
-          <TextInput
+          <MedicationsProvider>
+            <MedicationForm
+              setModalVisible={setModalVisible}
+              medication={medication}
+              method="PATCH"
+            />
+          </MedicationsProvider>
+
+          {/* <TextInput
             onChangeText={formik.handleChange("name")}
             onBlur={formik.handleBlur("name")}
             value={formik.values.name}
           />
-          <Button onPress={formik.handleSubmit}>Save</Button>
+          <Button onPress={formik.handleSubmit}>Save</Button> */}
         </Modal>
       </Portal>
       <Card style={styles.card}>
@@ -121,6 +100,7 @@ function MedicationCard({ medication }) {
             )}
           />
         </Card.Content>
+        {instructionChips}
       </Card>
     </>
   );

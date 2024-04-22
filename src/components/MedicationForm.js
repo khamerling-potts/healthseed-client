@@ -7,9 +7,23 @@ import { TextInput, Button, List } from "react-native-paper";
 import { MedicationsContext } from "../context/medications";
 import DropDown from "react-native-paper-dropdown";
 
-function MedicationForm({ setAddFormVisible, setFABExtended }) {
+function MedicationForm({
+  setAddFormVisible,
+  setFABExtended,
+  setModalVisible,
+  method,
+  medication,
+}) {
+  console.log(medication);
   const { medications, setMedications } = useContext(MedicationsContext);
   const [showDropDown, setShowDropDown] = useState([false, false, false]);
+
+  function handleEditMedication(editedMedication) {
+    const updatedMedications = medications.filter(
+      (medication) => medication.id !== editedMedication.id
+    );
+    setMedications([...updatedMedications, editedMedication]);
+  }
 
   const timeList = [
     {
@@ -24,36 +38,50 @@ function MedicationForm({ setAddFormVisible, setFABExtended }) {
       label: "Evening",
       value: "evening",
     },
+    { label: "None", value: "" },
   ];
+
+  const instructions = medication ? medication.instructions : null;
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      time1: "",
-      dose1: "",
-      time2: "",
-      dose2: "",
-      time3: "",
-      dose3: "",
+      name: medication ? medication.name : "",
+      time1: instructions && instructions[0] ? instructions[0].time : "",
+      dose1: instructions && instructions[0] ? instructions[0].dose : "",
+      time2: instructions && instructions[1] ? instructions[1].time : "",
+      dose2: instructions && instructions[1] ? instructions[1].dose : "",
+      time3: instructions && instructions[2] ? instructions[2].time : "",
+      dose3: instructions && instructions[2] ? instructions[2].dose : "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name required"),
     }),
     onSubmit: (values, { resetForm }) => {
       const configObj = {
-        method: "POST",
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
       };
-      fetch("http://127.0.0.1:5555/medications", configObj).then((r) => {
+      fetch(
+        `http://127.0.0.1:5555/medications${
+          medication ? "/" + medication.id : ""
+        }`,
+        configObj
+      ).then((r) => {
         if (r.ok) {
           r.json().then((medication) => {
             console.log(medication);
-            setMedications([...medications, medication]);
-            setAddFormVisible(false);
-            setFABExtended(true);
+            if (method === "POST") {
+              setMedications([...medications, medication]);
+              setAddFormVisible(false);
+              setFABExtended(true);
+            } else if (method === "PATCH") {
+              handleEditMedication(medication);
+              setModalVisible(false);
+            }
+
             resetForm();
           });
         } else {
@@ -65,7 +93,7 @@ function MedicationForm({ setAddFormVisible, setFABExtended }) {
   });
 
   return (
-    <View>
+    <View style={{ borderWidth: 1 }}>
       <ScrollView>
         <TextInput
           onChangeText={formik.handleChange("name")}
@@ -143,7 +171,7 @@ function MedicationForm({ setAddFormVisible, setFABExtended }) {
             style={styles.loginForm}
           ></TextInput>
         </List.Section>
-        <Button onPress={formik.handleSubmit}>Add</Button>
+        <Button onPress={formik.handleSubmit}>Save</Button>
       </ScrollView>
     </View>
   );

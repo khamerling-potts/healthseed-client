@@ -28,11 +28,11 @@ function Medications() {
     ));
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.medicationsPage}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         {/* <Text>This is the Medications screen</Text> */}
 
-        <ScrollView style={{ borderWidth: 1 }}>
+        <ScrollView style={styles.medicationsScrollView}>
           {medicationsToDisplay}
         </ScrollView>
 
@@ -40,27 +40,28 @@ function Medications() {
           <MedicationForm
             setAddFormVisible={setAddFormVisible}
             setFABExtended={setFABExtended}
+            method="POST"
           />
         ) : null}
-        <AnimatedFAB
-          icon={FABExtended ? "plus" : "minus"}
-          label="New medication"
-          extended={FABExtended}
-          onPress={() => {
-            if (FABExtended) {
-              setFABExtended(false);
-              setAddFormVisible(true);
-            } else {
-              setFABExtended(true);
-              setAddFormVisible(false);
-            }
-          }}
-          // visible={visible}
-          animateFrom={"right"}
-          iconMode={"dynamic"}
-          style={styles.addFAB}
-        />
       </KeyboardAvoidingView>
+      <AnimatedFAB
+        icon={FABExtended ? "plus" : "minus"}
+        label="New medication"
+        extended={FABExtended}
+        onPress={() => {
+          if (FABExtended) {
+            setFABExtended(false);
+            setAddFormVisible(true);
+          } else {
+            setFABExtended(true);
+            setAddFormVisible(false);
+          }
+        }}
+        // visible={visible}
+        animateFrom={"right"}
+        iconMode={"dynamic"}
+        style={styles.addFAB}
+      />
     </SafeAreaView>
   );
 }

@@ -53,13 +53,13 @@ function MedicationCard({ medication }) {
           onDismiss={() => setModalVisible(false)}
           contentContainerStyle={styles.formModal}
         >
-          <MedicationsProvider>
-            <MedicationForm
-              setModalVisible={setModalVisible}
-              medication={medication}
-              method="PATCH"
-            />
-          </MedicationsProvider>
+          <MedicationForm
+            setModalVisible={setModalVisible}
+            medication={medication}
+            method="PATCH"
+            medications={medications}
+            setMedications={setMedications}
+          />
 
           {/* <TextInput
             onChangeText={formik.handleChange("name")}

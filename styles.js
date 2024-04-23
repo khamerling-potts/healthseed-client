@@ -40,11 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     width: "80%",
-    height: "80%",
+    height: "40%",
     borderWidth: 1,
     borderColor: "grey",
     justifyContent: "center",
-    alignItems: "center",
     alignSelf: "center",
   },
   medicationsPage: {
@@ -63,11 +62,26 @@ const styles = StyleSheet.create({
   instructionChipsView: {
     flexDirection: "row",
     flexWrap: "wrap",
-    // borderWidth: 1,
-    // borderColor: "green",
   },
   instructionChip: {
     margin: 4,
+  },
+  helperText: {
+    padding: 0,
+    margin: 0,
+  },
+  timeDropDown: {
+    marginHorizontal: 10,
+  },
+  dosageInput: {
+    marginHorizontal: 10,
+  },
+  divider: {
+    marginVertical: 10,
+  },
+  medicationName: {
+    marginTop: 10,
+    marginHorizontal: 10,
   },
 });
 

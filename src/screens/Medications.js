@@ -5,16 +5,28 @@ import { AnimatedFAB } from "react-native-paper";
 import MedicationCard from "../components/MedicationCard";
 import { MedicationsContext } from "../context/medications";
 import MedicationForm from "../components/MedicationForm";
+import { InstructionsContext } from "../context/instructions";
 
 function Medications() {
   const { medications, setMedications } = useContext(MedicationsContext);
+  const { instructions, setInstructions } = useContext(InstructionsContext);
   const [addFormVisible, setAddFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
+
+  console.log("medications: ", medications);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/medications").then((r) => {
       if (r.ok) {
         r.json().then((medications) => setMedications(medications));
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
+
+    fetch("http://127.0.0.1:5555/instructions").then((r) => {
+      if (r.ok) {
+        r.json().then((instructions) => setInstructions(instructions));
       } else {
         r.json().then((err) => console.log(err));
       }
@@ -41,6 +53,7 @@ function Medications() {
             setAddFormVisible={setAddFormVisible}
             setFABExtended={setFABExtended}
             method="POST"
+            handleEditMedication={handleEditMedication}
           />
         ) : null}
       </KeyboardAvoidingView>

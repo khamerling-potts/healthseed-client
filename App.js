@@ -23,6 +23,7 @@ import { PaperProvider } from "react-native-paper";
 import { ConditionsProvider } from "./src/context/conditions";
 import { ProvidersProvider } from "./src/context/providers";
 import { MedicationsProvider } from "./src/context/medications";
+import { InstructionsProvider } from "./src/context/instructions";
 
 export default function App() {
   // const { user, setUser } = useContext(UserContext);
@@ -36,7 +37,9 @@ export default function App() {
             <ConditionsProvider>
               <ProvidersProvider>
                 <MedicationsProvider>
-                  <AppWrapper />
+                  <InstructionsProvider>
+                    <AppWrapper />
+                  </InstructionsProvider>
                 </MedicationsProvider>
               </ProvidersProvider>
             </ConditionsProvider>

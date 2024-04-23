@@ -21,13 +21,15 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
     marginTop: 16,
-    alignContent: "center",
+    // alignContent: "center",
   },
   cardContent: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 0,
     paddingVertical: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   cardTitle: {
     flexShrink: 1,
@@ -47,7 +49,6 @@ const styles = StyleSheet.create({
   },
   medicationsPage: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
   },
   addFAB: {
@@ -58,6 +59,15 @@ const styles = StyleSheet.create({
   medicationsScrollView: {
     maxHeight: "95%",
     borderWidth: 1,
+  },
+  instructionChipsView: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    // borderWidth: 1,
+    // borderColor: "green",
+  },
+  instructionChip: {
+    margin: 4,
   },
 });
 

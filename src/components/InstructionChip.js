@@ -1,4 +1,5 @@
 import { Chip } from "react-native-paper";
+import styles from "../../styles";
 
 function InstructionChip({ instruction }) {
   const icons = {
@@ -7,7 +8,14 @@ function InstructionChip({ instruction }) {
     evening: "weather-night",
   };
   return (
-    <Chip icon={icons[instruction.time]} onPress={() => {}}>
+    <Chip
+      icon={icons[instruction.time]}
+      onPress={() => {
+        console.log("pressed");
+      }}
+      compact
+      style={styles.instructionChip}
+    >
       {instruction.dose}
     </Chip>
   );

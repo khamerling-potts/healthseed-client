@@ -100,7 +100,7 @@ function MedicationCard({ medication }) {
             )}
           />
         </Card.Content>
-        {instructionChips}
+        <View style={styles.instructionChipsView}>{instructionChips}</View>
       </Card>
     </>
   );

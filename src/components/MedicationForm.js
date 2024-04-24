@@ -85,40 +85,34 @@ function MedicationForm({
       <ScrollView>
         <Formik
           initialValues={{
-            name: medication ? medication.name : "",
-            time1: instructions && instructions[0] ? instructions[0].time : "",
-            dose1: instructions && instructions[0] ? instructions[0].dose : "",
-            time2: instructions && instructions[1] ? instructions[1].time : "",
-            dose2: instructions && instructions[1] ? instructions[1].dose : "",
-            time3: instructions && instructions[2] ? instructions[2].time : "",
-            dose3: instructions && instructions[2] ? instructions[2].dose : "",
+            name: "",
+            time1: "",
+            dose1: "",
+            time2: "",
+            dose2: "",
+            time3: "",
+            dose3: "",
           }}
           validate={validate}
           onSubmit={(values, { resetForm }) => {
             const configObj = {
-              method: method,
+              method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(values, null, 2),
             };
-            fetch(
-              `http://127.0.0.1:5555/medications${
-                medication ? "/" + medication.id : ""
-              }`,
-              configObj
-            ).then((r) => {
+            fetch(`http://127.0.0.1:5555/medications`, configObj).then((r) => {
               if (r.ok) {
                 r.json().then((medication) => {
                   console.log(medication);
-                  if (method === "POST") {
-                    setMedications([...medications, medication]);
-                    setAddFormVisible(false);
-                    setFABExtended(true);
-                  } else if (method === "PATCH") {
-                    handleEditMedication(medication);
-                    setModalVisible(false);
-                  }
+                  setMedications([...medications, medication]);
+                  setAddFormVisible(false);
+                  setFABExtended(true);
+                  //   } else if (method === "PATCH") {
+                  //     handleEditMedication(medication);
+                  //     setModalVisible(false);
+                  //   }
 
                   resetForm();
                 });

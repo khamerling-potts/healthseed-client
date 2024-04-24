@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   medicationsScrollView: {
     maxHeight: "95%",
     borderWidth: 1,
+    maxWidth: "90%",
   },
   instructionChipsView: {
     flexDirection: "row",
@@ -82,6 +83,10 @@ const styles = StyleSheet.create({
   medicationName: {
     marginTop: 10,
     marginHorizontal: 10,
+  },
+  editMedicationInput: {
+    backgroundColor: "transparent",
+    marginLeft: 0,
   },
 });
 

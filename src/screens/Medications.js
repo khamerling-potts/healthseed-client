@@ -53,7 +53,6 @@ function Medications() {
             setAddFormVisible={setAddFormVisible}
             setFABExtended={setFABExtended}
             method="POST"
-            handleEditMedication={handleEditMedication}
           />
         ) : null}
       </KeyboardAvoidingView>

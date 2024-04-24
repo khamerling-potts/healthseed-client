@@ -1,15 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { View, ScrollView, Text, KeyboardAvoidingView } from "react-native";
 import styles from "../../styles";
 import { Formik } from "formik";
-import {
-  TextInput,
-  Button,
-  List,
-  HelperText,
-  Divider,
-} from "react-native-paper";
-import { MedicationsContext } from "../context/medications";
+import { TextInput, Button, HelperText } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import * as Yup from "yup";
 
@@ -39,11 +32,29 @@ function EditInstructionForm({
     { label: "None", value: "" },
   ];
 
+  // Updates medications state after a medication's instruction is edited
   function handleEditMedication(editedMedication) {
     const updatedMedications = medications.filter(
       (medication) => medication.id !== editedMedication.id
     );
     setMedications([...updatedMedications, editedMedication]);
+  }
+
+  // Deletes an instruction from the server and updates corresponding medication state
+  function onDeleteInstruction() {
+    fetch(`http://127.0.0.1:5555/instructions/${instruction.id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((medication) => {
+          console.log("updated med: ", medication);
+          handleEditMedication(medication);
+          setEditFormVisible(false);
+        });
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
   }
 
   return (
@@ -127,6 +138,7 @@ function EditInstructionForm({
           </HelperText>
 
           <Button onPress={handleSubmit}>Save</Button>
+          <Button onPress={onDeleteInstruction}>Delete instruction</Button>
         </>
       )}
     </Formik>

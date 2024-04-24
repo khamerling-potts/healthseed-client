@@ -18,10 +18,9 @@ function MedicationForm({
   setModalVisible,
   method,
   medication,
-  medications,
-  setMedications,
 }) {
   const [showDropDown, setShowDropDown] = useState([false, false, false]);
+  const { medications, setMedications } = useContext(MedicationsContext);
 
   function handleEditMedication(editedMedication) {
     const updatedMedications = medications.filter(

@@ -1,21 +1,5 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useState, useContext } from "react";
-import {
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  KeyboardAvoidingView,
-} from "react-native";
-import { Link, NativeRouter, Route, Routes } from "react-router-native";
-import RoutesComponent from "./routes";
-import styles from "./styles";
-import Home from "./src/screens/Home";
-import Profile from "./src/screens/Profile";
-import { UserContext, UserProvider } from "./src/context/user";
-import LoginForm from "./src/components/LoginForm";
-import BottomNav from "./src/components/BottomNav";
+import { UserProvider } from "./src/context/user";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import AppWrapper from "./src/components/AppWrapper";
@@ -24,6 +8,7 @@ import { ConditionsProvider } from "./src/context/conditions";
 import { ProvidersProvider } from "./src/context/providers";
 import { MedicationsProvider } from "./src/context/medications";
 import { InstructionsProvider } from "./src/context/instructions";
+import { RoutinesProvider } from "./src/context/routines";
 
 export default function App() {
   // const { user, setUser } = useContext(UserContext);
@@ -38,7 +23,9 @@ export default function App() {
               <ProvidersProvider>
                 <MedicationsProvider>
                   <InstructionsProvider>
-                    <AppWrapper />
+                    <RoutinesProvider>
+                      <AppWrapper />
+                    </RoutinesProvider>
                   </InstructionsProvider>
                 </MedicationsProvider>
               </ProvidersProvider>

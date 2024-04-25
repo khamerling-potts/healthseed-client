@@ -4,6 +4,7 @@ import Conditions from "../screens/Conditions";
 import BottomNav from "./BottomNav";
 import Providers from "../screens/Providers";
 import Medications from "../screens/Medications";
+import Routines from "../screens/Routines";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +15,7 @@ function SideNav() {
         <Drawer.Screen name="Healthseed" component={BottomNav} />
         <Drawer.Screen name="Providers" component={Providers} />
         <Drawer.Screen name="Medications" component={Medications} />
+        <Drawer.Screen name="Routines" component={Routines} />
       </Drawer.Navigator>
     </>
   );

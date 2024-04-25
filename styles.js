@@ -19,8 +19,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
   },
   card: {
-    marginHorizontal: 16,
-    marginTop: 16,
+    margin: 10,
     // alignContent: "center",
   },
   cardContent: {

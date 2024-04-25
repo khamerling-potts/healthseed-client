@@ -1,7 +1,7 @@
-import React, { useContext, useRef } from "react";
-import { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import styles from "../../styles";
-import { useFormik, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { View } from "react-native";
 import {
@@ -14,6 +14,8 @@ import {
   Portal,
   Text,
   HelperText,
+  Icon,
+  Chip,
 } from "react-native-paper";
 import {
   MedicationsContext,
@@ -21,26 +23,14 @@ import {
 } from "../context/medications";
 import MedicationForm from "./MedicationForm";
 import InstructionChip from "./InstructionChip";
+import InstructionForm from "./InstructionForm";
 
 function MedicationCard({ medication }) {
   const [menuVisible, setMenuVisible] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [instructionFormVisible, setInstructionFormVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
   const [editFormVisible, setEditFormVisible] = useState(false);
   const id = medication.id;
-  const editInputRef = useRef();
-
-  // if (editInputRef.current) {
-  //   console.log(editInputRef.current);
-  //   editInputRef.current.focus();
-  // }
-
-  // useEffect(() => {
-  //   if (editFormVisible) {
-  //     console.log(editInputRef.current);
-  //     editInputRef.current.focus();
-  //   }
-  // });
 
   const instructionChips = medication.instructions.map((instruction) => (
     <InstructionChip key={instruction.id} instruction={instruction} />
@@ -69,6 +59,22 @@ function MedicationCard({ medication }) {
 
   return (
     <>
+      {/* Portal only visible when editing an instruction */}
+      <Portal>
+        <Modal
+          visible={instructionFormVisible}
+          onDismiss={() => setInstructionFormVisible(false)}
+          contentContainerStyle={styles.formModal}
+        >
+          <InstructionForm
+            medication={medication}
+            setInstructionFormVisible={setInstructionFormVisible}
+            medications={medications}
+            setMedications={setMedications}
+          />
+        </Modal>
+      </Portal>
+
       {!editFormVisible ? (
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
@@ -91,7 +97,6 @@ function MedicationCard({ medication }) {
                 >
                   <Menu.Item
                     onPress={() => {
-                      // setModalVisible(true);
                       setMenuVisible(false);
                       setEditFormVisible(true);
                     }}
@@ -105,7 +110,25 @@ function MedicationCard({ medication }) {
               )}
             />
           </Card.Content>
-          <View style={styles.instructionChipsView}>{instructionChips}</View>
+          <View style={styles.instructionChipsView}>
+            {instructionChips}
+            {instructionChips.length ? (
+              <Chip
+                style={styles.instructionChip}
+                onPress={() => setInstructionFormVisible(true)}
+              >
+                <Icon source="plus" size={20} />
+              </Chip>
+            ) : (
+              <Chip
+                icon="plus"
+                style={styles.instructionChip}
+                onPress={() => setInstructionFormVisible(true)}
+              >
+                Add instructions
+              </Chip>
+            )}
+          </View>
         </Card>
       ) : (
         <Formik
@@ -153,9 +176,7 @@ function MedicationCard({ medication }) {
                 onBlur={handleBlur("name")}
                 value={values.name}
                 placeholder="Enter medication name here"
-                // style={styles.editMedicationInput}
                 style={styles.card}
-                ref={editInputRef}
                 autoFocus={true}
                 right={<TextInput.Icon icon="check" onPress={handleSubmit} />}
               ></TextInput>

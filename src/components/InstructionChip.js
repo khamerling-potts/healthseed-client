@@ -1,7 +1,7 @@
 import { Chip } from "react-native-paper";
 import styles from "../../styles";
 import { useContext, useState } from "react";
-import EditInstructionForm from "./EditInstructionForm";
+import InstructionForm from "./InstructionForm";
 import { View, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import {
@@ -15,14 +15,14 @@ function InstructionChip({ instruction }) {
     afternoon: "weather-sunny",
     evening: "weather-night",
   };
-  const [editFormVisible, setEditFormVisible] = useState(false);
+  const [instructionFormVisible, setInstructionFormVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
   return (
     <>
       <Chip
         icon={icons[instruction.time]}
         onPress={() => {
-          setEditFormVisible(true);
+          setInstructionFormVisible(true);
         }}
         style={styles.instructionChip}
       >
@@ -30,13 +30,14 @@ function InstructionChip({ instruction }) {
       </Chip>
       <Portal>
         <Modal
-          visible={editFormVisible}
-          onDismiss={() => setEditFormVisible(false)}
+          visible={instructionFormVisible}
+          onDismiss={() => setInstructionFormVisible(false)}
           contentContainerStyle={styles.formModal}
         >
-          <EditInstructionForm
+          <InstructionForm
             instruction={instruction}
-            setEditFormVisible={setEditFormVisible}
+            medication={instruction.medication}
+            setInstructionFormVisible={setInstructionFormVisible}
             medications={medications}
             setMedications={setMedications}
           />

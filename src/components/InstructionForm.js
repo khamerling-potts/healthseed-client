@@ -6,13 +6,18 @@ import { TextInput, Button, HelperText } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import * as Yup from "yup";
 
-function EditInstructionForm({
+// If instruction prop is defined, we're editing an instruction. If not, we're adding a new instruction
+function InstructionForm({
   instruction,
-  setEditFormVisible,
+  medication,
+  setInstructionFormVisible,
   medications,
   setMedications,
 }) {
   const [showDropDown, setShowDropDown] = useState(false);
+  const URL = instruction
+    ? `http://127.0.0.1:5555/instructions/${instruction.id}`
+    : `http://127.0.0.1:5555/instructions`;
 
   console.log(medications);
 
@@ -42,14 +47,14 @@ function EditInstructionForm({
 
   // Deletes an instruction from the server and updates corresponding medication state
   function onDeleteInstruction() {
-    fetch(`http://127.0.0.1:5555/instructions/${instruction.id}`, {
+    fetch(URL, {
       method: "DELETE",
     }).then((r) => {
       if (r.ok) {
         r.json().then((medication) => {
           console.log("updated med: ", medication);
           handleEditMedication(medication);
-          setEditFormVisible(false);
+          setInstructionFormVisible(false);
         });
       } else {
         r.json().then((err) => console.log(err));
@@ -60,8 +65,8 @@ function EditInstructionForm({
   return (
     <Formik
       initialValues={{
-        time: instruction.time,
-        dose: instruction.dose,
+        time: instruction ? instruction.time : "",
+        dose: instruction ? instruction.dose : "",
       }}
       validationSchema={Yup.object({
         time: Yup.string().required("Time required"),
@@ -69,20 +74,21 @@ function EditInstructionForm({
       })}
       onSubmit={(values, { resetForm }) => {
         const configObj = {
-          method: "PATCH",
+          method: instruction ? "PATCH" : "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values, null, 2),
+          body: JSON.stringify(
+            { ...values, medication_id: medication.id },
+            null,
+            2
+          ),
         };
-        fetch(
-          `http://127.0.0.1:5555/instructions/${instruction.id}`,
-          configObj
-        ).then((r) => {
+        fetch(URL, configObj).then((r) => {
           if (r.ok) {
             r.json().then((medication) => {
               handleEditMedication(medication);
-              setEditFormVisible(false);
+              setInstructionFormVisible(false);
               resetForm();
             });
           } else {
@@ -100,7 +106,7 @@ function EditInstructionForm({
         touched,
       }) => (
         <>
-          <Text>{instruction.medication.name}</Text>
+          {instruction ? <Text>{instruction.medication.name}</Text> : null}
 
           <DropDown
             label={"Select time taken"}
@@ -137,12 +143,16 @@ function EditInstructionForm({
             {errors.dose}
           </HelperText>
 
-          <Button onPress={handleSubmit}>Save</Button>
-          <Button onPress={onDeleteInstruction}>Delete instruction</Button>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Button onPress={handleSubmit}>Save</Button>
+            {instruction ? (
+              <Button onPress={onDeleteInstruction}>Delete instruction</Button>
+            ) : null}
+          </View>
         </>
       )}
     </Formik>
   );
 }
 
-export default EditInstructionForm;
+export default InstructionForm;

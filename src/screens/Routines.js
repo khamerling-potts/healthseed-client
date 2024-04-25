@@ -1,9 +1,10 @@
-import { Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { RoutinesContext } from "../context/routines";
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
 import styles from "../../styles";
+import RoutineForm from "../components/RoutineForm";
 
 function Routines() {
   const { routines, setRoutines } = useContext(RoutinesContext);
@@ -28,9 +29,15 @@ function Routines() {
   return (
     <SafeAreaView style={styles.medicationsPage}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
+        <Button onPress={() => setRoutineFormVisible(true)}>
+          Add routines
+        </Button>
         <ScrollView style={styles.medicationsScrollView}>
           {routinesToDisplay}
         </ScrollView>
+        {routineFormVisible ? (
+          <RoutineForm setRoutineFormVisible={setRoutineFormVisible} />
+        ) : null}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

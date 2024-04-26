@@ -22,16 +22,6 @@ import {
 function Providers() {
   const { providers, setProviders } = useContext(ProvidersContext);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5555/providers").then((r) => {
-      if (r.ok) {
-        r.json().then((providers) => setProviders(providers));
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-  }, []);
-
   const providersToDisplay = providers
     .sort((a, b) => a.id - b.id)
     .map((provider) => <ProviderCard provider={provider} key={provider.id} />);

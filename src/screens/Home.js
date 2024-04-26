@@ -10,29 +10,10 @@ import LoginForm from "../components/LoginForm";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
-  const [users, setUsers] = useState([]);
-  usersToDisplay = users.map((user) => <Text key={user.id}>{user.name}</Text>);
-
-  // useEffect(() => {
-  //   fetch("http://127.0.0.1:5555/users").then((r) => {
-  //     if (r.ok) {
-  //       r.json().then((data) => setUsers(data));
-  //     }
-  //   });
-  // }, []);
 
   return (
     <View style={styles.container}>
-      {/* <Link to="/profile">
-        <Text style={styles.link}>Profile</Text>
-      </Link>
-      <Link to="/conditions">
-        <Text style={styles.link}>Conditions</Text>
-      </Link> */}
       <Text>This is the Home screen</Text>
-      <Text>
-        Users from database: {usersToDisplay ? usersToDisplay : "No users"}
-      </Text>
     </View>
   );
 }

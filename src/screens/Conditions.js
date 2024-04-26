@@ -26,16 +26,6 @@ function Conditions() {
   const { user } = useContext(UserContext);
   const { conditions, setConditions } = useContext(ConditionsContext);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5555/conditions").then((r) => {
-      if (r.ok) {
-        r.json().then((conditions) => setConditions(conditions));
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-  }, []);
-
   const conditionsToDisplay = conditions
     .sort((a, b) => a.id - b.id)
     .map((condition) => (

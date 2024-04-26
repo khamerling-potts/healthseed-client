@@ -1,4 +1,4 @@
-import { Button, Text } from "react-native-paper";
+import { Button, Card, Text, AnimatedFAB } from "react-native-paper";
 import { Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { RoutinesContext } from "../context/routines";
@@ -9,6 +9,7 @@ import RoutineForm from "../components/RoutineForm";
 function Routines() {
   const { routines, setRoutines } = useContext(RoutinesContext);
   const [routineFormVisible, setRoutineFormVisible] = useState(false);
+  const [FABExtended, setFABExtended] = useState(true);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/routines").then((r) => {
@@ -21,20 +22,46 @@ function Routines() {
   }, []);
 
   const routinesToDisplay = routines.map((routine) => (
-    <Text key={routine.id}>
-      `${routine.title}: {routine.notes}`
-    </Text>
+    <Card key={routine.id} style={styles.card}>
+      <Card.Content style={styles.cardContent}>
+        <Card.Title title={`${routine.title}: {routine.notes}`} />
+      </Card.Content>
+    </Card>
   ));
 
   return (
-    <SafeAreaView style={styles.medicationsPage}>
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
-        <Button onPress={() => setRoutineFormVisible(true)}>
-          Add routines
-        </Button>
+    <SafeAreaView style={styles.routinesPage}>
+      <AnimatedFAB
+        icon={FABExtended ? "plus" : "minus"}
+        label="New routine"
+        extended={FABExtended}
+        onPress={() => {
+          if (FABExtended) {
+            setFABExtended(false);
+            setRoutineFormVisible(true);
+          } else {
+            setFABExtended(true);
+            setRoutineFormVisible(false);
+          }
+        }}
+        animateFrom={"right"}
+        iconMode={"dynamic"}
+        style={styles.addFAB}
+      />
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={110}
+        style={{ maxHeight: "95%" }}
+      >
         <ScrollView style={styles.medicationsScrollView}>
           {routinesToDisplay}
+          <Card style={styles.card}>
+            <Card.Content>
+              <Card.Title title="example routine card" />
+            </Card.Content>
+          </Card>
         </ScrollView>
+
         {routineFormVisible ? (
           <RoutineForm setRoutineFormVisible={setRoutineFormVisible} />
         ) : null}

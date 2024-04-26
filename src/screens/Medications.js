@@ -15,24 +15,6 @@ function Medications() {
 
   console.log("medications: ", medications);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5555/medications").then((r) => {
-      if (r.ok) {
-        r.json().then((medications) => setMedications(medications));
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-
-    fetch("http://127.0.0.1:5555/instructions").then((r) => {
-      if (r.ok) {
-        r.json().then((instructions) => setInstructions(instructions));
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-  }, []);
-
   const medicationsToDisplay = medications
     .sort((a, b) => a.id - b.id)
     .map((medication) => (

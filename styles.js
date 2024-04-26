@@ -87,6 +87,20 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     marginLeft: 0,
   },
+  routinesScrollView: {
+    maxHeight: "80%",
+    borderWidth: 1,
+    borderColor: "green",
+    width: "90%",
+  },
+  routinesPage: {
+    flex: 1,
+    alignSelf: "center",
+    // justifyContent: "center",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "blue",
+  },
 });
 
 export default styles;

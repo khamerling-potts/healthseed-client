@@ -24,7 +24,9 @@ function Routines() {
   const routinesToDisplay = routines.map((routine) => (
     <Card key={routine.id} style={styles.card}>
       <Card.Content style={styles.cardContent}>
-        <Card.Title title={`${routine.title}: {routine.notes}`} />
+        <Card.Title
+          title={`${routine.title}: ${routine.notes}, ${routine.instructions[0].medication.name}`}
+        />
       </Card.Content>
     </Card>
   ));
@@ -63,7 +65,10 @@ function Routines() {
         </ScrollView>
 
         {routineFormVisible ? (
-          <RoutineForm setRoutineFormVisible={setRoutineFormVisible} />
+          <RoutineForm
+            setRoutineFormVisible={setRoutineFormVisible}
+            setFABExtended={setFABExtended}
+          />
         ) : null}
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -1,5 +1,5 @@
 import { ScrollView, View } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
+import { TextInput, HelperText, Button } from "react-native-paper";
 import { RoutinesContext } from "../context/routines";
 import { useContext, useEffect, useState } from "react";
 import DropDown from "react-native-paper-dropdown";
@@ -9,20 +9,19 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import styles from "../../styles";
 
-function RoutineForm({ setRoutineFormVisible }) {
+function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
   const { routines, setRoutines } = useContext(RoutinesContext);
   const { instructions } = useContext(InstructionsContext);
+  const [dropDownValue, setDropDownValue] = useState([]);
 
   const [instructionsList, setInstructionsList] = useState(
     assignInstructionsList(instructions)
   );
   const [showDropDown, setShowDropDown] = useState(false);
-  console.log("instructions, ", instructionsList);
 
   function assignInstructionsList(instructions) {
     console.log(instructions);
     const newList = [];
-    console.log("here");
     for (const instruction of instructions) {
       console.log(instruction);
       // if no routine id, the instruction is available to be selected
@@ -33,7 +32,6 @@ function RoutineForm({ setRoutineFormVisible }) {
         });
       }
     }
-    console.log(newList);
     return newList;
     // setInstructionsList(newList);
   }
@@ -56,13 +54,13 @@ function RoutineForm({ setRoutineFormVisible }) {
   };
 
   return (
-    <View style={{ borderWidth: 1, borderColor: "red" }}>
+    <View style={{ borderWidth: 1, borderColor: "red", height: "100%" }}>
       <ScrollView>
         <Formik
           initialValues={{
             title: "",
             notes: "",
-            instruction_ids: "",
+            // instruction_ids: [],
           }}
           validate={validate}
           onSubmit={(values, { resetForm }) => {
@@ -71,7 +69,11 @@ function RoutineForm({ setRoutineFormVisible }) {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(values, null, 2),
+              body: JSON.stringify(
+                { ...values, instruction_ids: dropDownValue },
+                null,
+                2
+              ),
             };
             fetch(`http://127.0.0.1:5555/routines`, configObj).then((r) => {
               if (r.ok) {
@@ -123,18 +125,29 @@ function RoutineForm({ setRoutineFormVisible }) {
               >
                 {errors.notes}
               </HelperText>
-              {instructionsList.length ? (
-                <DropDownPicker
-                  open={showDropDown}
-                  value={values.instruction_ids}
-                  items={instructionsList}
-                  setOpen={setShowDropDown}
-                  setValue={handleChange("instruction_ids")}
-                  setItems={setInstructionsList}
-                  multiple={true}
-                  mode="badge"
-                />
-              ) : null}
+              <DropDownPicker
+                open={showDropDown}
+                value={dropDownValue}
+                items={instructionsList}
+                setOpen={setShowDropDown}
+                setValue={setDropDownValue}
+                setItems={setInstructionsList}
+                multiple={true}
+                mode="BADGE"
+                extendableBadgeContainer={true}
+                badgeDotColors={[
+                  "#e76f51",
+                  "#00b4d8",
+                  "#e9c46a",
+                  "#e76f51",
+                  "#8ac926",
+                  "#00b4d8",
+                  "#e9c46a",
+                ]}
+                listMode="SCROLLVIEW"
+              />
+              <Button onPress={handleSubmit}>Save</Button>
+
               {/* <DropDown
                   label="Select medication instructions"
                   mode="outlined"

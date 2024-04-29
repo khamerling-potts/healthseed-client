@@ -152,9 +152,10 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                   if (indexOfAnyTime === 0 && val.length > 1) {
                     val.splice(0, 1);
                     setTimes([...val]);
-                  }
-                  // if 'any time' was just selected, unselect others
-                  else if (indexOfAnyTime > 0) {
+                  } else if (indexOfAnyTime > 0) {
+                    // if 'any time' was just selected, unselect others
+                    setTimes(["any time"]);
+                  } else if (!val.length) {
                     setTimes(["any time"]);
                   } else {
                     setTimes(val);

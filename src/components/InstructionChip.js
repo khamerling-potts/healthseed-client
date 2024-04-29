@@ -9,7 +9,7 @@ import {
   MedicationsProvider,
 } from "../context/medications";
 
-function InstructionChip({ instruction }) {
+function InstructionChip({ instruction, page }) {
   const icons = {
     morning: "weather-sunset",
     afternoon: "weather-sunny",
@@ -27,6 +27,7 @@ function InstructionChip({ instruction }) {
         style={styles.instructionChip}
       >
         {instruction.dose}
+        {page === "routine" ? " " + instruction.medication.name : null}
       </Chip>
       <Portal>
         <Modal

@@ -1,15 +1,23 @@
-import { Button, Card, Text, AnimatedFAB } from "react-native-paper";
+import {
+  Button,
+  Card,
+  Text,
+  AnimatedFAB,
+  SegmentedButtons,
+} from "react-native-paper";
 import { Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { RoutinesContext } from "../context/routines";
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
 import styles from "../../styles";
 import RoutineForm from "../components/RoutineForm";
+import RoutineComponent from "../components/RoutineComponent";
 
 function Routines() {
   const { routines, setRoutines } = useContext(RoutinesContext);
   const [routineFormVisible, setRoutineFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
+  const [times, setTimes] = useState([]);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/routines").then((r) => {
@@ -21,20 +29,18 @@ function Routines() {
     });
   }, []);
 
-  const routinesToDisplay = routines.map((routine) => (
-    <Card key={routine.id} style={styles.card}>
-      <Card.Content style={styles.cardContent}>
-        <Card.Title
-          title={`${routine.title}: ${routine.notes}, ${
-            routine.instructions.length
-              ? routine.instructions[0].medication.name
-              : ""
-          }`}
-          subtitle={routine.times}
-        />
-      </Card.Content>
-    </Card>
-  ));
+  // Filter by time
+  const routinesToDisplay = routines
+    .filter((routine) => {
+      if (times.length === 0) return true;
+      if (!routine.times) return false;
+      const commonTimes = routine.times.filter((time) => {
+        console.log(time);
+        return times.includes(time);
+      });
+      return commonTimes.length > 0;
+    })
+    .map((routine) => <RoutineComponent key={routine.id} routine={routine} />);
 
   return (
     <SafeAreaView style={styles.routinesPage}>
@@ -60,13 +66,36 @@ function Routines() {
         keyboardVerticalOffset={110}
         style={{ maxHeight: "95%" }}
       >
+        <SegmentedButtons
+          value={times}
+          onValueChange={setTimes}
+          multiSelect
+          buttons={[
+            {
+              value: "any time",
+              label: "Any time",
+              showSelectedCheck: true,
+            },
+            {
+              value: "morning",
+              label: "Morning",
+              showSelectedCheck: true,
+            },
+            {
+              value: "afternoon",
+              label: "Afternoon",
+              showSelectedCheck: true,
+            },
+            {
+              value: "evening",
+              label: "Evening",
+              // style: styles.button,
+              showSelectedCheck: true,
+            },
+          ]}
+        />
         <ScrollView style={styles.medicationsScrollView}>
           {routinesToDisplay}
-          <Card style={styles.card}>
-            <Card.Content>
-              <Card.Title title="example routine card" />
-            </Card.Content>
-          </Card>
         </ScrollView>
 
         {routineFormVisible ? (

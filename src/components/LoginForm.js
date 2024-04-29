@@ -51,6 +51,7 @@ function LoginForm() {
         placeholder="Password"
         style={styles.loginForm}
         autoCapitalize="none"
+        // secureTextEntry
       ></TextInput>
       <Button onPress={formik.handleSubmit} title="Login" />
     </SafeAreaView>

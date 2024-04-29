@@ -25,7 +25,12 @@ function Routines() {
     <Card key={routine.id} style={styles.card}>
       <Card.Content style={styles.cardContent}>
         <Card.Title
-          title={`${routine.title}: ${routine.notes}, ${routine.instructions[0].medication.name}`}
+          title={`${routine.title}: ${routine.notes}, ${
+            routine.instructions.length
+              ? routine.instructions[0].medication.name
+              : ""
+          }`}
+          subtitle={routine.times}
         />
       </Card.Content>
     </Card>

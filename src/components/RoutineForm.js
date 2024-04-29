@@ -1,5 +1,10 @@
 import { ScrollView, View } from "react-native";
-import { TextInput, HelperText, Button } from "react-native-paper";
+import {
+  TextInput,
+  HelperText,
+  Button,
+  SegmentedButtons,
+} from "react-native-paper";
 import { RoutinesContext } from "../context/routines";
 import { useContext, useEffect, useState } from "react";
 import DropDown from "react-native-paper-dropdown";
@@ -13,6 +18,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
   const { routines, setRoutines } = useContext(RoutinesContext);
   const { instructions } = useContext(InstructionsContext);
   const [dropDownValue, setDropDownValue] = useState([]);
+  const [times, setTimes] = useState(["any time"]);
 
   const [instructionsList, setInstructionsList] = useState(
     assignInstructionsList(instructions)
@@ -20,10 +26,8 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
   const [showDropDown, setShowDropDown] = useState(false);
 
   function assignInstructionsList(instructions) {
-    console.log(instructions);
     const newList = [];
     for (const instruction of instructions) {
-      console.log(instruction);
       // if no routine id, the instruction is available to be selected
       if (!instruction.routine_id) {
         newList.push({
@@ -33,12 +37,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
       }
     }
     return newList;
-    // setInstructionsList(newList);
   }
-
-  //   useEffect(() => {
-  //     assignInstructionsList(instructions);
-  //   }, []);
 
   const validate = (values) => {
     const errors = {};
@@ -70,7 +69,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(
-                { ...values, instruction_ids: dropDownValue },
+                { ...values, instruction_ids: dropDownValue, times: times },
                 null,
                 2
               ),
@@ -78,7 +77,6 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
             fetch(`http://127.0.0.1:5555/routines`, configObj).then((r) => {
               if (r.ok) {
                 r.json().then((routine) => {
-                  console.log(routine);
                   setRoutines([...routines, routine]);
                   setRoutineFormVisible(false);
                   setFABExtended(true);
@@ -146,9 +144,59 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                 ]}
                 listMode="SCROLLVIEW"
               />
+              <SegmentedButtons
+                value={times}
+                onValueChange={(val) => {
+                  // Not allowing 'any time' to be selected with other options
+                  const indexOfAnyTime = val.indexOf("any time");
+                  if (indexOfAnyTime === 0 && val.length > 1) {
+                    val.splice(0, 1);
+                    setTimes([...val]);
+                  }
+                  // if 'any time' was just selected, unselect others
+                  else if (indexOfAnyTime > 0) {
+                    setTimes(["any time"]);
+                  } else {
+                    setTimes(val);
+                  }
+                }}
+                multiSelect
+                buttons={[
+                  {
+                    value: "any time",
+                    label: "Any time",
+                    showSelectedCheck: true,
+                  },
+                  {
+                    value: "morning",
+                    label: "Morning",
+                    showSelectedCheck: true,
+                  },
+                  {
+                    value: "afternoon",
+                    label: "Afternoon",
+                    showSelectedCheck: true,
+                  },
+                  {
+                    value: "evening",
+                    label: "Evening",
+                    // style: styles.button,
+                    showSelectedCheck: true,
+                  },
+                ]}
+              />
               <Button onPress={handleSubmit}>Save</Button>
+            </>
+          )}
+        </Formik>
+      </ScrollView>
+    </View>
+  );
+}
 
-              {/* <DropDown
+export default RoutineForm;
+
+/* <DropDown
                   label="Select medication instructions"
                   mode="outlined"
                   value={values.instruction_ids}
@@ -160,13 +208,4 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                   onDismiss={() => setShowDropDown(false)}
                   inputProps={{ style: styles.timeDropDown }}
                   multiSelect
-                /> */}
-            </>
-          )}
-        </Formik>
-      </ScrollView>
-    </View>
-  );
-}
-
-export default RoutineForm;
+                /> */

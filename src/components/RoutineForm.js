@@ -53,7 +53,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
   };
 
   return (
-    <View style={{ borderWidth: 1, borderColor: "red", height: "100%" }}>
+    <View style={{ borderWidth: 1 }}>
       <ScrollView>
         <Formik
           initialValues={{

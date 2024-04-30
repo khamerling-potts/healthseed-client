@@ -35,7 +35,6 @@ function Routines() {
       if (times.length === 0) return true;
       if (!routine.times) return false;
       const commonTimes = routine.times.filter((time) => {
-        console.log(time);
         return times.includes(time);
       });
       return commonTimes.length > 0;
@@ -44,28 +43,7 @@ function Routines() {
 
   return (
     <SafeAreaView style={styles.routinesPage}>
-      <AnimatedFAB
-        icon={FABExtended ? "plus" : "minus"}
-        label="New routine"
-        extended={FABExtended}
-        onPress={() => {
-          if (FABExtended) {
-            setFABExtended(false);
-            setRoutineFormVisible(true);
-          } else {
-            setFABExtended(true);
-            setRoutineFormVisible(false);
-          }
-        }}
-        animateFrom={"right"}
-        iconMode={"dynamic"}
-        style={styles.addFAB}
-      />
-      <KeyboardAvoidingView
-        behavior="padding"
-        keyboardVerticalOffset={110}
-        style={{ maxHeight: "95%" }}
-      >
+      {!routineFormVisible ? (
         <SegmentedButtons
           value={times}
           onValueChange={setTimes}
@@ -94,10 +72,11 @@ function Routines() {
             },
           ]}
         />
-        <ScrollView style={styles.medicationsScrollView}>
+      ) : null}
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
+        <ScrollView style={styles.routinesScrollView}>
           {routinesToDisplay}
         </ScrollView>
-
         {routineFormVisible ? (
           <RoutineForm
             setRoutineFormVisible={setRoutineFormVisible}
@@ -105,6 +84,23 @@ function Routines() {
           />
         ) : null}
       </KeyboardAvoidingView>
+      <AnimatedFAB
+        icon={FABExtended ? "plus" : "minus"}
+        label="New routine"
+        extended={FABExtended}
+        onPress={() => {
+          if (FABExtended) {
+            setFABExtended(false);
+            setRoutineFormVisible(true);
+          } else {
+            setFABExtended(true);
+            setRoutineFormVisible(false);
+          }
+        }}
+        animateFrom={"right"}
+        iconMode={"dynamic"}
+        style={styles.addFAB}
+      />
     </SafeAreaView>
   );
 }

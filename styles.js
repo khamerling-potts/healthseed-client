@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
+
+const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -88,18 +91,20 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   routinesScrollView: {
-    maxHeight: "80%",
+    maxHeight: "90%",
     borderWidth: 1,
-    borderColor: "green",
-    width: "90%",
+    maxWidth: "90%",
+    marginTop: 10,
   },
   routinesPage: {
     flex: 1,
-    alignSelf: "center",
-    // justifyContent: "center",
-    width: "100%",
+    alignItems: "center",
+    // alignContent: "center",
     borderWidth: 1,
     borderColor: "blue",
+  },
+  routineItem: {
+    width: windowWidth * 0.9,
   },
 });
 

@@ -1,6 +1,7 @@
 import { List, Divider, Text, Badge } from "react-native-paper";
 import { v4 as uuidv4 } from "uuid";
 import InstructionChip from "./InstructionChip";
+import styles from "../../styles";
 
 function RoutineComponent({ routine }) {
   const backgroundColors = {
@@ -28,7 +29,11 @@ function RoutineComponent({ routine }) {
     />
   ));
   return (
-    <List.Accordion left={(props) => badges} title={routine.title}>
+    <List.Accordion
+      left={(props) => badges}
+      title={routine.title}
+      style={styles.routineItem}
+    >
       <List.Item title={routine.notes} />
       {medications}
     </List.Accordion>

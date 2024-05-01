@@ -18,22 +18,24 @@ import styles from "../../styles";
 
 function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
   const { routines, setRoutines } = useContext(RoutinesContext);
+  const { setInstructions } = useContext(InstructionsContext);
   const { instructions } = useContext(InstructionsContext);
   const [dropDownValue, setDropDownValue] = useState(
     routine && routine.instructions
       ? routine.instructions.map((instruction) => `${instruction.id}`)
       : []
   );
-  console.log(dropDownValue);
   const [times, setTimes] = useState(routine ? routine.times : ["any time"]);
-
-  const [instructionsList, setInstructionsList] = useState([
-    ...assignInstructionsList(instructions),
-    { label: "test", value: "test" },
-  ]);
+  const [instructionsList, setInstructionsList] = useState(
+    assignInstructionsList(instructions)
+  );
   const [showDropDown, setShowDropDown] = useState(false);
 
-  //   useEffect(()=>{setInstructionsList(assignInstructionsList(instructions))}, [])
+  //conditionally assigning fetch properties based on whether adding or editing routine
+  const URL = routine
+    ? `http://127.0.0.1:5555/routines${"/" + routine.id}`
+    : `http://127.0.0.1:5555/routines`;
+  const method = routine ? "PATCH" : "POST";
 
   function assignInstructionsList(instructions) {
     const newList = [];
@@ -69,6 +71,13 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
     return errors;
   };
 
+  function handleEditRoutine(editedRoutine) {
+    const updatedRoutines = routines.filter(
+      (routine) => routine.id !== editedRoutine.id
+    );
+    setRoutines([...updatedRoutines, editedRoutine]);
+  }
+
   return (
     <View style={{ borderWidth: 1 }}>
       <ScrollView>
@@ -80,7 +89,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
           validate={validate}
           onSubmit={(values, { resetForm }) => {
             const configObj = {
-              method: "POST",
+              method: method,
               headers: {
                 "Content-Type": "application/json",
               },
@@ -90,12 +99,20 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 2
               ),
             };
-            fetch(`http://127.0.0.1:5555/routines`, configObj).then((r) => {
+            fetch(URL, configObj).then((r) => {
               if (r.ok) {
                 r.json().then((routine) => {
-                  setRoutines([...routines, routine]);
+                  if (method === "POST") {
+                    setRoutines([...routines, routine]);
+                  } else {
+                    handleEditRoutine(routine);
+                  }
                   setRoutineFormVisible(false);
                   setFABExtended(true);
+                  //Must also set instructions state bc routine ids were modified
+                  fetch("http://127.0.0.1:5555/instructions")
+                    .then((r) => r.json())
+                    .then((instructions) => setInstructions(instructions));
                   resetForm();
                 });
               } else {

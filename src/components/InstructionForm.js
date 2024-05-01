@@ -52,7 +52,6 @@ function InstructionForm({
     }).then((r) => {
       if (r.ok) {
         r.json().then((medication) => {
-          console.log("updated med: ", medication);
           handleEditMedication(medication);
           setInstructionFormVisible(false);
         });

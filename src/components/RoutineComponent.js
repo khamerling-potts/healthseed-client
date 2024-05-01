@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import InstructionChip from "./InstructionChip";
 import styles from "../../styles";
 import { View } from "react-native";
+import { useContext } from "react";
+import { InstructionsContext } from "../context/instructions";
+import { RoutinesContext } from "../context/routines";
 
 function RoutineComponent({
   routine,
@@ -10,6 +13,8 @@ function RoutineComponent({
   setRoutineFormVisible,
   setCurrentRoutine,
 }) {
+  const { instructions, setInstructions } = useContext(InstructionsContext);
+  const { routines, setRoutines } = useContext(RoutinesContext);
   const backgroundColors = {
     "any time": "green",
     morning: "goldenrod",
@@ -34,6 +39,22 @@ function RoutineComponent({
       page={"routine"}
     />
   ));
+
+  // Deletes a routine from the server and updates instructions and routines state
+  function onDeleteRoutine() {
+    fetch(`http://127.0.0.1:5555/routines/${routine.id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((instructions) => {
+          setInstructions(instructions);
+          setRoutines(routines.filter((r) => r.id !== routine.id));
+        });
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
+  }
   return (
     <List.Accordion
       left={(props) => <View style={styles.badgesView}>{badges}</View>}
@@ -57,7 +78,7 @@ function RoutineComponent({
         >
           Edit
         </Button>
-        <Button>Delete</Button>
+        <Button onPress={() => onDeleteRoutine()}>Delete</Button>
       </View>
     </List.Accordion>
   );

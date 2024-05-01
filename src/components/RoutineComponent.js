@@ -1,10 +1,15 @@
-import { List, Divider, Text, Badge } from "react-native-paper";
+import { List, Divider, Text, Badge, Button } from "react-native-paper";
 import { v4 as uuidv4 } from "uuid";
 import InstructionChip from "./InstructionChip";
 import styles from "../../styles";
 import { View } from "react-native";
 
-function RoutineComponent({ routine }) {
+function RoutineComponent({
+  routine,
+  setFABExtended,
+  setRoutineFormVisible,
+  setCurrentRoutine,
+}) {
   const backgroundColors = {
     "any time": "green",
     morning: "goldenrod",
@@ -42,6 +47,18 @@ function RoutineComponent({ routine }) {
         style={styles.routineItem}
       />
       <View style={styles.instructionChipsView}>{medications}</View>
+      <View style={styles.routineButtonsView}>
+        <Button
+          onPress={() => {
+            setCurrentRoutine(routine);
+            setFABExtended(false);
+            setRoutineFormVisible(true);
+          }}
+        >
+          Edit
+        </Button>
+        <Button>Delete</Button>
+      </View>
     </List.Accordion>
   );
 }

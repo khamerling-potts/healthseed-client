@@ -13,8 +13,6 @@ function Medications() {
   const [addFormVisible, setAddFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
 
-  console.log("medications: ", medications);
-
   const medicationsToDisplay = medications
     .sort((a, b) => a.id - b.id)
     .map((medication) => (

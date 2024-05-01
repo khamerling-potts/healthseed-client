@@ -16,28 +16,43 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import styles from "../../styles";
 
-function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
+function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
   const { routines, setRoutines } = useContext(RoutinesContext);
   const { instructions } = useContext(InstructionsContext);
-  const [dropDownValue, setDropDownValue] = useState([]);
-  const [times, setTimes] = useState(["any time"]);
-
-  const [instructionsList, setInstructionsList] = useState(
-    assignInstructionsList(instructions)
+  const [dropDownValue, setDropDownValue] = useState(
+    routine && routine.instructions
+      ? routine.instructions.map((instruction) => `${instruction.id}`)
+      : []
   );
+  console.log(dropDownValue);
+  const [times, setTimes] = useState(routine ? routine.times : ["any time"]);
+
+  const [instructionsList, setInstructionsList] = useState([
+    ...assignInstructionsList(instructions),
+    { label: "test", value: "test" },
+  ]);
   const [showDropDown, setShowDropDown] = useState(false);
+
+  //   useEffect(()=>{setInstructionsList(assignInstructionsList(instructions))}, [])
 
   function assignInstructionsList(instructions) {
     const newList = [];
     for (const instruction of instructions) {
+      //   if editing (rather than adding) a routine, prepopulate with
+      //   existing instructions
+
       // if no routine id, the instruction is available to be selected
-      if (!instruction.routine_id) {
+      if (
+        !instruction.routine_id ||
+        (routine && instruction.routine_id === routine.id)
+      ) {
         newList.push({
           label: `${instruction.medication.name} (${instruction.dose}, ${instruction.time})`,
           value: `${instruction.id}`,
         });
       }
     }
+    // setInstructionsList(newList);
     return newList;
   }
 
@@ -59,9 +74,8 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
       <ScrollView>
         <Formik
           initialValues={{
-            title: "",
-            notes: "",
-            // instruction_ids: [],
+            title: routine ? routine.title : "",
+            notes: routine ? routine.notes : "",
           }}
           validate={validate}
           onSubmit={(values, { resetForm }) => {

@@ -18,6 +18,8 @@ function Routines() {
   const [routineFormVisible, setRoutineFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
   const [times, setTimes] = useState([]);
+  //   const [action, setAction] = useState("add");
+  const [currentRoutine, setCurrentRoutine] = useState(null);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/routines").then((r) => {
@@ -39,7 +41,15 @@ function Routines() {
       });
       return commonTimes.length > 0;
     })
-    .map((routine) => <RoutineComponent key={routine.id} routine={routine} />);
+    .map((routine) => (
+      <RoutineComponent
+        key={routine.id}
+        routine={routine}
+        setCurrentRoutine={setCurrentRoutine}
+        setFABExtended={setFABExtended}
+        setRoutineFormVisible={setRoutineFormVisible}
+      />
+    ));
 
   return (
     <SafeAreaView style={styles.routinesPage}>
@@ -92,6 +102,7 @@ function Routines() {
           <RoutineForm
             setRoutineFormVisible={setRoutineFormVisible}
             setFABExtended={setFABExtended}
+            routine={currentRoutine}
           />
         ) : null}
       </KeyboardAvoidingView>
@@ -102,6 +113,7 @@ function Routines() {
         onPress={() => {
           if (FABExtended) {
             setFABExtended(false);
+            setCurrentRoutine(null);
             setRoutineFormVisible(true);
           } else {
             setFABExtended(true);

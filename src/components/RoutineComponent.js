@@ -2,12 +2,13 @@ import { List, Divider, Text, Badge } from "react-native-paper";
 import { v4 as uuidv4 } from "uuid";
 import InstructionChip from "./InstructionChip";
 import styles from "../../styles";
+import { View } from "react-native";
 
 function RoutineComponent({ routine }) {
   const backgroundColors = {
     "any time": "green",
-    morning: "yellow",
-    afternoon: "red",
+    morning: "goldenrod",
+    afternoon: "indianred",
     evening: "indigo",
   };
 
@@ -16,7 +17,7 @@ function RoutineComponent({ routine }) {
         <Badge
           key={uuidv4()}
           size={12}
-          style={{ backgroundColor: backgroundColors[time] }}
+          style={{ backgroundColor: backgroundColors[time], marginVertical: 2 }}
         />
       ))
     : null;
@@ -30,12 +31,17 @@ function RoutineComponent({ routine }) {
   ));
   return (
     <List.Accordion
-      left={(props) => badges}
-      title={routine.title}
-      style={styles.routineItem}
+      left={(props) => <View style={styles.badgesView}>{badges}</View>}
+      title={routine.id + routine.title}
+      style={styles.routineAccordion}
+      titleNumberOfLines={0}
     >
-      <List.Item title={routine.notes} />
-      {medications}
+      <List.Item
+        title={routine.notes}
+        titleNumberOfLines={0}
+        style={styles.routineItem}
+      />
+      <View style={styles.instructionChipsView}>{medications}</View>
     </List.Accordion>
   );
 }

@@ -4,6 +4,8 @@ import {
   HelperText,
   Button,
   SegmentedButtons,
+  Text,
+  Badge,
 } from "react-native-paper";
 import { RoutinesContext } from "../context/routines";
 import { useContext, useEffect, useState } from "react";
@@ -115,6 +117,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                 onChangeText={handleChange("notes")}
                 onBlur={handleBlur("notes")}
                 value={values.notes}
+                multiline
               />
               <HelperText
                 visible={touched.notes && errors.notes}
@@ -124,6 +127,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                 {errors.notes}
               </HelperText>
               <DropDownPicker
+                placeholder="Add medication instructions"
                 open={showDropDown}
                 value={dropDownValue}
                 items={instructionsList}
@@ -164,25 +168,36 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended }) {
                 multiSelect
                 buttons={[
                   {
+                    icon: "circle",
                     value: "any time",
                     label: "Any time",
                     showSelectedCheck: true,
+                    checkedColor: "green",
+                    uncheckedColor: "green",
                   },
                   {
+                    icon: "circle",
                     value: "morning",
                     label: "Morning",
                     showSelectedCheck: true,
+                    checkedColor: "goldenrod",
+                    uncheckedColor: "goldenrod",
                   },
                   {
+                    icon: "circle",
                     value: "afternoon",
                     label: "Afternoon",
                     showSelectedCheck: true,
+                    checkedColor: "indianred",
+                    uncheckedColor: "indianred",
                   },
                   {
+                    icon: "circle",
                     value: "evening",
                     label: "Evening",
-                    // style: styles.button,
                     showSelectedCheck: true,
+                    checkedColor: "indigo",
+                    uncheckedColor: "indigo",
                   },
                 ]}
               />

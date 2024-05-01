@@ -50,25 +50,36 @@ function Routines() {
           multiSelect
           buttons={[
             {
+              icon: "circle",
               value: "any time",
               label: "Any time",
               showSelectedCheck: true,
+              checkedColor: "green",
+              uncheckedColor: "green",
             },
             {
+              icon: "circle",
               value: "morning",
               label: "Morning",
               showSelectedCheck: true,
+              checkedColor: "goldenrod",
+              uncheckedColor: "goldenrod",
             },
             {
+              icon: "circle",
               value: "afternoon",
               label: "Afternoon",
               showSelectedCheck: true,
+              checkedColor: "indianred",
+              uncheckedColor: "indianred",
             },
             {
+              icon: "circle",
               value: "evening",
               label: "Evening",
-              // style: styles.button,
               showSelectedCheck: true,
+              checkedColor: "indigo",
+              uncheckedColor: "indigo",
             },
           ]}
         />

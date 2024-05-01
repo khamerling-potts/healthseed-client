@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   instructionChipsView: {
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingLeft: 0,
   },
   instructionChip: {
     margin: 4,
@@ -103,8 +104,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "blue",
   },
-  routineItem: {
+  routineAccordion: {
+    // necessary to fill entire width of component
     width: windowWidth * 0.9,
+    paddingLeft: 0,
+    borderWidth: 1,
+    // borderColor: "violet",
+  },
+  routineItem: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  segmentedButtons: {},
+  badgesView: {
+    justifyContent: "center",
+    marginLeft: 10,
   },
 });
 

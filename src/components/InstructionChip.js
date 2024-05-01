@@ -20,7 +20,7 @@ function InstructionChip({ instruction, page }) {
   return (
     <>
       <Chip
-        icon={icons[instruction.time]}
+        icon={!(page === "routine") ? icons[instruction.time] : null}
         onPress={() => {
           setInstructionFormVisible(true);
         }}

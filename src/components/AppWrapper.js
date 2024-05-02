@@ -15,6 +15,7 @@ import { MedicationsContext } from "../context/medications";
 import { InstructionsContext } from "../context/instructions";
 import { ConditionsContext } from "../context/conditions";
 import { ProvidersContext } from "../context/providers";
+import { AppointmentsContext } from "../context/appointments";
 
 function AppWrapper() {
   const { user, setUser } = useContext(UserContext);
@@ -22,6 +23,7 @@ function AppWrapper() {
   const { instructions, setInstructions } = useContext(InstructionsContext);
   const { conditions, setConditions } = useContext(ConditionsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
+  const { appointments, setAppointments } = useContext(AppointmentsContext);
   const Stack = createStackNavigator();
 
   // Setting global contexts
@@ -53,6 +55,14 @@ function AppWrapper() {
     fetch("http://127.0.0.1:5555/providers").then((r) => {
       if (r.ok) {
         r.json().then((providers) => setProviders(providers));
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
+
+    fetch("http://127.0.0.1:5555/appointments").then((r) => {
+      if (r.ok) {
+        r.json().then((appointments) => setAppointments(appointments));
       } else {
         r.json().then((err) => console.log(err));
       }

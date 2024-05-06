@@ -14,11 +14,24 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import styles from "../../styles";
 import { ProvidersContext } from "../context/providers";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
   const [showDropDown, setShowDropDown] = useState(false);
+
+  // 3 states below are for date time picker
+  //conversion practice
+  console.log("before formatting ", new Date());
+  const IsoDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  console.log("to string ", IsoDate);
+  const converted = new Date(IsoDate + "Z");
+  console.log("back to date ", converted);
+
+  const [datetime, setDateTime] = useState(converted);
+  const [mode, setMode] = useState("datetime");
+  const [show, setShow] = useState(false);
 
   const [dropDownValue, setDropDownValue] = useState(
     appointments && appointments.providers
@@ -46,26 +59,12 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
     return newList;
   }
 
-  const validate = (values) => {
-    const errors = {};
-    //datetime validation
-    if (!values.datetime) {
-      errors.datetime = "Required";
-    }
-    // category validation
-    if (!values.category) {
-      errors.category = "Required";
-    }
-    // location validation
-    if (!values.location) {
-      errors.location = "Required";
-    }
-
-    return errors;
+  const onDateTimeChange = (event, selectedDateTime) => {
+    setDateTime(selectedDateTime);
   };
 
   const validationSchema = Yup.object().shape({
-    datetime: Yup.string().required("Required"),
+    // datetime: Yup.string().required("Required"),
     category: Yup.string()
       .oneOf(
         ["Medical", "Vision", "Dental", "Mental Health", "Fitness/Wellness"],
@@ -89,7 +88,6 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
           initialValues={{
             category: appointment ? appointment.category : "",
             location: appointment ? appointment.location : "",
-            datetime: appointment ? appointment.datetime : "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { resetForm }) => {
@@ -99,7 +97,15 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(
-                { ...values, provider_ids: dropDownValue },
+                {
+                  ...values,
+                  // formatting datetime for backend database
+                  datetime: datetime
+                    .toISOString()
+                    .slice(0, 19)
+                    .replace("T", " "),
+                  provider_ids: dropDownValue,
+                },
                 null,
                 2
               ),
@@ -130,11 +136,12 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
             touched,
           }) => (
             <>
-              <TextInput
-                placeholder="Select a date and time"
-                onChangeText={handleChange("datetime")}
-                onBlur={handleBlur("datetime")}
-                value={values.datetime}
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={datetime}
+                mode={"datetime"}
+                is24Hour={true}
+                onChange={onDateTimeChange}
               />
               <HelperText
                 visible={!!(touched.datetime && errors.datetime)}

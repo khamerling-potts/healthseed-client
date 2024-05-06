@@ -137,7 +137,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 value={values.title}
               />
               <HelperText
-                visible={touched.title && errors.title}
+                visible={!!(touched.title && errors.title)}
                 type="error"
                 style={styles.helperText}
               >
@@ -151,7 +151,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 multiline
               />
               <HelperText
-                visible={touched.notes && errors.notes}
+                visible={!!(touched.notes && errors.notes)}
                 type="error"
                 style={styles.helperText}
               >

@@ -104,7 +104,7 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                     .toISOString()
                     .slice(0, 19)
                     .replace("T", " "),
-                  provider_ids: dropDownValue,
+                  provider_id: dropDownValue,
                 },
                 null,
                 2

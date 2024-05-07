@@ -6,24 +6,29 @@ import styles from "../../styles";
 import AppointmentForm from "../components/AppointmentForm";
 import { SafeAreaView, ScrollView, KeyboardAvoidingView } from "react-native";
 import { AnimatedFAB } from "react-native-paper";
+import AppointmentCard from "../components/AppointmentCard";
 
 function Appointments() {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const [apptFormVisible, setApptFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
+  const [currentAppt, setCurrentAppt] = useState(null);
+
+  console.log(appointments);
 
   const appointmentsToDisplay = appointments.map((appt) => (
-    <View key={appt.id}>
-      <Text>{appt.datetime}</Text>
-      <Text>{appt.location}</Text>
-      <Text>{appt.provider.name}</Text>
-      <Text>{appt.category}</Text>
-    </View>
+    <AppointmentCard
+      key={appt.id}
+      appointment={appt}
+      setApptFormVisible={setApptFormVisible}
+      setFABExtended={setFABExtended}
+      setCurrentAppt={setCurrentAppt}
+    />
   ));
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
-        <ScrollView style={styles.medicationsScrollView}>
+        <ScrollView style={styles.apptsScrollView}>
           {appointmentsToDisplay}
         </ScrollView>
         {apptFormVisible ? (

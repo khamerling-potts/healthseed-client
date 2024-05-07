@@ -120,6 +120,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 10,
   },
+  apptsScrollView: {
+    maxHeight: "90%",
+    borderWidth: 1,
+    width: windowWidth * 0.9,
+  },
+  apptCard: {
+    // necessary to fill entire width of component
+    width: windowWidth * 0.9,
+    paddingLeft: 0,
+    borderWidth: 1,
+    margin: 10,
+  },
+  apptDateView: {
+    padding: 10,
+    borderWidth: 1,
+    backgroundColor: "#443850",
+    alignItems: "center",
+  },
+  apptDateText: {
+    color: "white",
+  },
+  apptTimeText: {
+    color: "white",
+    marginLeft: 2,
+  },
+  apptCardInfo: {
+    justifyContent: "space-around",
+  },
 });
 
 export default styles;

@@ -20,6 +20,7 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
   const [showDropDown, setShowDropDown] = useState(false);
+  console.log(appointment);
 
   // 3 states below are for date time picker
   //conversion practice
@@ -29,14 +30,12 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const converted = new Date(IsoDate + "Z");
   console.log("back to date ", converted);
 
-  const [datetime, setDateTime] = useState(converted);
-  const [mode, setMode] = useState("datetime");
-  const [show, setShow] = useState(false);
+  const [datetime, setDateTime] = useState(
+    appointment ? new Date(appointment.datetime + "Z") : new Date()
+  );
 
   const [dropDownValue, setDropDownValue] = useState(
-    appointments && appointments.providers
-      ? appointments.providers.map((provider) => `${provider.id}`)
-      : []
+    appointment && appointment.provider ? appointment.provider_id : null
   );
   const [providersList, setProvidersList] = useState(
     assignProvidersList(providers)

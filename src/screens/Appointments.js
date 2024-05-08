@@ -14,8 +14,6 @@ function Appointments() {
   const [FABExtended, setFABExtended] = useState(true);
   const [currentAppt, setCurrentAppt] = useState(null);
 
-  console.log(appointments);
-
   const appointmentsToDisplay = appointments.map((appt) => (
     <AppointmentCard
       key={appt.id}
@@ -35,7 +33,7 @@ function Appointments() {
           <AppointmentForm
             setApptFormVisible={setApptFormVisible}
             setFABExtended={setFABExtended}
-            method="POST"
+            appointment={currentAppt}
           />
         ) : null}
       </KeyboardAvoidingView>
@@ -46,6 +44,7 @@ function Appointments() {
         onPress={() => {
           if (FABExtended) {
             setFABExtended(false);
+            setCurrentAppt(null);
             setApptFormVisible(true);
           } else {
             setFABExtended(true);

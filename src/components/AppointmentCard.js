@@ -90,7 +90,9 @@ function AppointmentCard({
               {appointment.category}
             </Text>
             <Text numberOfLines={0} variant="bodyLarge">
-              {appointment.provider.name}
+              {appointment.provider
+                ? appointment.provider.name
+                : "No provider specified"}
             </Text>
             <Text numberOfLines={0} variant="bodyLarge">
               {appointment.location}
@@ -114,6 +116,8 @@ function AppointmentCard({
                 onPress={() => {
                   setMenuVisible(false);
                   setApptFormVisible(true);
+                  setFABExtended(false);
+                  setCurrentAppt(appointment);
                 }}
                 title="Edit"
               />

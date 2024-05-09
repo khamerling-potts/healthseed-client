@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { UserContext, UserProvider } from "../context/user";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
@@ -10,8 +10,7 @@ import { InstructionsContext } from "../context/instructions";
 import { ConditionsContext } from "../context/conditions";
 import { ProvidersContext } from "../context/providers";
 import { AppointmentsContext } from "../context/appointments";
-// import BottomNav from "../components/BottomNav";
-// import RoutesComponent from "../../routes";
+import HomeCalendar from "../components/HomeCalendar";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -65,9 +64,11 @@ function Home() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>This is the Home screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.homeScrollView}>
+        <HomeCalendar />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

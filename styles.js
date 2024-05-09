@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "cyan",
   },
+  homeScrollView: {
+    borderWidth: 1,
+    width: "100%",
+  },
   buttonContainer: {
     margin: 10,
   },
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   apptsScrollView: {
-    maxHeight: "90%",
+    maxHeight: "95%",
 
     borderWidth: 1,
     width: windowWidth * 0.9,

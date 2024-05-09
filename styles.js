@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "cyan",
   },
   buttonContainer: {
     margin: 10,
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
     maxHeight: "95%",
     borderWidth: 1,
     maxWidth: "90%",
+    marginTop: 10,
   },
   instructionChipsView: {
     flexDirection: "row",
@@ -91,18 +94,23 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     marginLeft: 0,
   },
-  routinesScrollView: {
-    maxHeight: "90%",
+  providersScrollView: {
+    maxHeight: "95%",
     borderWidth: 1,
     maxWidth: "90%",
+  },
+  routinesScrollView: {
+    maxHeight: "90%",
+    maxWidth: "90%",
+    borderWidth: 1,
     marginTop: 10,
   },
   routinesPage: {
     flex: 1,
     alignItems: "center",
     // alignContent: "center",
-    borderWidth: 1,
-    borderColor: "blue",
+    // borderWidth: 1,
+    // borderColor: "blue",
   },
   routineAccordion: {
     // necessary to fill entire width of component
@@ -122,6 +130,7 @@ const styles = StyleSheet.create({
   },
   apptsScrollView: {
     maxHeight: "90%",
+
     borderWidth: 1,
     width: windowWidth * 0.9,
   },
@@ -137,6 +146,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "#443850",
     alignItems: "center",
+    width: "30%",
   },
   apptDateText: {
     color: "white",
@@ -147,6 +157,20 @@ const styles = StyleSheet.create({
   },
   apptCardInfo: {
     justifyContent: "space-around",
+  },
+  apptText: {
+    marginLeft: 2,
+  },
+  apptTextView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  formScrollView: {
+    borderWidth: 1,
+    // maxWidth: "100%",
+    width: windowWidth * 0.9,
+
+    borderColor: "pink",
   },
 });
 

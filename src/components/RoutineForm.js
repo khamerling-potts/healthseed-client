@@ -79,8 +79,10 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
   }
 
   return (
-    <View style={{ borderWidth: 1 }}>
-      <ScrollView>
+    <View
+      style={{ borderWidth: 1, borderColor: "green", alignItems: "center" }}
+    >
+      <ScrollView style={styles.formScrollView}>
         <Formik
           initialValues={{
             title: routine ? routine.title : "",

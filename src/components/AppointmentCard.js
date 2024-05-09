@@ -30,11 +30,21 @@ function AppointmentCard({
     "December",
   ];
   const dayString = date.getDate();
-  const monthString = months[date.getMonth()];
+  const monthString = months[date.getMonth()].slice(0, 3);
   const timeString = date.toLocaleString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const apptIcons = {
+    Vision: "eye",
+    Medical: "stethoscope",
+    "Fitness/Wellness": "flower",
+    "Mental Health": "brain",
+    Dental: "tooth-outline",
+    Provider: "doctor",
+    Location: "map-marker",
+  };
 
   function onDeleteAppt() {
     fetch(`http://127.0.0.1:5555/appointments/${appointment.id}`, {
@@ -86,17 +96,40 @@ function AppointmentCard({
           </View>
 
           <View style={styles.apptCardInfo}>
-            <Text numberOfLines={0} variant="bodyLarge">
-              {appointment.category}
-            </Text>
-            <Text numberOfLines={0} variant="bodyLarge">
-              {appointment.provider
-                ? appointment.provider.name
-                : "No provider specified"}
-            </Text>
-            <Text numberOfLines={0} variant="bodyLarge">
-              {appointment.location}
-            </Text>
+            <View style={styles.apptTextView}>
+              <Icon source={apptIcons[appointment.category]} size={15} />
+              <Text
+                numberOfLines={0}
+                variant="titleSmall"
+                style={styles.apptText}
+              >
+                {appointment.category}
+              </Text>
+            </View>
+
+            <View style={styles.apptTextView}>
+              <Icon source={apptIcons["Provider"]} size={15} />
+              <Text
+                numberOfLines={0}
+                variant="titleSmall"
+                style={styles.apptText}
+              >
+                {appointment.provider
+                  ? appointment.provider.name
+                  : "No provider specified"}
+              </Text>
+            </View>
+
+            <View style={styles.apptTextView}>
+              <Icon source={apptIcons["Location"]} size={15} />
+              <Text
+                numberOfLines={0}
+                variant="titleSmall"
+                style={styles.apptText}
+              >
+                {appointment.location}
+              </Text>
+            </View>
           </View>
 
           <View>

@@ -36,7 +36,7 @@ function RoutineComponent({
     <InstructionChip
       key={instruction.id}
       instruction={instruction}
-      page={"routine"}
+      page={"routines"}
     />
   ));
 

@@ -20,13 +20,18 @@ import {
   isValidPhoneNumber,
 } from "libphonenumber-js";
 
-function ProviderCard({ provider }) {
+function ProviderCard({
+  provider,
+  setFABExtended,
+  setProviderFormVisible,
+  setCurrentProvider,
+}) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { providers, setProviders } = useContext(ProvidersContext);
   const id = provider.id;
 
-  function deleteProvider() {
+  function onDeleteProvider() {
     fetch(`http://127.0.0.1:5555/providers/${provider.id}`, {
       method: "DELETE",
     }).then((r) => {
@@ -45,51 +50,51 @@ function ProviderCard({ provider }) {
     setProviders([...updatedProviders, editedProvider]);
   }
 
-  const formik = useFormik({
-    initialValues: {
-      name: provider.name,
-      address: provider.address,
-      countryCode: parsePhoneNumber(provider.phone).countryCallingCode,
-      phone: parsePhoneNumber(provider.phone).nationalNumber,
-    },
-    validationSchema: Yup.object({
-      //Add phone validation here
-      name: Yup.string().required("Name required"),
-    }),
-    onSubmit: (values) => {
-      const configObj = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          {
-            ...values,
-            phone: "+" + values.countryCode + values.phone,
-          },
-          null,
-          2
-        ),
-      };
-      fetch(`http://127.0.0.1:5555/providers/${provider.id}`, configObj).then(
-        (r) => {
-          if (r.ok) {
-            r.json().then((provider) => {
-              console.log(provider);
-              handleEditProvider(provider);
-              setModalVisible(false);
-            });
-          } else {
-            r.json().then((err) => console.log(err));
-          }
-        }
-      );
-    },
-  });
-
   return (
     <>
-      <Portal>
+      <Card style={styles.card}>
+        <Card.Content style={styles.cardContent}>
+          <Card.Title
+            title={provider.name}
+            subtitle={`${provider.phone}\n${provider.address}`}
+            subtitleNumberOfLines={0}
+            right={(props) => (
+              <Menu
+                visible={menuVisible}
+                onDismiss={() => setMenuVisible(false)}
+                anchor={
+                  <IconButton
+                    {...props}
+                    icon="dots-vertical"
+                    onPress={() => {
+                      setMenuVisible(true);
+                    }}
+                  />
+                }
+              >
+                <Menu.Item
+                  onPress={() => {
+                    setMenuVisible(false);
+                    setProviderFormVisible(true);
+                    setFABExtended(false);
+                    setCurrentProvider(provider);
+                  }}
+                  title="Edit"
+                />
+                <Menu.Item onPress={() => onDeleteProvider()} title="Delete" />
+              </Menu>
+            )}
+          />
+        </Card.Content>
+      </Card>
+    </>
+  );
+}
+
+export default ProviderCard;
+
+{
+  /* <Portal>
         <Modal
           visible={modalVisible}
           onDismiss={() => setModalVisible(false)}
@@ -118,42 +123,47 @@ function ProviderCard({ provider }) {
           />
           <Button onPress={formik.handleSubmit}>Save</Button>
         </Modal>
-      </Portal>
-      <Card style={styles.card}>
-        <Card.Content style={styles.cardContent}>
-          <Card.Title
-            title={provider.name}
-            subtitle={`${provider.phone}\n${provider.address}`}
-            subtitleNumberOfLines={2}
-            right={(props) => (
-              <Menu
-                visible={menuVisible}
-                onDismiss={() => setMenuVisible(false)}
-                anchor={
-                  <IconButton
-                    {...props}
-                    icon="dots-vertical"
-                    onPress={() => {
-                      setMenuVisible(true);
-                    }}
-                  />
-                }
-              >
-                <Menu.Item
-                  onPress={() => {
-                    setModalVisible(true);
-                    setMenuVisible(false);
-                  }}
-                  title="Edit"
-                />
-                <Menu.Item onPress={() => deleteProvider()} title="Delete" />
-              </Menu>
-            )}
-          />
-        </Card.Content>
-      </Card>
-    </>
-  );
+      </Portal> */
 }
 
-export default ProviderCard;
+// const formik = useFormik({
+//   initialValues: {
+//     name: provider.name,
+//     address: provider.address,
+//     countryCode: parsePhoneNumber(provider.phone).countryCallingCode,
+//     phone: parsePhoneNumber(provider.phone).nationalNumber,
+//   },
+//   validationSchema: Yup.object({
+//     //Add phone validation here
+//     name: Yup.string().required("Name required"),
+//   }),
+//   onSubmit: (values) => {
+//     const configObj = {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(
+//         {
+//           ...values,
+//           phone: "+" + values.countryCode + values.phone,
+//         },
+//         null,
+//         2
+//       ),
+//     };
+//     fetch(`http://127.0.0.1:5555/providers/${provider.id}`, configObj).then(
+//       (r) => {
+//         if (r.ok) {
+//           r.json().then((provider) => {
+//             console.log(provider);
+//             handleEditProvider(provider);
+//             setModalVisible(false);
+//           });
+//         } else {
+//           r.json().then((err) => console.log(err));
+//         }
+//       }
+//     );
+//   },
+// });

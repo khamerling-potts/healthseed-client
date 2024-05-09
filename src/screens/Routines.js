@@ -52,7 +52,7 @@ function Routines() {
     ));
 
   return (
-    <SafeAreaView style={styles.routinesPage}>
+    <SafeAreaView style={styles.container}>
       {!routineFormVisible ? (
         <SegmentedButtons
           value={times}

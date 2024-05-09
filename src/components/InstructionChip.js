@@ -20,14 +20,16 @@ function InstructionChip({ instruction, page }) {
   return (
     <>
       <Chip
-        icon={!(page === "routine") ? icons[instruction.time] : null}
+        icon={!(page === "routines") ? icons[instruction.time] : null}
         onPress={() => {
-          setInstructionFormVisible(true);
+          if (page === "medications") {
+            setInstructionFormVisible(true);
+          }
         }}
         style={styles.instructionChip}
       >
         {instruction.dose}
-        {page === "routine" ? " " + instruction.medication.name : null}
+        {page === "routines" ? " " + instruction.medication.name : null}
       </Chip>
       <Portal>
         <Modal

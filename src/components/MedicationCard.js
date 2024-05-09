@@ -33,7 +33,11 @@ function MedicationCard({ medication }) {
   const id = medication.id;
 
   const instructionChips = medication.instructions.map((instruction) => (
-    <InstructionChip key={instruction.id} instruction={instruction} />
+    <InstructionChip
+      key={instruction.id}
+      instruction={instruction}
+      page={"medications"}
+    />
   ));
 
   function handleEditMedication(editedMedication) {

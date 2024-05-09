@@ -6,6 +6,7 @@ import {
   SegmentedButtons,
   Text,
   Badge,
+  Snackbar,
 } from "react-native-paper";
 import { AppointmentsContext } from "../context/appointments";
 import { useContext, useEffect, useState } from "react";
@@ -15,11 +16,15 @@ import * as Yup from "yup";
 import styles from "../../styles";
 import { ProvidersContext } from "../context/providers";
 import DateTimePicker from "@react-native-community/datetimepicker";
+// import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 
 function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [suggestedAddress, setSuggestedAddress] = useState(null);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   console.log(appointment);
 
   // 3 states below are for date time picker
@@ -80,9 +85,17 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
     setAppointments([...updatedAppointments, editedAppointment]);
   }
 
+  //Used to set the suggested address to the selected provider's address
+  function onDropDownChange(value) {
+    const provider_id = value;
+    const provider = providers.find((provider) => provider.id === provider_id);
+    setSuggestedAddress(provider.address);
+    setSnackbarVisible(true);
+  }
+
   return (
     <View style={{ borderWidth: 1 }}>
-      <ScrollView>
+      <ScrollView style={styles.formScrollView}>
         <Formik
           initialValues={{
             category: appointment ? appointment.category : "",
@@ -162,6 +175,23 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
               >
                 {errors.category}
               </HelperText>
+
+              <DropDownPicker
+                placeholder="Select one of your providers..."
+                open={showDropDown}
+                value={dropDownValue}
+                items={providersList}
+                setOpen={setShowDropDown}
+                setValue={setDropDownValue}
+                onChangeValue={(value) => onDropDownChange(value)}
+                setItems={setProvidersList}
+                multiple={false}
+                mode="BADGE"
+                extendableBadgeContainer={true}
+                listMode="SCROLLVIEW"
+              />
+              <HelperText />
+
               <TextInput
                 placeholder="Location"
                 onChangeText={handleChange("location")}
@@ -175,24 +205,35 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
               >
                 {errors.location}
               </HelperText>
-              <DropDownPicker
-                placeholder="Add provider"
-                open={showDropDown}
-                value={dropDownValue}
-                items={providersList}
-                setOpen={setShowDropDown}
-                setValue={setDropDownValue}
-                setItems={setProvidersList}
-                multiple={false}
-                mode="BADGE"
-                extendableBadgeContainer={true}
-                listMode="SCROLLVIEW"
-              />
+
               <Button onPress={handleSubmit}>Save</Button>
             </>
           )}
         </Formik>
       </ScrollView>
+      <Snackbar
+        visible={snackbarVisible}
+        wrapperStyle={{ bottom: 10 }}
+        onDismiss={() => setSnackbarVisible(false)}
+        action={{
+          label: "Copy",
+          onPress: () => {
+            Clipboard.setStringAsync(suggestedAddress);
+          },
+        }}
+        onIconPress={() => {
+          setSnackbarVisible(false);
+        }}
+        duration={Snackbar.DURATION_LONG}
+      >
+        <Text style={{ fontWeight: "bold", color: "white" }}>
+          Suggested address:
+          <Text style={{ fontWeight: "normal", color: "white" }}>
+            {" " + suggestedAddress}
+          </Text>
+        </Text>
+      </Snackbar>
+      <Text />
     </View>
   );
 }

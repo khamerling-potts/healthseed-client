@@ -1,45 +1,78 @@
-import React, { useContext } from "react";
-import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
+import { Button } from "react-native-paper";
 import { UserContext, UserProvider } from "../context/user";
-import { Link, NativeRouter, Route, Routes } from "react-router-native";
-import styles from "../../styles";
 import LoginForm from "../components/LoginForm";
-import Home from "../screens/Home";
-import BottomNav from "../components/BottomNav";
-import RoutesComponent from "../../routes";
 import SignUpForm from "./SignUpForm";
 import SideNav from "./SideNav";
-import { createStackNavigator } from "@react-navigation/stack";
-import { MedicationsContext } from "../context/medications";
-import { InstructionsContext } from "../context/instructions";
-import { ConditionsContext } from "../context/conditions";
-import { ProvidersContext } from "../context/providers";
-import { AppointmentsContext } from "../context/appointments";
+import styles from "../../styles";
 
 function AppWrapper() {
   const { user, setUser } = useContext(UserContext);
+  const { loginMethod, setLoginMethod } = useState("none");
+  const { landingPageContent, setLandingPageContent } = useState(
+    <SafeAreaView
+      style={{ ...styles.container, backgroundColor: "transparent" }}
+    >
+      <Text>Better health management, right in your pocket</Text>
+      <Button onPress={() => setLoginMethod("login")}>Log in</Button>
+      <Button onpress={() => setLoginMethod("signup")}>
+        Create an account
+      </Button>
+    </SafeAreaView>
+  );
+  // const image = "../../assets/background-image.jpg";
+
+  const image = {
+    uri: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800",
+  };
 
   return (
     <>
       {user ? (
-        <>
-          {/* uncomment below if you want react router back */}
-          {/* <View style={styles.container}>
-            <RoutesComponent />
-          </View> */}
-          <SideNav />
-
-          {/* <BottomNav /> */}
-        </>
+        <SideNav />
       ) : (
-        <>
-          <LoginForm />
-          <SignUpForm />
-        </>
+        <ImageBackground
+          source={image}
+          resizeMode="cover"
+          style={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          {landingPageContent}
+        </ImageBackground>
       )}
     </>
   );
 }
 
 export default AppWrapper;
+
+// return (
+//   <>
+//     {user ? (
+//       <SideNav />
+//     ) : (
+//       <ImageBackground
+//         source="../../assets/background-image.jpg"
+//         style={{
+//           flex: 1,
+//           justifyContent: "center",
+//           borderWidth: 2,
+//           borderColor: "blue",
+//         }}
+//         resizeMode="cover"
+//       >
+//         <LoginForm />
+//         <SignUpForm />
+//       </ImageBackground>
+//     )}
+//   </>
+// );

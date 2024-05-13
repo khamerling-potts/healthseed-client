@@ -152,13 +152,23 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
             touched,
           }) => (
             <>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={datetime}
-                mode={"datetime"}
-                is24Hour={true}
-                onChange={onDateTimeChange}
-              />
+              <View
+                style={{
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: "blue",
+                }}
+              >
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={datetime}
+                  mode={"datetime"}
+                  is24Hour={true}
+                  onChange={onDateTimeChange}
+                  accentColor="#3A4954"
+                />
+              </View>
+
               <HelperText
                 visible={!!(touched.datetime && errors.datetime)}
                 type="error"

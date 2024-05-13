@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Button, SafeAreaView, TextInput, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 import { Formik, useFormik } from "formik";
 import { UserContext } from "../context/user";
 import * as Yup from "yup";
@@ -39,7 +40,9 @@ function SignUpForm() {
     },
   });
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={{ ...styles.container, backgroundColor: "transparent" }}
+    >
       <TextInput
         onChangeText={formik.handleChange("username")}
         onBlur={formik.handleBlur("username")}
@@ -73,7 +76,7 @@ function SignUpForm() {
         autoCapitalize="none"
         secureTextEntry
       ></TextInput>
-      <Button onPress={formik.handleSubmit} title="Sign up" />
+      <Button onPress={formik.handleSubmit}>Sign up</Button>
     </SafeAreaView>
   );
 }

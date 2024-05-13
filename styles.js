@@ -178,9 +178,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 10,
   },
+  apptCardView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   apptDateView: {
     padding: 10,
-    borderWidth: 1,
     backgroundColor: "#443850",
     alignItems: "center",
     width: "30%",
@@ -194,13 +197,17 @@ const styles = StyleSheet.create({
   },
   apptCardInfo: {
     justifyContent: "space-around",
+    width: "55%",
   },
   apptText: {
     marginLeft: 2,
+    flex: 1,
+    flexWrap: "wrap",
   },
   apptTextView: {
     flexDirection: "row",
     alignItems: "center",
+    padding: 4,
   },
   formScrollView: {
     borderWidth: 1,

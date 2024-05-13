@@ -22,13 +22,14 @@ import * as Clipboard from "expo-clipboard";
 function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
-  const [showDropDown, setShowDropDown] = useState(false);
+  const [showProviderDropDown, setShowProviderDropDown] = useState(false);
+  const [showCategoryDropDown, setShowCategoryDropDown] = useState(false);
+
   const [suggestedAddress, setSuggestedAddress] = useState(null);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   console.log(appointment);
 
-  // 3 states below are for date time picker
-  //conversion practice
+  //date conversion practice
   console.log("before formatting ", new Date());
   const IsoDate = new Date().toISOString().slice(0, 19).replace("T", " ");
   console.log("to string ", IsoDate);
@@ -38,13 +39,23 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   const [datetime, setDateTime] = useState(
     appointment ? new Date(appointment.datetime + "Z") : new Date()
   );
-
-  const [dropDownValue, setDropDownValue] = useState(
+  const [providerDropDownValue, setProviderDropDownValue] = useState(
     appointment && appointment.provider ? appointment.provider_id : null
   );
   const [providersList, setProvidersList] = useState(
     assignProvidersList(providers)
   );
+  const [categoryDropDownValue, setCategoryDropDownValue] = useState(
+    appointment ? appointment.category : null
+  );
+  const [categoryList, setCategoryList] = useState([
+    { label: "Medical", value: "Medical" },
+    { label: "Vision", value: "Vision" },
+    { label: "Dental", value: "Dental" },
+    { label: "Mental Health", value: "Mental Health" },
+    { label: "Fitness/Wellness", value: "Fitness/Wellness" },
+    { label: "Other", value: "Other" },
+  ]);
 
   //conditionally assigning fetch properties based on whether adding or editing appt
   const URL = appointment
@@ -68,13 +79,6 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   };
 
   const validationSchema = Yup.object().shape({
-    // datetime: Yup.string().required("Required"),
-    category: Yup.string()
-      .oneOf(
-        ["Medical", "Vision", "Dental", "Mental Health", "Fitness/Wellness"],
-        "Must be one of these"
-      )
-      .required("Required"),
     location: Yup.string().required("Required"),
   });
 
@@ -98,7 +102,6 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
       <ScrollView style={styles.formScrollView}>
         <Formik
           initialValues={{
-            category: appointment ? appointment.category : "",
             location: appointment ? appointment.location : "",
           }}
           validationSchema={validationSchema}
@@ -116,7 +119,8 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                     .toISOString()
                     .slice(0, 19)
                     .replace("T", " "),
-                  provider_id: dropDownValue,
+                  category: categoryDropDownValue,
+                  provider_id: providerDropDownValue,
                 },
                 null,
                 2
@@ -162,33 +166,38 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
               >
                 {errors.datetime}
               </HelperText>
-              <TextInput
-                placeholder="Category"
-                onChangeText={handleChange("category")}
-                onBlur={handleBlur("category")}
-                value={values.category}
-              />
-              <HelperText
-                visible={!!(touched.category && errors.category)}
-                type="error"
-                style={styles.helperText}
-              >
-                {errors.category}
-              </HelperText>
 
               <DropDownPicker
+                placeholder="Select a category..."
+                open={showCategoryDropDown}
+                value={categoryDropDownValue}
+                items={categoryList}
+                setOpen={setShowCategoryDropDown}
+                setValue={setCategoryDropDownValue}
+                setItems={setCategoryList}
+                multiple={false}
+                mode="BADGE"
+                extendableBadgeContainer={true}
+                listMode="SCROLLVIEW"
+                zIndex={3000}
+                zIndexInverse={1000}
+              />
+              <HelperText />
+              <DropDownPicker
                 placeholder="Select one of your providers..."
-                open={showDropDown}
-                value={dropDownValue}
+                open={showProviderDropDown}
+                value={providerDropDownValue}
                 items={providersList}
-                setOpen={setShowDropDown}
-                setValue={setDropDownValue}
+                setOpen={setShowProviderDropDown}
+                setValue={setProviderDropDownValue}
                 onChangeValue={(value) => onDropDownChange(value)}
                 setItems={setProvidersList}
                 multiple={false}
                 mode="BADGE"
                 extendableBadgeContainer={true}
                 listMode="SCROLLVIEW"
+                zIndex={1000}
+                zIndexInverse={3000}
               />
               <HelperText />
 

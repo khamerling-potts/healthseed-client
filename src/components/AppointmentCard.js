@@ -51,11 +51,9 @@ function AppointmentCard({
       method: "DELETE",
     }).then((r) => {
       if (r.ok) {
-        r.json().then((instructions) => {
-          setAppointments(
-            appointments.filter((appt) => appt.id !== appointment.id)
-          );
-        });
+        setAppointments(
+          appointments.filter((appt) => appt.id !== appointment.id)
+        );
       } else {
         r.json().then((err) => console.log(err));
       }
@@ -65,7 +63,7 @@ function AppointmentCard({
   return (
     <>
       <Card style={styles.card}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.apptCardView}>
           <View style={styles.apptDateView}>
             <Text
               numberOfLines={0}

@@ -11,6 +11,7 @@ import { ConditionsContext } from "../context/conditions";
 import { ProvidersContext } from "../context/providers";
 import { AppointmentsContext } from "../context/appointments";
 import HomeCalendar from "../components/HomeCalendar";
+import { RoutinesContext } from "../context/routines";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -19,6 +20,7 @@ function Home() {
   const { conditions, setConditions } = useContext(ConditionsContext);
   const { providers, setProviders } = useContext(ProvidersContext);
   const { appointments, setAppointments } = useContext(AppointmentsContext);
+  const { routines, setRoutines } = useContext(RoutinesContext);
 
   // Setting global contexts
   useEffect(() => {
@@ -57,6 +59,14 @@ function Home() {
     fetch("http://127.0.0.1:5555/appointments").then((r) => {
       if (r.ok) {
         r.json().then((appointments) => setAppointments(appointments));
+      } else {
+        r.json().then((err) => console.log(err));
+      }
+    });
+
+    fetch("http://127.0.0.1:5555/routines").then((r) => {
+      if (r.ok) {
+        r.json().then((routines) => setRoutines(routines));
       } else {
         r.json().then((err) => console.log(err));
       }

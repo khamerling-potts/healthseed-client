@@ -12,22 +12,27 @@ import LoginForm from "../components/LoginForm";
 import SignUpForm from "./SignUpForm";
 import SideNav from "./SideNav";
 import styles from "../../styles";
+import { LoginMethodContext } from "../context/loginmethod";
 
 function AppWrapper() {
   const { user, setUser } = useContext(UserContext);
-  const { loginMethod, setLoginMethod } = useState("none");
-  const { landingPageContent, setLandingPageContent } = useState(
+  const { loginMethod, setLoginMethod } = useContext(LoginMethodContext);
+
+  let landingPageContent = (
     <SafeAreaView
       style={{ ...styles.container, backgroundColor: "transparent" }}
     >
       <Text>Better health management, right in your pocket</Text>
       <Button onPress={() => setLoginMethod("login")}>Log in</Button>
-      <Button onpress={() => setLoginMethod("signup")}>
-        Create an account
-      </Button>
+      <Button onPress={() => setLoginMethod("signup")}>Create account</Button>
     </SafeAreaView>
   );
-  // const image = "../../assets/background-image.jpg";
+
+  if (loginMethod === "login") {
+    landingPageContent = <LoginForm />;
+  } else if (loginMethod === "signup") {
+    landingPageContent = <SignUpForm />;
+  }
 
   const image = {
     uri: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800",

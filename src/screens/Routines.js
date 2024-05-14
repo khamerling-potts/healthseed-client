@@ -21,16 +21,6 @@ function Routines() {
   //   const [action, setAction] = useState("add");
   const [currentRoutine, setCurrentRoutine] = useState(null);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5555/routines").then((r) => {
-      if (r.ok) {
-        r.json().then((routines) => setRoutines(routines));
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-  }, []);
-
   // Filter by time
   const routinesToDisplay = routines
     .filter((routine) => {

@@ -10,6 +10,7 @@ import { MedicationsProvider } from "./src/context/medications";
 import { InstructionsProvider } from "./src/context/instructions";
 import { RoutinesProvider } from "./src/context/routines";
 import { AppointmentsProvider } from "./src/context/appointments";
+import { LoginMethodProvider } from "./src/context/loginmethod";
 
 import "react-native-get-random-values";
 
@@ -28,7 +29,9 @@ export default function App() {
                   <InstructionsProvider>
                     <RoutinesProvider>
                       <AppointmentsProvider>
-                        <AppWrapper />
+                        <LoginMethodProvider>
+                          <AppWrapper />
+                        </LoginMethodProvider>
                       </AppointmentsProvider>
                     </RoutinesProvider>
                   </InstructionsProvider>

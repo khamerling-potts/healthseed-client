@@ -12,6 +12,38 @@ const styles = StyleSheet.create({
     // borderColor: "cyan",
     backgroundColor: "#ffffff",
   },
+  landingContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  landingButton: {
+    backgroundColor: "#597683",
+    width: "90%",
+    marginTop: 10,
+  },
+  landingKeyboardAvoidingView: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  landingPageSurface: {
+    padding: 8,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    borderRadius: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.75)",
+    minHeight: "20%",
+    width: "80%",
+  },
+  landingText: {
+    textAlign: "center",
+    color: "#443850",
+  },
+  birthdayPicker: {
+    height: 50,
+  },
   nav: {
     backgroundColor: "#597683",
   },
@@ -57,8 +89,10 @@ const styles = StyleSheet.create({
   },
   loginForm: {
     margin: 10,
-    borderWidth: 1,
-    borderColor: "grey",
+    borderRadius: "5",
+    width: "90%",
+    margin: 5,
+    backgroundColor: "white",
   },
   card: {
     margin: 10,

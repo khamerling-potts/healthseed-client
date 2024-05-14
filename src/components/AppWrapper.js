@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   View,
-  Text,
   ImageBackground,
   StyleSheet,
   SafeAreaView,
+  KeyboardAvoidingView,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Surface, Text } from "react-native-paper";
 import { UserContext, UserProvider } from "../context/user";
 import LoginForm from "../components/LoginForm";
 import SignUpForm from "./SignUpForm";
@@ -19,13 +19,18 @@ function AppWrapper() {
   const { loginMethod, setLoginMethod } = useContext(LoginMethodContext);
 
   let landingPageContent = (
-    <SafeAreaView
-      style={{ ...styles.container, backgroundColor: "transparent" }}
-    >
-      <Text>Better health management, right in your pocket</Text>
-      <Button onPress={() => setLoginMethod("login")}>Log in</Button>
-      <Button onPress={() => setLoginMethod("signup")}>Create account</Button>
-    </SafeAreaView>
+    <>
+      <Button
+        onPress={() => setLoginMethod("login")}
+        style={styles.landingButton}
+        textColor="white"
+      >
+        Log in
+      </Button>
+      <Button onPress={() => setLoginMethod("signup")} textColor="#443850">
+        Create account
+      </Button>
+    </>
   );
 
   if (loginMethod === "login") {
@@ -51,7 +56,22 @@ function AppWrapper() {
             justifyContent: "center",
           }}
         >
-          {landingPageContent}
+          <SafeAreaView style={styles.landingContainer}>
+            <Text variant="displaySmall" style={styles.landingText}>
+              {"Healthseed\n"}
+              <Text variant="bodyLarge" style={styles.landingText}>
+                Better health management, right in your pocket.
+              </Text>
+            </Text>
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={styles.landingKeyboardAvoidingView}
+            >
+              <Surface elevation={4} style={styles.landingPageSurface}>
+                {landingPageContent}
+              </Surface>
+            </KeyboardAvoidingView>
+          </SafeAreaView>
         </ImageBackground>
       )}
     </>
@@ -59,25 +79,3 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
-
-// return (
-//   <>
-//     {user ? (
-//       <SideNav />
-//     ) : (
-//       <ImageBackground
-//         source="../../assets/background-image.jpg"
-//         style={{
-//           flex: 1,
-//           justifyContent: "center",
-//           borderWidth: 2,
-//           borderColor: "blue",
-//         }}
-//         resizeMode="cover"
-//       >
-//         <LoginForm />
-//         <SignUpForm />
-//       </ImageBackground>
-//     )}
-//   </>
-// );

@@ -5,9 +5,11 @@ import { Formik, useFormik } from "formik";
 import { UserContext } from "../context/user";
 import * as Yup from "yup";
 import styles from "../../styles";
+import { LoginMethodContext } from "../context/loginmethod";
 
 function LoginForm() {
   const { user, setUser } = useContext(UserContext);
+  const { loginMethod, setLoginMethod } = useContext(LoginMethodContext);
 
   const formik = useFormik({
     initialValues: {
@@ -36,9 +38,10 @@ function LoginForm() {
     },
   });
   return (
-    <SafeAreaView
-      style={{ ...styles.container, backgroundColor: "transparent" }}
-    >
+    // <SafeAreaView
+    //   style={{ ...styles.container, backgroundColor: "transparent" }}
+    // >
+    <>
       <TextInput
         onChangeText={formik.handleChange("username")}
         onBlur={formik.handleBlur("username")}
@@ -46,6 +49,7 @@ function LoginForm() {
         placeholder="Username"
         style={styles.loginForm}
         autoCapitalize="none"
+        mode="outlined"
       ></TextInput>
       <TextInput
         onChangeText={formik.handleChange("password")}
@@ -54,10 +58,21 @@ function LoginForm() {
         placeholder="Password"
         style={styles.loginForm}
         autoCapitalize="none"
-        // secureTextEntry
+        mode="outlined"
+        secureTextEntry
       ></TextInput>
-      <Button onPress={formik.handleSubmit}>Login</Button>
-    </SafeAreaView>
+      <Button
+        onPress={formik.handleSubmit}
+        style={styles.landingButton}
+        textColor="white"
+      >
+        Log in
+      </Button>
+      <Button onPress={() => setLoginMethod("none")} textColor="#443850">
+        Back
+      </Button>
+    </>
+    // </SafeAreaView>
   );
 }
 

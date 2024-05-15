@@ -27,14 +27,13 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
 
   const [suggestedAddress, setSuggestedAddress] = useState(null);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
-  console.log(appointment);
 
   //date conversion practice
-  console.log("before formatting ", new Date());
-  const IsoDate = new Date().toISOString().slice(0, 19).replace("T", " ");
-  console.log("to string ", IsoDate);
-  const converted = new Date(IsoDate + "Z");
-  console.log("back to date ", converted);
+  // console.log("before formatting ", new Date());
+  // const IsoDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  // console.log("to string ", IsoDate);
+  // const converted = new Date(IsoDate + "Z");
+  // console.log("back to date ", converted);
 
   const [datetime, setDateTime] = useState(
     appointment ? new Date(appointment.datetime + "Z") : new Date()

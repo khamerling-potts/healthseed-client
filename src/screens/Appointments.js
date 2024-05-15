@@ -1,4 +1,4 @@
-import { Text } from "react-native-paper";
+import { Text, SegmentedButtons } from "react-native-paper";
 import { AppointmentsContext } from "../context/appointments";
 import { useContext, useState } from "react";
 import { View } from "react-native";
@@ -13,21 +13,59 @@ function Appointments() {
   const [apptFormVisible, setApptFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
   const [currentAppt, setCurrentAppt] = useState(null);
+  const [view, setView] = useState("upcoming");
 
-  const appointmentsToDisplay = appointments.map((appt) => (
-    <AppointmentCard
-      key={appt.id}
-      appointment={appt}
-      setApptFormVisible={setApptFormVisible}
-      setFABExtended={setFABExtended}
-      setCurrentAppt={setCurrentAppt}
-    />
-  ));
+  const sortedAppointments = appointments.sort(
+    (a, b) => new Date(a.datetime + "Z") - new Date(b.datetime + "Z")
+  );
+
+  const upcomingAppointments = sortedAppointments
+    .filter((appt) => new Date(appt.datetime + "Z") - new Date() >= 0)
+    .map((appt) => (
+      <AppointmentCard
+        key={appt.id}
+        appointment={appt}
+        setApptFormVisible={setApptFormVisible}
+        setFABExtended={setFABExtended}
+        setCurrentAppt={setCurrentAppt}
+      />
+    ));
+
+  const pastAppointments = sortedAppointments
+    .filter((appt) => new Date(appt.datetime + "Z") - new Date() < 0)
+    .map((appt) => (
+      <AppointmentCard
+        key={appt.id}
+        appointment={appt}
+        setApptFormVisible={setApptFormVisible}
+        setFABExtended={setFABExtended}
+        setCurrentAppt={setCurrentAppt}
+      />
+    ));
   return (
     <SafeAreaView style={styles.container}>
+      <SegmentedButtons
+        value={view}
+        onValueChange={setView}
+        style={styles.apptFilterButton}
+        buttons={[
+          {
+            value: "upcoming",
+            label: "Upcoming",
+            showSelectedCheck: true,
+            // checkedColor: "green",
+            // uncheckedColor: "green",
+          },
+          {
+            value: "past",
+            label: "Past",
+            showSelectedCheck: true,
+          },
+        ]}
+      />
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.apptsScrollView}>
-          {appointmentsToDisplay}
+          {view === "upcoming" ? upcomingAppointments : pastAppointments}
         </ScrollView>
         {apptFormVisible ? (
           <AppointmentForm

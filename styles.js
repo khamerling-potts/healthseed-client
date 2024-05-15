@@ -201,9 +201,13 @@ const styles = StyleSheet.create({
   },
   apptsScrollView: {
     maxHeight: "95%",
-
-    borderWidth: 1,
+    // borderWidth: 1,
     width: windowWidth * 0.9,
+  },
+  apptFilterButton: {
+    width: "90%",
+    marginTop: 30,
+    marginBottom: 10,
   },
   apptCard: {
     // necessary to fill entire width of component
@@ -219,6 +223,8 @@ const styles = StyleSheet.create({
   apptDateView: {
     padding: 10,
     backgroundColor: "#443850",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     alignItems: "center",
     width: "30%",
   },

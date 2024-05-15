@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, HelperText } from "react-native-paper";
 import { SafeAreaView, View } from "react-native";
 import { Formik, useFormik } from "formik";
 import { UserContext } from "../context/user";
@@ -51,6 +51,13 @@ function LoginForm() {
         autoCapitalize="none"
         mode="outlined"
       ></TextInput>
+      <HelperText
+        visible={!!(formik.touched.username && formik.errors.username)}
+        style={styles.helperText}
+        type="error"
+      >
+        {formik.errors.username}
+      </HelperText>
       <TextInput
         onChangeText={formik.handleChange("password")}
         onBlur={formik.handleBlur("password")}
@@ -61,6 +68,13 @@ function LoginForm() {
         mode="outlined"
         secureTextEntry
       ></TextInput>
+      <HelperText
+        visible={!!(formik.touched.password && formik.errors.password)}
+        style={styles.helperText}
+        type="error"
+      >
+        {formik.errors.password}
+      </HelperText>
       <Button
         onPress={formik.handleSubmit}
         style={styles.landingButton}

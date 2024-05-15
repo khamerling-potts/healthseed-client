@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   loginForm: {
-    margin: 10,
+    // margin: 10,
     borderRadius: "5",
     width: "90%",
-    margin: 5,
+    marginTop: 5,
     backgroundColor: "white",
   },
   card: {

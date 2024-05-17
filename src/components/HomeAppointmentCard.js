@@ -6,14 +6,7 @@ import { Card, Icon, IconButton, Menu, Text } from "react-native-paper";
 import AppointmentForm from "./AppointmentForm";
 import { AppointmentsContext } from "../context/appointments";
 
-function AppointmentCard({
-  appointment,
-  setApptFormVisible,
-  setFABExtended,
-  setCurrentAppt,
-}) {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const { appointments, setAppointments } = useContext(AppointmentsContext);
+function HomeAppointmentCard({ appointment }) {
   const date = new Date(appointment.datetime + "Z");
   const months = [
     "January",
@@ -31,6 +24,7 @@ function AppointmentCard({
   ];
   const dayString = date.getDate();
   const monthString = months[date.getMonth()].slice(0, 3);
+  yearString = date.getFullYear();
   const timeString = date.toLocaleString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -47,39 +41,19 @@ function AppointmentCard({
     Location: "map-marker",
   };
 
-  function onDeleteAppt() {
-    fetch(`http://127.0.0.1:5555/appointments/${appointment.id}`, {
-      method: "DELETE",
-    }).then((r) => {
-      if (r.ok) {
-        setAppointments(
-          appointments.filter((appt) => appt.id !== appointment.id)
-        );
-      } else {
-        r.json().then((err) => console.log(err));
-      }
-    });
-  }
-
   return (
     <>
       <Card style={styles.card}>
         <View style={styles.apptCardView}>
-          <View style={styles.apptDateView}>
+          <View style={styles.homeApptDateView}>
             <Text
               numberOfLines={0}
               style={styles.apptDateText}
-              variant="headlineSmall"
+              variant="titleSmall"
             >
-              {dayString}
+              {`${monthString} ${dayString}, ${yearString}`}
             </Text>
-            <Text
-              numberOfLines={0}
-              style={styles.apptDateText}
-              variant="headlineSmall"
-            >
-              {monthString}
-            </Text>
+
             <View
               style={{
                 flexDirection: "row",
@@ -94,7 +68,7 @@ function AppointmentCard({
             </View>
           </View>
 
-          <View style={styles.apptCardInfo}>
+          <View style={styles.homeApptCardInfo}>
             <View style={styles.apptTextView}>
               <Icon source={apptIcons[appointment.category]} size={15} />
               <Text
@@ -118,43 +92,6 @@ function AppointmentCard({
                   : "No provider specified"}
               </Text>
             </View>
-
-            <View style={styles.apptTextView}>
-              <Icon source={apptIcons["Location"]} size={15} />
-              <Text
-                numberOfLines={0}
-                variant="titleSmall"
-                style={styles.apptText}
-              >
-                {appointment.location}
-              </Text>
-            </View>
-          </View>
-
-          <View>
-            <Menu
-              visible={menuVisible}
-              onDismiss={() => setMenuVisible(false)}
-              anchor={
-                <IconButton
-                  icon="dots-vertical"
-                  onPress={() => {
-                    setMenuVisible(true);
-                  }}
-                />
-              }
-            >
-              <Menu.Item
-                onPress={() => {
-                  setMenuVisible(false);
-                  setApptFormVisible(true);
-                  setFABExtended(false);
-                  setCurrentAppt(appointment);
-                }}
-                title="Edit"
-              />
-              <Menu.Item onPress={() => onDeleteAppt()} title="Delete" />
-            </Menu>
           </View>
         </View>
       </Card>
@@ -162,4 +99,4 @@ function AppointmentCard({
   );
 }
 
-export default AppointmentCard;
+export default HomeAppointmentCard;

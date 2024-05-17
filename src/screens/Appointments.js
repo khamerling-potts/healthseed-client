@@ -44,25 +44,28 @@ function Appointments() {
     ));
   return (
     <SafeAreaView style={styles.container}>
-      <SegmentedButtons
-        value={view}
-        onValueChange={setView}
-        style={styles.apptFilterButton}
-        buttons={[
-          {
-            value: "upcoming",
-            label: "Upcoming",
-            showSelectedCheck: true,
-            // checkedColor: "green",
-            // uncheckedColor: "green",
-          },
-          {
-            value: "past",
-            label: "Past",
-            showSelectedCheck: true,
-          },
-        ]}
-      />
+      {!apptFormVisible ? (
+        <SegmentedButtons
+          value={view}
+          onValueChange={setView}
+          style={styles.apptFilterButton}
+          buttons={[
+            {
+              value: "upcoming",
+              label: "Upcoming",
+              showSelectedCheck: true,
+              // checkedColor: "green",
+              // uncheckedColor: "green",
+            },
+            {
+              value: "past",
+              label: "Past",
+              showSelectedCheck: true,
+            },
+          ]}
+        />
+      ) : null}
+
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.apptsScrollView}>
           {view === "upcoming" ? upcomingAppointments : pastAppointments}

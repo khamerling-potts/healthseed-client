@@ -239,6 +239,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "55%",
   },
+  homeApptCardInfo: {
+    width: "60%",
+    justifyContent: "center",
+  },
+  homeApptDateView: {
+    padding: 10,
+    backgroundColor: "#443850",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    alignItems: "center",
+    width: "40%",
+  },
   apptText: {
     marginLeft: 2,
     flex: 1,

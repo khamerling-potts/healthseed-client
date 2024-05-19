@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
+import { Button, Divider, Text } from "react-native-paper";
 import { UserContext, UserProvider } from "../context/user";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
@@ -13,7 +13,8 @@ import { AppointmentsContext } from "../context/appointments";
 import HomeCalendar from "../components/HomeCalendar";
 import { RoutinesContext } from "../context/routines";
 
-function Home() {
+//Each navigation screen is automatically passed the navigation prop
+function Home({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const { medications, setMedications } = useContext(MedicationsContext);
   const { instructions, setInstructions } = useContext(InstructionsContext);
@@ -73,10 +74,62 @@ function Home() {
     });
   }, []);
 
+  //Filter morning, afternoon, evening, and any-time routines
+  const morningRoutines = routines
+    .filter((routine) => routine.times.includes("morning"))
+    .map((routine) => routine.title);
+  const afternoonRoutines = routines
+    .filter((routine) => routine.times.includes("afternoon"))
+    .map((routine) => routine.title);
+  const eveningRoutines = routines
+    .filter((routine) => routine.times.includes("evening"))
+    .map((routine) => routine.title);
+  const anytimeRoutines = routines
+    .filter((routine) => routine.times.includes("any time"))
+    .map((routine) => routine.title);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.homeScrollView}>
-        <HomeCalendar />
+        <HomeCalendar navigation={navigation} />
+        <Divider />
+
+        {/* Display number of routines and up to 3 routine titles for each time category */}
+        <View style={styles.homeRoutines}>
+          <Text variant="titleLarge">{`${morningRoutines.length} morning routine(s)`}</Text>
+          {morningRoutines.length ? (
+            <Text>{`Including ${afternoonRoutines
+              .slice(0, 4)
+              .join(", ")}...`}</Text>
+          ) : null}
+
+          <Text variant="titleLarge">{`${afternoonRoutines.length} afternoon routine(s)`}</Text>
+          {afternoonRoutines.length ? (
+            <Text>{`Including ${afternoonRoutines
+              .slice(0, 4)
+              .join(", ")}...`}</Text>
+          ) : null}
+
+          <Text variant="titleLarge">{`${eveningRoutines.length} evening routine(s)`}</Text>
+          {eveningRoutines.length ? (
+            <Text>{`Including ${eveningRoutines
+              .slice(0, 4)
+              .join(", ")}...`}</Text>
+          ) : null}
+
+          <Text variant="titleLarge">
+            {`${anytimeRoutines.length} routine(s) to complete at any time`}
+          </Text>
+          {anytimeRoutines.length ? (
+            <Text>{`Including ${anytimeRoutines
+              .slice(0, 4)
+              .join(", ")}...`}</Text>
+          ) : null}
+        </View>
+
+        <Button onPress={() => navigation.navigate("Routines")}>
+          See All Routines
+        </Button>
       </ScrollView>
     </SafeAreaView>
   );

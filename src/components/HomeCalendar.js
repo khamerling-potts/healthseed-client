@@ -4,22 +4,27 @@ import { AppointmentsContext } from "../context/appointments";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import HomeAppointmentCard from "./HomeAppointmentCard";
 import { View } from "react-native";
+import { Navigate } from "react-router-native";
+import { Button } from "react-native-paper";
 
-function HomeCalendar() {
+function HomeCalendar({ navigation }) {
   const { appointments, setAppointments } = useContext(AppointmentsContext);
   const [selectedAppointments, setSelectedAppointments] = useState([]);
-  console.log(selectedAppointments);
+  const [selectedDay, setSelectedDay] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
 
   markedDates = {};
   for (appt of appointments) {
     const date = appt.datetime.slice(0, 10);
-    markedDates[date] = { marked: true };
-    if (markedDates[date].appointments) {
+    if (markedDates[date]) {
       markedDates[date].appointments.push(appt);
     } else {
+      markedDates[date] = { marked: true };
       markedDates[date].appointments = [appt];
     }
   }
+  console.log(markedDates);
 
   const apptsToDisplay = selectedAppointments
     .sort((a, b) => new Date(a.datetime + "Z") - new Date(b.datetime + "Z"))
@@ -27,6 +32,7 @@ function HomeCalendar() {
 
   //date param is in the format YYYY-MM-DD
   function handleDayPress(date) {
+    setSelectedDay(date);
     if (markedDates[date]) {
       setSelectedAppointments(markedDates[date].appointments);
     } else {
@@ -38,7 +44,13 @@ function HomeCalendar() {
     <View style={{ alignItems: "center" }}>
       <Calendar
         //Dates marked with appts
-        markedDates={markedDates}
+        markedDates={{
+          ...markedDates,
+          [selectedDay]: {
+            ...markedDates[selectedDay],
+            selected: true,
+          },
+        }}
         onDayPress={(day) => handleDayPress(day.dateString)}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={"MMM yyyy"}
@@ -52,7 +64,16 @@ function HomeCalendar() {
         style={styles.calendar}
         theme={styles.calendarTheme}
       />
-      {apptsToDisplay}
+      {apptsToDisplay[0]}
+      {selectedAppointments.length > 1 ? (
+        <Button onPress={() => navigation.navigate("Appointments")}>
+          +{selectedAppointments.length - 1} more
+        </Button>
+      ) : (
+        <Button onPress={() => navigation.navigate("Appointments")}>
+          See All
+        </Button>
+      )}
     </View>
   );
 }

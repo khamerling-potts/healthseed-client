@@ -18,7 +18,6 @@ function Routines() {
   const [routineFormVisible, setRoutineFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
   const [times, setTimes] = useState([]);
-  //   const [action, setAction] = useState("add");
   const [currentRoutine, setCurrentRoutine] = useState(null);
 
   // Filter by time

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
-import { Button, Divider, Text } from "react-native-paper";
+import { Button, Divider, Icon, Surface, Text } from "react-native-paper";
 import { UserContext, UserProvider } from "../context/user";
 import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
@@ -12,6 +12,7 @@ import { ProvidersContext } from "../context/providers";
 import { AppointmentsContext } from "../context/appointments";
 import HomeCalendar from "../components/HomeCalendar";
 import { RoutinesContext } from "../context/routines";
+import HomeRoutinePreviews from "../components/HomeRoutinePreviews";
 
 //Each navigation screen is automatically passed the navigation prop
 function Home({ navigation }) {
@@ -96,35 +97,12 @@ function Home({ navigation }) {
 
         {/* Display number of routines and up to 3 routine titles for each time category */}
         <View style={styles.homeRoutines}>
-          <Text variant="titleLarge">{`${morningRoutines.length} morning routine(s)`}</Text>
-          {morningRoutines.length ? (
-            <Text>{`Including ${afternoonRoutines
-              .slice(0, 4)
-              .join(", ")}...`}</Text>
-          ) : null}
-
-          <Text variant="titleLarge">{`${afternoonRoutines.length} afternoon routine(s)`}</Text>
-          {afternoonRoutines.length ? (
-            <Text>{`Including ${afternoonRoutines
-              .slice(0, 4)
-              .join(", ")}...`}</Text>
-          ) : null}
-
-          <Text variant="titleLarge">{`${eveningRoutines.length} evening routine(s)`}</Text>
-          {eveningRoutines.length ? (
-            <Text>{`Including ${eveningRoutines
-              .slice(0, 4)
-              .join(", ")}...`}</Text>
-          ) : null}
-
-          <Text variant="titleLarge">
-            {`${anytimeRoutines.length} routine(s) to complete at any time`}
-          </Text>
-          {anytimeRoutines.length ? (
-            <Text>{`Including ${anytimeRoutines
-              .slice(0, 4)
-              .join(", ")}...`}</Text>
-          ) : null}
+          <HomeRoutinePreviews
+            morningRoutines={morningRoutines}
+            afternoonRoutines={afternoonRoutines}
+            eveningRoutines={eveningRoutines}
+            anytimeRoutines={anytimeRoutines}
+          />
         </View>
 
         <Button onPress={() => navigation.navigate("Routines")}>

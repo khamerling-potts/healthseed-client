@@ -88,6 +88,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
   },
+  homeRoutinesText: {
+    color: "#2d4150",
+  },
+  homeRoutinePreviews: {
+    marginTop: 10,
+    padding: 5,
+  },
   buttonContainer: {
     margin: 10,
   },

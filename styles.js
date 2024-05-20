@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // borderWidth: 1,
     // borderColor: "cyan",
-    backgroundColor: "#ffffff",
+    backgroundColor: "white",
   },
   landingContainer: {
     flex: 1,
@@ -50,16 +50,24 @@ const styles = StyleSheet.create({
   pageHeader: {
     headerStyle: {
       backgroundColor: "#597683",
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
     },
     headerTitleStyle: {
       color: "#ffffff",
     },
+    headerShadowVisible: false,
   },
   homeScrollView: {
+    backgroundColor: "transparent",
     // maxHeight: "95%",
     // borderWidth: 1,
     // maxWidth: "90%",
     // borderColor: "red",
+  },
+  homePageButton: {
+    alignSelf: "flex-end",
+    marginTop: 0,
   },
   calendar: {
     borderTopLeftRadius: 10,
@@ -86,7 +94,9 @@ const styles = StyleSheet.create({
   },
   homeRoutines: {
     justifyContent: "center",
-    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "90%",
   },
   homeRoutinesText: {
     color: "#2d4150",
@@ -94,6 +104,8 @@ const styles = StyleSheet.create({
   homeRoutinePreviews: {
     marginTop: 10,
     padding: 5,
+    width: "100%",
+    backgroundColor: "#ffffff",
   },
   buttonContainer: {
     margin: 10,

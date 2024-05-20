@@ -15,12 +15,10 @@ function Appointments() {
   const [currentAppt, setCurrentAppt] = useState(null);
   const [view, setView] = useState("upcoming");
 
-  const sortedAppointments = appointments.sort(
-    (a, b) => new Date(a.datetime + "Z") - new Date(b.datetime + "Z")
-  );
-
-  const upcomingAppointments = sortedAppointments
+  // Filter out future appointments and order starting with soonest date
+  const upcomingAppointments = appointments
     .filter((appt) => new Date(appt.datetime + "Z") - new Date() >= 0)
+    .sort((a, b) => new Date(a.datetime + "Z") - new Date(b.datetime + "Z"))
     .map((appt) => (
       <AppointmentCard
         key={appt.id}
@@ -31,8 +29,10 @@ function Appointments() {
       />
     ));
 
-  const pastAppointments = sortedAppointments
+  // Filter out past appointments and order starting with most recent
+  const pastAppointments = appointments
     .filter((appt) => new Date(appt.datetime + "Z") - new Date() < 0)
+    .sort((a, b) => new Date(b.datetime + "Z") - new Date(a.datetime + "Z"))
     .map((appt) => (
       <AppointmentCard
         key={appt.id}
@@ -42,6 +42,7 @@ function Appointments() {
         setCurrentAppt={setCurrentAppt}
       />
     ));
+
   return (
     <SafeAreaView style={styles.container}>
       {!apptFormVisible ? (
@@ -54,8 +55,6 @@ function Appointments() {
               value: "upcoming",
               label: "Upcoming",
               showSelectedCheck: true,
-              // checkedColor: "green",
-              // uncheckedColor: "green",
             },
             {
               value: "past",

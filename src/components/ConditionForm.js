@@ -29,16 +29,25 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
     setConditions([...updatedConditions, editedCondition]);
   }
 
+  const validationSchema = Yup.object().shape({
+    description: Yup.string().required("Required"),
+  });
+
   return (
-    <View style={{ borderWidth: 1 }}>
-      <ScrollView style={styles.formScrollView}>
+    <View style={styles.formView}>
+      <ScrollView
+        style={styles.formScrollView}
+        contentContainerStyle={{
+          alignItems: "center",
+          height: "100%",
+          justifyContent: "center",
+        }}
+      >
         <Formik
           initialValues={{
             description: condition ? condition.description : "",
           }}
-          validationSchema={Yup.object({
-            description: Yup.string().required("Description required"),
-          })}
+          validationSchema={validationSchema}
           onSubmit={(values, { resetForm }) => {
             const configObj = {
               method: method,
@@ -74,10 +83,13 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
           }) => (
             <>
               <TextInput
+                label="Condition description"
                 onChangeText={handleChange("description")}
                 onBlur={handleBlur("description")}
                 value={values.description}
-                placeholder="Enter condition description here"
+                placeholder="e.g. Type II Diabetes, Arthritis..."
+                activeUnderlineColor="#597683"
+                style={{ width: "100%" }}
               ></TextInput>
               <HelperText
                 visible={!!(touched.description && errors.description)}
@@ -87,7 +99,13 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
                 {errors.description}
               </HelperText>
 
-              <Button onPress={handleSubmit}>Save</Button>
+              <Button
+                onPress={handleSubmit}
+                style={styles.saveButton}
+                textColor="#fafafa"
+              >
+                Save
+              </Button>
             </>
           )}
         </Formik>

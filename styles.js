@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
   },
   nav: {
     backgroundColor: "#597683",
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: "#000000",
+    shadowOpacity: 1,
+    shadowRadius: 4,
   },
   pageHeader: {
     headerStyle: {
@@ -155,9 +159,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   conditionsScrollView: {
-    maxHeight: "90%",
+    maxHeight: "95%",
     maxWidth: "95%",
-    marginTop: 20,
   },
   medicationsPage: {
     flex: 1,
@@ -309,11 +312,14 @@ const styles = StyleSheet.create({
     // backgroundColor: "#F2F4F6",
   },
   formScrollView: {
-    borderWidth: 1,
     // maxWidth: "100%",
     width: windowWidth * 0.9,
-
-    borderColor: "pink",
+    padding: 10,
+  },
+  formView: { alignItems: "center" },
+  saveButton: {
+    backgroundColor: "#4D564F",
+    width: "80%",
   },
 });
 

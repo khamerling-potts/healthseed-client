@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   View,
-  Text,
   SafeAreaView,
   ScrollView,
   TextComponent,
@@ -13,7 +12,7 @@ import { Link, NativeRouter, Route, Routes } from "react-router-native";
 import styles from "../../styles";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { AnimatedFAB } from "react-native-paper";
+import { AnimatedFAB, Text } from "react-native-paper";
 import ConditionCard from "../components/ConditionCard";
 import { ConditionsContext } from "../context/conditions";
 import ConditionForm from "../components/ConditionForm";
@@ -39,8 +38,17 @@ function Conditions() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {!conditionFormVisible ? (
+        <Text variant="titleMedium" style={{ marginTop: 10 }}>
+          Your Conditions
+        </Text>
+      ) : null}
+
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
-        <ScrollView style={styles.conditionsScrollView}>
+        <ScrollView
+          style={styles.conditionsScrollView}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
           {conditionsToDisplay}
         </ScrollView>
         {conditionFormVisible ? (

@@ -23,7 +23,7 @@ function SideNav() {
         }}
       >
         <Drawer.Screen
-          name="Healthseed"
+          name="Healthseed - Overview"
           component={BottomNav}
           options={styles.pageHeader}
         />

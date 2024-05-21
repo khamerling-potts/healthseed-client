@@ -152,7 +152,7 @@ function Home({ navigation }) {
     .map((routine) => routine.title);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, justifyContent: "center" }}>
       {medicationsLoading ||
       instructionsLoading ||
       conditionsLoading ||

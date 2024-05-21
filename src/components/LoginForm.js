@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { SafeAreaView, View } from "react-native";
-import { Formik, useFormik } from "formik";
+import { Formik, setIn, useFormik } from "formik";
 import { UserContext } from "../context/user";
 import * as Yup from "yup";
 import styles from "../../styles";
@@ -10,6 +10,7 @@ import { LoginMethodContext } from "../context/loginmethod";
 function LoginForm() {
   const { user, setUser } = useContext(UserContext);
   const { loginMethod, setLoginMethod } = useContext(LoginMethodContext);
+  const [invalid, setInvalid] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +33,10 @@ function LoginForm() {
         if (r.ok) {
           r.json().then((user) => setUser(user));
         } else {
-          r.json().then((err) => console.log(err));
+          r.json().then((err) => {
+            setInvalid(true);
+            console.log(err);
+          });
         }
       });
     },
@@ -42,6 +46,12 @@ function LoginForm() {
     //   style={{ ...styles.container, backgroundColor: "transparent" }}
     // >
     <>
+      {invalid ? (
+        <HelperText style={styles.helperText} type="error">
+          Invalid login credentials. Please try again.
+        </HelperText>
+      ) : null}
+
       <TextInput
         onChangeText={formik.handleChange("username")}
         onBlur={formik.handleBlur("username")}

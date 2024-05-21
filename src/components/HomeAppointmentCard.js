@@ -43,7 +43,7 @@ function HomeAppointmentCard({ appointment }) {
 
   return (
     <>
-      <Card style={styles.card}>
+      <Card style={styles.homeApptCard}>
         <View style={styles.apptCardView}>
           <View style={styles.homeApptDateView}>
             <Text

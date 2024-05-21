@@ -1,9 +1,15 @@
 import "react-native-gesture-handler";
 import { UserProvider } from "./src/context/user";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme as DefaultNavTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
 import AppWrapper from "./src/components/AppWrapper";
-import { PaperProvider } from "react-native-paper";
+import {
+  PaperProvider,
+  DefaultTheme as DefaultPaperTheme,
+} from "react-native-paper";
 import { ConditionsProvider } from "./src/context/conditions";
 import { ProvidersProvider } from "./src/context/providers";
 import { MedicationsProvider } from "./src/context/medications";
@@ -16,11 +22,25 @@ import "react-native-get-random-values";
 
 export default function App() {
   // const { user, setUser } = useContext(UserContext);
+  const navTheme = DefaultNavTheme;
+  navTheme.colors.background = "white";
+
+  const paperTheme = {
+    ...DefaultPaperTheme,
+    colors: {
+      ...DefaultPaperTheme.colors,
+      elevation: {
+        ...DefaultPaperTheme.colors.elevation,
+        level1: "#F4FBFF",
+      },
+    },
+  };
+  console.log(paperTheme);
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={paperTheme}>
       <SafeAreaProvider>
-        <NavigationContainer>
+        <NavigationContainer theme={navTheme}>
           {/* <NativeRouter> */}
           <UserProvider>
             <ConditionsProvider>

@@ -161,7 +161,10 @@ function Home({ navigation }) {
       routinesLoading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView style={styles.homeScrollView}>
+        <ScrollView
+          style={styles.homeScrollView}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
           <HomeCalendar
             navigation={navigation}
             markedDates={markedDates}
@@ -169,14 +172,15 @@ function Home({ navigation }) {
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
           />
-          {apptsToDisplay[0]}
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+          <View style={styles.homeHeaderView}>
             {selectedAppointments.length === 0 ? (
-              <Text>No appointments on {selectedDay}</Text>
+              <Text style={{ fontWeight: "bold", color: "#597683" }}>
+                No appointments
+              </Text>
             ) : (
-              <Text>{selectedDay}</Text>
+              <Text style={{ fontWeight: "bold", color: "#597683" }}>
+                Appointments
+              </Text>
             )}
             {selectedAppointments.length > 1 ? (
               <Button
@@ -196,23 +200,33 @@ function Home({ navigation }) {
               </Button>
             )}
           </View>
-          <Divider />
+          {apptsToDisplay[0]}
+
+          <Divider style={styles.divider} />
 
           {/* Display number of routines and up to 3 routine titles for each time category */}
+          <View style={styles.homeHeaderView}>
+            <Text
+              variant="titleMedium"
+              style={{ fontWeight: "bold", color: "#597683" }}
+            >
+              Your Routines - Overview
+            </Text>
+            <Button
+              onPress={() => navigation.navigate("Routines")}
+              style={styles.homePageButton}
+              textColor="#006A6A"
+            >
+              See All
+            </Button>
+          </View>
+
           <View style={styles.homeRoutines}>
             <HomeRoutinePreview routines={morningRoutines} time="morning" />
             <HomeRoutinePreview routines={afternoonRoutines} time="afternoon" />
             <HomeRoutinePreview routines={eveningRoutines} time="evening" />
             <HomeRoutinePreview routines={anytimeRoutines} time="any time" />
           </View>
-
-          <Button
-            onPress={() => navigation.navigate("Routines")}
-            style={styles.homePageButton}
-            textColor="#006A6A"
-          >
-            See All Routines
-          </Button>
         </ScrollView>
       )}
     </SafeAreaView>

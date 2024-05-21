@@ -6,7 +6,7 @@ const windowWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     // borderWidth: 1,
     // borderColor: "cyan",
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     headerShadowVisible: false,
   },
   homeScrollView: {
-    backgroundColor: "transparent",
+    backgroundColor: "white",
+
     // maxHeight: "95%",
     // borderWidth: 1,
     // maxWidth: "90%",
@@ -70,8 +71,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   calendar: {
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    // borderTopLeftRadius: 10,
+    // borderBottomRightRadius: 10,
+    borderRadius: 5,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   },
   calendarTheme: {
     backgroundColor: "#ffffff",
-    calendarBackground: "#ffffff",
+    calendarBackground: "#fafafa",
     textSectionTitleColor: "#886F66",
     selectedDayBackgroundColor: "#886F66",
     selectedDayTextColor: "white",
@@ -95,17 +97,16 @@ const styles = StyleSheet.create({
   homeRoutines: {
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    width: "90%",
+    width: "95%",
   },
   homeRoutinesText: {
     color: "#2d4150",
   },
   homeRoutinePreviews: {
-    marginTop: 10,
+    marginBottom: 10,
     padding: 5,
     width: "100%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fafafa",
   },
   buttonContainer: {
     margin: 10,
@@ -124,6 +125,11 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
     // alignContent: "center",
+  },
+  homeApptCard: {
+    margin: 10,
+    marginTop: 0,
+    width: windowWidth * 0.9,
   },
   cardContent: {
     flexDirection: "row",
@@ -147,6 +153,11 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     justifyContent: "center",
     alignSelf: "center",
+  },
+  conditionsScrollView: {
+    maxHeight: "90%",
+    maxWidth: "95%",
+    marginTop: 20,
   },
   medicationsPage: {
     flex: 1,
@@ -182,7 +193,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   divider: {
-    marginVertical: 10,
+    marginVertical: 20,
+    width: "100%",
   },
   medicationName: {
     marginTop: 10,
@@ -249,7 +261,7 @@ const styles = StyleSheet.create({
   },
   apptDateView: {
     padding: 10,
-    backgroundColor: "#443850",
+    backgroundColor: "#374E5B",
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     alignItems: "center",
@@ -269,10 +281,17 @@ const styles = StyleSheet.create({
   homeApptCardInfo: {
     width: "60%",
     justifyContent: "center",
+    // backgroundColor: "#F2F4F6",
+  },
+  homeHeaderView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "95%",
   },
   homeApptDateView: {
     padding: 10,
-    backgroundColor: "#443850",
+    backgroundColor: "#374E5B",
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     alignItems: "center",
@@ -287,6 +306,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 4,
+    // backgroundColor: "#F2F4F6",
   },
   formScrollView: {
     borderWidth: 1,

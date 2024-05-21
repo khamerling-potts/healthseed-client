@@ -16,11 +16,17 @@ function HomeRoutinePreview({
     evening: "weather-night",
     "any time": "circle-outline",
   };
+  const iconColors = {
+    "any time": "green",
+    morning: "goldenrod",
+    afternoon: "indianred",
+    evening: "indigo",
+  };
   return (
     <Surface style={styles.homeRoutinePreviews}>
       <>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon source={icons[time]} size={16} color="#597683" />
+          <Icon source={icons[time]} size={16} color={iconColors[time]} />
           <Text variant="titleMedium" style={styles.homeRoutinesText}>
             {time !== "any time"
               ? ` ${routines.length} ${time} routine${
@@ -35,7 +41,7 @@ function HomeRoutinePreview({
         {routines.length ? (
           <Text>
             Including{" "}
-            <Text style={{ fontWeight: "bold", color: "#597683" }}>
+            <Text style={{ fontWeight: "bold", color: "#674E82" }}>
               {routines.slice(0, 4).join(", ")}
             </Text>
             ...

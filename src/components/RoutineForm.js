@@ -234,7 +234,13 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                   },
                 ]}
               />
-              <Button onPress={handleSubmit}>Save</Button>
+              <Button
+                onPress={handleSubmit}
+                style={styles.saveButton}
+                textColor="#fafafa"
+              >
+                Save
+              </Button>
             </>
           )}
         </Formik>

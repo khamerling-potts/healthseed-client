@@ -54,13 +54,17 @@ const styles = StyleSheet.create({
   pageHeader: {
     headerStyle: {
       backgroundColor: "#597683",
-      borderBottomLeftRadius: 20,
-      borderBottomRightRadius: 20,
+      // borderBottomLeftRadius: 20,
+      // borderBottomRightRadius: 20,
+      shadowOffset: { width: 0, height: -2 },
+      shadowColor: "#000000",
+      shadowOpacity: 1,
+      shadowRadius: 3,
     },
     headerTitleStyle: {
       color: "#ffffff",
     },
-    headerShadowVisible: false,
+    headerShadowVisible: true,
   },
   homeScrollView: {
     backgroundColor: "white",
@@ -161,6 +165,52 @@ const styles = StyleSheet.create({
   conditionsScrollView: {
     maxHeight: "95%",
     maxWidth: "95%",
+  },
+  profileTopView: {
+    height: "40%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: {
+    marginBottom: 10,
+    backgroundColor: "#fafafa",
+  },
+  profileBottomView: {
+    backgroundColor: "#fafafa",
+    height: "60%",
+    width: "100%",
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  userInfoView: {
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "90%",
+    borderRadius: 5,
+    backgroundColor: "white",
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    height: "40%",
+  },
+  profileDivider: {
+    width: "95%",
+    height: 3,
+    color: "#fafafa",
+  },
+  userInfoLine: {
+    flexDirection: "row",
+    width: "95%",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  userInfoText: {
+    fontWeight: "bold",
+    color: "#525451",
   },
   medicationsPage: {
     flex: 1,
@@ -319,6 +369,10 @@ const styles = StyleSheet.create({
   formView: { alignItems: "center" },
   saveButton: {
     backgroundColor: "#4D564F",
+    width: "80%",
+  },
+  logoutButton: {
+    backgroundColor: "#F2F7F6",
     width: "80%",
   },
 });

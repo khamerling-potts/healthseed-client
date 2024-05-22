@@ -59,6 +59,7 @@ function LoginForm() {
         placeholder="Username"
         style={styles.loginForm}
         autoCapitalize="none"
+        activeOutlineColor="#597683"
         mode="outlined"
       ></TextInput>
       <HelperText
@@ -76,6 +77,7 @@ function LoginForm() {
         style={styles.loginForm}
         autoCapitalize="none"
         mode="outlined"
+        activeOutlineColor="#597683"
         secureTextEntry
       ></TextInput>
       <HelperText

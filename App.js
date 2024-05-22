@@ -36,7 +36,7 @@ export default function App() {
       onSurfaceVariant: "#40484B",
       elevation: {
         ...DefaultPaperTheme.colors.elevation,
-        level1: "#F2F4F7",
+        level1: "#F2F7F6",
       },
     },
   };

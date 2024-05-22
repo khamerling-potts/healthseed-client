@@ -257,7 +257,13 @@ function MedicationForm({
               >
                 {errors.dose3}
               </HelperText>
-              <Button onPress={handleSubmit}>Save</Button>
+              <Button
+                onPress={handleSubmit}
+                style={styles.saveButton}
+                textColor="#fafafa"
+              >
+                Save
+              </Button>
             </>
           )}
         </Formik>

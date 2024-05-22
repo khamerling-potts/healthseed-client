@@ -143,7 +143,13 @@ function InstructionForm({
           </HelperText>
 
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Button onPress={handleSubmit}>Save</Button>
+            <Button
+              onPress={handleSubmit}
+              style={styles.saveButton}
+              textColor="#fafafa"
+            >
+              Save
+            </Button>
             {instruction ? (
               <Button onPress={onDeleteInstruction}>Delete instruction</Button>
             ) : null}

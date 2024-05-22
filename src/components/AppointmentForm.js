@@ -224,7 +224,13 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                 {errors.location}
               </HelperText>
 
-              <Button onPress={handleSubmit}>Save</Button>
+              <Button
+                onPress={handleSubmit}
+                style={styles.saveButton}
+                textColor="#fafafa"
+              >
+                Save
+              </Button>
             </>
           )}
         </Formik>

@@ -259,7 +259,6 @@ const styles = StyleSheet.create({
   },
   providersScrollView: {
     maxHeight: "95%",
-    borderWidth: 1,
     maxWidth: "90%",
   },
   routinesScrollView: {
@@ -307,6 +306,24 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     borderWidth: 1,
     margin: 10,
+  },
+  providerCardView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  providerCardInfo: {
+    justifyContent: "space-around",
+    width: "85%",
+  },
+  providerTextView: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 4,
+  },
+  providerText: {
+    marginLeft: 2,
+    flex: 1,
+    flexWrap: "wrap",
   },
   apptCardView: {
     flexDirection: "row",
@@ -370,6 +387,7 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: "#4D564F",
     width: "80%",
+    marginTop: 20,
   },
   logoutButton: {
     backgroundColor: "#F2F7F6",

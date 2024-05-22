@@ -4,14 +4,12 @@ import styles from "../../styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  TextInput,
-  Button,
   Card,
   IconButton,
   Menu,
-  Modal,
-  Portal,
   Text,
+  Icon,
+  Divider,
 } from "react-native-paper";
 import { ProvidersContext } from "../context/providers";
 import {
@@ -19,6 +17,7 @@ import {
   isPossiblePhoneNumber,
   isValidPhoneNumber,
 } from "libphonenumber-js";
+import { View } from "react-native";
 
 function ProviderCard({
   provider,
@@ -51,43 +50,71 @@ function ProviderCard({
   }
 
   return (
-    <>
-      <Card style={styles.card}>
-        <Card.Content style={styles.cardContent}>
-          <Card.Title
-            title={provider.name}
-            subtitle={`${provider.phone}\n${provider.address}`}
-            subtitleNumberOfLines={0}
-            right={(props) => (
-              <Menu
-                visible={menuVisible}
-                onDismiss={() => setMenuVisible(false)}
-                anchor={
-                  <IconButton
-                    {...props}
-                    icon="dots-vertical"
-                    onPress={() => {
-                      setMenuVisible(true);
-                    }}
-                  />
-                }
-              >
-                <Menu.Item
-                  onPress={() => {
-                    setMenuVisible(false);
-                    setProviderFormVisible(true);
-                    setFABExtended(false);
-                    setCurrentProvider(provider);
-                  }}
-                  title="Edit"
-                />
-                <Menu.Item onPress={() => onDeleteProvider()} title="Delete" />
-              </Menu>
-            )}
-          />
-        </Card.Content>
-      </Card>
-    </>
+    <Card style={styles.card}>
+      <View style={styles.providerCardView}>
+        <View style={styles.providerCardInfo}>
+          <View style={styles.providerTextView}>
+            <Icon source="doctor" size={15} />
+            <Text
+              numberOfLines={0}
+              variant="titleMedium"
+              style={styles.providerText}
+            >
+              {provider.name}
+            </Text>
+          </View>
+          <Divider />
+
+          <View style={{ ...styles.providerTextView, marginLeft: 5 }}>
+            <Icon source="phone" size={15} />
+            <Text
+              numberOfLines={0}
+              variant="titleSmall"
+              style={styles.providerText}
+            >
+              {provider.phone}
+            </Text>
+          </View>
+
+          <View style={{ ...styles.providerTextView, marginLeft: 5 }}>
+            <Icon source="map-marker" size={15} />
+            <Text
+              numberOfLines={0}
+              variant="titleSmall"
+              style={styles.providerText}
+            >
+              {provider.address}
+            </Text>
+          </View>
+        </View>
+
+        <View>
+          <Menu
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            anchor={
+              <IconButton
+                icon="dots-vertical"
+                onPress={() => {
+                  setMenuVisible(true);
+                }}
+              />
+            }
+          >
+            <Menu.Item
+              onPress={() => {
+                setMenuVisible(false);
+                setProviderFormVisible(true);
+                setFABExtended(false);
+                setCurrentProvider(provider);
+              }}
+              title="Edit"
+            />
+            <Menu.Item onPress={() => onDeleteProvider()} title="Delete" />
+          </Menu>
+        </View>
+      </View>
+    </Card>
   );
 }
 

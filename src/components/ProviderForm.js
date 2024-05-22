@@ -6,6 +6,7 @@ import {
   SegmentedButtons,
   Text,
   Badge,
+  Icon,
 } from "react-native-paper";
 import { useContext, useEffect, useState } from "react";
 import { Formik } from "formik";
@@ -112,12 +113,13 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
             errors,
             touched,
           }) => (
-            <>
+            <View style={{ alignItems: "center" }}>
               <TextInput
                 onChangeText={handleChange("name")}
                 onBlur={handleBlur("name")}
                 value={values.name}
-                placeholder="Enter provider name here"
+                label="Provider name"
+                style={{ width: "100%" }}
               ></TextInput>
               <HelperText
                 visible={!!(touched.name && errors.name)}
@@ -130,7 +132,8 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                 onChangeText={handleChange("address")}
                 onBlur={handleBlur("address")}
                 value={values.address}
-                placeholder="Enter provider address here"
+                label="Provider address"
+                style={{ width: "100%" }}
               ></TextInput>
               <HelperText
                 visible={!!(touched.address && errors.address)}
@@ -139,26 +142,34 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
               >
                 {errors.address}
               </HelperText>
-              <View style={{ flexDirection: "row", maxWidth: "100%" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: "100%",
+                  alignItems: "center",
+                }}
+              >
                 <TextInput
                   keyboardType="phone-pad"
                   onChangeText={handleChange("countryCode")}
                   onBlur={handleBlur("countryCode")}
                   value={values.countryCode}
-                  left={<TextInput.Icon icon="plus" />}
-                  placeholder="Country Code"
-                  style={{ width: "30%" }}
+                  label="Country code"
+                  // {
+                  //   <Text style={{ fontSize: 16 }} numberOfLines={0}>
+                  //     Country code
+                  //   </Text>
+                  // }
+                  style={{ width: "40%" }}
                 />
-
                 <TextInput
                   keyboardType="phone-pad"
                   onChangeText={handleChange("phone")}
                   onBlur={handleBlur("phone")}
                   value={values.phone}
-                  placeholder="Enter provider phone here"
-                  style={{ width: "70%" }}
+                  label="Phone number"
+                  style={{ width: "60%" }}
                 ></TextInput>
-
                 {/* <HelperText
                   visible={!!(touched.phone && errors.phone)}
                   type="error"
@@ -185,7 +196,7 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
               >
                 Save
               </Button>
-            </>
+            </View>
           )}
         </Formik>
       </ScrollView>

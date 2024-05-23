@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, ScrollView, Text, KeyboardAvoidingView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView } from "react-native";
 import styles from "../../styles";
 import { Formik } from "formik";
-import { TextInput, Button, HelperText } from "react-native-paper";
+import { TextInput, Button, HelperText, Text } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import * as Yup from "yup";
 
@@ -105,7 +105,21 @@ function InstructionForm({
         touched,
       }) => (
         <>
-          {instruction ? <Text>{instruction.medication.name}</Text> : null}
+          {instruction ? (
+            <Text
+              variant="titleMedium"
+              style={{ textAlign: "center", marginBottom: 10 }}
+            >
+              Edit your {instruction.medication.name} instruction below
+            </Text>
+          ) : (
+            <Text
+              variant="titleMedium"
+              style={{ textAlign: "center", marginBottom: 10 }}
+            >
+              Add instruction for {medication.name} below
+            </Text>
+          )}
 
           <DropDown
             label={"Select time taken"}
@@ -131,7 +145,8 @@ function InstructionForm({
             onChangeText={handleChange("dose")}
             onBlur={handleBlur("dose")}
             value={values.dose}
-            placeholder="Enter dosage here"
+            label="Enter dosage here"
+            placeholder="E.g. 2 tablets, 5mg"
             style={styles.dosageInput}
           ></TextInput>
           <HelperText
@@ -142,7 +157,7 @@ function InstructionForm({
             {errors.dose}
           </HelperText>
 
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View style={{ alignItems: "center" }}>
             <Button
               onPress={handleSubmit}
               style={styles.saveButton}

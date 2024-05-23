@@ -114,6 +114,9 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
             touched,
           }) => (
             <View style={{ alignItems: "center" }}>
+              <Text variant="titleMedium" style={{ marginBottom: 10 }}>
+                Fill out provider details below:
+              </Text>
               <TextInput
                 onChangeText={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -155,11 +158,6 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                   onBlur={handleBlur("countryCode")}
                   value={values.countryCode}
                   label="Country code"
-                  // {
-                  //   <Text style={{ fontSize: 16 }} numberOfLines={0}>
-                  //     Country code
-                  //   </Text>
-                  // }
                   style={{ width: "40%" }}
                 />
                 <TextInput
@@ -170,13 +168,6 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                   label="Phone number"
                   style={{ width: "60%" }}
                 ></TextInput>
-                {/* <HelperText
-                  visible={!!(touched.phone && errors.phone)}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.phone}
-                </HelperText> */}
               </View>
               <HelperText
                 visible={

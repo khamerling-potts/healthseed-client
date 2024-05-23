@@ -154,13 +154,14 @@ const styles = StyleSheet.create({
   },
   formModal: {
     backgroundColor: "white",
-    padding: 20,
-    width: "80%",
-    height: "40%",
+    paddingHorizontal: 20,
+    width: "90%",
+    height: "45%",
     borderWidth: 1,
     borderColor: "grey",
     justifyContent: "center",
     alignSelf: "center",
+    top: -95,
   },
   conditionsScrollView: {
     maxHeight: "95%",
@@ -223,8 +224,7 @@ const styles = StyleSheet.create({
   },
   medicationsScrollView: {
     maxHeight: "95%",
-    borderWidth: 1,
-    maxWidth: "90%",
+    maxWidth: "95%",
     marginTop: 10,
   },
   instructionChipsView: {
@@ -256,6 +256,11 @@ const styles = StyleSheet.create({
   editMedicationInput: {
     backgroundColor: "transparent",
     marginLeft: 0,
+  },
+  instructionAccordion: {
+    backgroundColor: "#fafafa",
+    width: "100%",
+    alignSelf: "center",
   },
   providersScrollView: {
     maxHeight: "95%",
@@ -385,9 +390,10 @@ const styles = StyleSheet.create({
   },
   formView: { alignItems: "center" },
   saveButton: {
-    backgroundColor: "#4D564F",
+    backgroundColor: "#597683",
     width: "80%",
     marginTop: 20,
+    alignSelf: "center",
   },
   logoutButton: {
     backgroundColor: "#F2F7F6",

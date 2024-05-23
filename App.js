@@ -28,15 +28,17 @@ export default function App() {
   const paperTheme = {
     ...DefaultPaperTheme,
     colors: {
-      primary: "#597683",
       ...DefaultPaperTheme.colors,
-      primaryContainer: "#C6E1B5",
-      onPrimaryContainer: "#2C4438",
+      primary: "#34474F",
+      secondaryContainer: "#dce2da",
+      onSecondaryContainer: "#2C4438",
+      primaryContainer: "#AFC9DC",
+      onPrimaryContainer: "#284B6D",
       surfaceVariant: "#DCE4E8",
       onSurfaceVariant: "#40484B",
       elevation: {
         ...DefaultPaperTheme.colors.elevation,
-        level1: "#F2F7F6",
+        level1: "#FDFCFA",
       },
     },
   };

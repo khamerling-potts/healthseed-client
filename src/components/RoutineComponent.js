@@ -67,18 +67,26 @@ function RoutineComponent({
         titleNumberOfLines={0}
         style={styles.routineItem}
       />
-      <View style={styles.instructionChipsView}>{medications}</View>
+      <View
+        style={{
+          ...styles.instructionChipsView,
+          backgroundColor: "#FDFCFA",
+        }}
+      >
+        {medications}
+      </View>
       <View style={styles.routineButtonsView}>
+        <Button onPress={() => onDeleteRoutine()}>Delete</Button>
         <Button
           onPress={() => {
             setCurrentRoutine(routine);
             setFABExtended(false);
             setRoutineFormVisible(true);
           }}
+          style={{ borderWidth: 1, borderColor: "black" }}
         >
           Edit
         </Button>
-        <Button onPress={() => onDeleteRoutine()}>Delete</Button>
       </View>
     </List.Accordion>
   );

@@ -44,6 +44,7 @@ function Routines() {
     <SafeAreaView style={styles.container}>
       {!routineFormVisible ? (
         <SegmentedButtons
+          style={{ marginTop: 10 }}
           value={times}
           onValueChange={setTimes}
           multiSelect

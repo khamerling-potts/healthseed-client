@@ -269,26 +269,33 @@ const styles = StyleSheet.create({
   routinesScrollView: {
     maxHeight: "90%",
     maxWidth: "90%",
-    borderWidth: 1,
     marginTop: 10,
   },
   routinesPage: {
     flex: 1,
     alignItems: "center",
-    // alignContent: "center",
-    // borderWidth: 1,
-    // borderColor: "blue",
   },
   routineAccordion: {
     // necessary to fill entire width of component
     width: windowWidth * 0.9,
     paddingLeft: 0,
-    borderWidth: 1,
-    // borderColor: "violet",
+    borderWidth: 5,
+    borderColor: "#FDFCFA",
+    backgroundColor: "#E0ECD5",
+    shadowOffset: { width: 0, height: -22 },
   },
   routineItem: {
     paddingLeft: 0,
     paddingRight: 0,
+    backgroundColor: "#FDFCFA",
+  },
+  routineButtonsView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingLeft: 0,
+    paddingVertical: 10,
+    backgroundColor: "#FDFCFA",
   },
   segmentedButtons: {},
   badgesView: {
@@ -385,7 +392,7 @@ const styles = StyleSheet.create({
   },
   formScrollView: {
     // maxWidth: "100%",
-    width: windowWidth * 0.9,
+    width: windowWidth * 0.95,
     padding: 10,
   },
   formView: { alignItems: "center" },

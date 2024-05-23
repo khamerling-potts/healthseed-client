@@ -79,9 +79,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
   }
 
   return (
-    <View
-      style={{ borderWidth: 1, borderColor: "green", alignItems: "center" }}
-    >
+    <View style={{ alignItems: "center" }}>
       <ScrollView style={styles.formScrollView}>
         <Formik
           initialValues={{
@@ -132,6 +130,12 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
             touched,
           }) => (
             <>
+              <Text
+                variant="titleMedium"
+                style={{ marginBottom: 10, textAlign: "center" }}
+              >
+                Fill out routine details below
+              </Text>
               <TextInput
                 placeholder="Routine title"
                 onChangeText={handleChange("title")}
@@ -182,6 +186,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 listMode="SCROLLVIEW"
               />
               <SegmentedButtons
+                style={{ marginTop: 20 }}
                 value={times}
                 onValueChange={(val) => {
                   // Not allowing 'any time' to be selected with other options

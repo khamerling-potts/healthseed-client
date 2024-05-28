@@ -109,8 +109,13 @@ function ProviderCard({
                 setCurrentProvider(provider);
               }}
               title="Edit"
+              leadingIcon="pencil"
             />
-            <Menu.Item onPress={() => onDeleteProvider()} title="Delete" />
+            <Menu.Item
+              onPress={() => onDeleteProvider()}
+              title="Delete"
+              leadingIcon="delete"
+            />
           </Menu>
         </View>
       </View>

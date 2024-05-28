@@ -97,14 +97,14 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
   }
 
   return (
-    <View style={{ borderWidth: 1 }}>
+    <View>
       <ScrollView style={styles.formScrollView}>
         <Formik
           initialValues={{
             location: appointment ? appointment.location : "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { resetForm }) => {
+          onSubmit={(values) => {
             const configObj = {
               method: method,
               headers: {
@@ -151,13 +151,16 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
             touched,
           }) => (
             <>
-              <View
-                style={{
-                  alignItems: "center",
-                  borderWidth: 1,
-                  borderColor: "blue",
-                }}
+              <Text
+                variant="titleMedium"
+                style={{ marginBottom: 10, textAlign: "center" }}
               >
+                {appointment
+                  ? "Edit appointment details below"
+                  : "Fill out appointment details below"}
+              </Text>
+              <View style={styles.apptFormDateView}>
+                <Text variant="labelLarge">Date and time: </Text>
                 <DateTimePicker
                   testID="dateTimePicker"
                   value={datetime}
@@ -190,6 +193,8 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                 listMode="SCROLLVIEW"
                 zIndex={3000}
                 zIndexInverse={1000}
+                dropDownContainerStyle={{ borderColor: "#737373" }}
+                style={{ borderColor: "#737373" }}
               />
               <HelperText />
               <DropDownPicker
@@ -207,14 +212,17 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                 listMode="SCROLLVIEW"
                 zIndex={1000}
                 zIndexInverse={3000}
+                dropDownContainerStyle={{ borderColor: "#737373" }}
+                style={{ borderColor: "#737373" }}
               />
               <HelperText />
 
               <TextInput
-                placeholder="Location"
+                label="Location"
                 onChangeText={handleChange("location")}
                 onBlur={handleBlur("location")}
                 value={values.location}
+                multiline
               />
               <HelperText
                 visible={!!(touched.location && errors.location)}

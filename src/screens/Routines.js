@@ -20,7 +20,7 @@ function Routines() {
   const [times, setTimes] = useState([]);
   const [currentRoutine, setCurrentRoutine] = useState(null);
 
-  // Filter by time
+  // Filter by time, sort by id for consistent ordering, then map to components
   const routinesToDisplay = routines
     .filter((routine) => {
       if (times.length === 0) return true;
@@ -30,6 +30,7 @@ function Routines() {
       });
       return commonTimes.length > 0;
     })
+    .sort((a, b) => a.id - b.id)
     .map((routine) => (
       <RoutineComponent
         key={routine.id}
@@ -44,7 +45,7 @@ function Routines() {
     <SafeAreaView style={styles.container}>
       {!routineFormVisible ? (
         <SegmentedButtons
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 10, width: "95%" }}
           value={times}
           onValueChange={setTimes}
           multiSelect

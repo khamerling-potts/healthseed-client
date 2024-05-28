@@ -158,7 +158,9 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                   onBlur={handleBlur("countryCode")}
                   value={values.countryCode}
                   label="Country code"
+                  placeholder="E.g. 1, 44"
                   style={{ width: "40%" }}
+                  mode="outlined"
                 />
                 <TextInput
                   keyboardType="phone-pad"
@@ -166,7 +168,9 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                   onBlur={handleBlur("phone")}
                   value={values.phone}
                   label="Phone number"
+                  placeholder="E.g. 555-555-5555"
                   style={{ width: "60%" }}
+                  mode="outlined"
                 ></TextInput>
               </View>
               <HelperText

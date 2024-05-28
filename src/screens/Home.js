@@ -174,12 +174,12 @@ function Home({ navigation }) {
           />
           <View style={styles.homeHeaderView}>
             {selectedAppointments.length === 0 ? (
-              <Text style={{ fontWeight: "bold", color: "#2d4150" }}>
-                No appointments
+              <Text style={{ fontWeight: "bold", color: "#737373" }}>
+                No appointments on {selectedDay}
               </Text>
             ) : (
               <Text style={{ fontWeight: "bold", color: "#597683" }}>
-                Appointments
+                Appointments ({selectedDay})
               </Text>
             )}
             {selectedAppointments.length > 1 ? (

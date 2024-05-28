@@ -83,7 +83,7 @@ function MedicationForm({
   };
 
   return (
-    <View style={{ borderWidth: 1 }}>
+    <View>
       <ScrollView>
         <Formik
           initialValues={{

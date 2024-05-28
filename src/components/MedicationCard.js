@@ -105,10 +105,12 @@ function MedicationCard({ medication }) {
                       setEditFormVisible(true);
                     }}
                     title="Edit"
+                    leadingIcon="pencil"
                   />
                   <Menu.Item
                     onPress={() => deleteMedication()}
                     title="Delete"
+                    leadingIcon="delete"
                   />
                 </Menu>
               )}

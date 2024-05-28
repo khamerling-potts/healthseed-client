@@ -22,14 +22,21 @@ function RoutineComponent({
     evening: "indigo",
   };
 
+  //Visually sorting time badges from morning to any time
+  const badgeSortOrder = ["morning", "afternoon", "evening", "any time"];
   const badges = routine.times
-    ? routine.times.map((time) => (
-        <Badge
-          key={uuidv4()}
-          size={12}
-          style={{ backgroundColor: backgroundColors[time], marginVertical: 2 }}
-        />
-      ))
+    ? routine.times
+        .sort((a, b) => badgeSortOrder.indexOf(a) - badgeSortOrder.indexOf(b))
+        .map((time) => (
+          <Badge
+            key={uuidv4()}
+            size={12}
+            style={{
+              backgroundColor: backgroundColors[time],
+              marginVertical: 2,
+            }}
+          />
+        ))
     : null;
 
   const medications = routine.instructions.map((instruction) => (
@@ -58,35 +65,40 @@ function RoutineComponent({
   return (
     <List.Accordion
       left={(props) => <View style={styles.badgesView}>{badges}</View>}
-      title={routine.id + routine.title}
+      title={routine.title}
+      titleStyle={{ color: "#284B6D", fontWeight: "bold" }}
       style={styles.routineAccordion}
       titleNumberOfLines={0}
     >
-      <List.Item
-        title={routine.notes}
-        titleNumberOfLines={0}
-        style={styles.routineItem}
-      />
-      <View
-        style={{
-          ...styles.instructionChipsView,
-          backgroundColor: "#FDFCFA",
-        }}
-      >
-        {medications}
-      </View>
-      <View style={styles.routineButtonsView}>
-        <Button onPress={() => onDeleteRoutine()}>Delete</Button>
-        <Button
-          onPress={() => {
-            setCurrentRoutine(routine);
-            setFABExtended(false);
-            setRoutineFormVisible(true);
+      <View style={styles.routineInfoView}>
+        <List.Item
+          title={routine.notes}
+          titleNumberOfLines={0}
+          style={styles.routineItem}
+        />
+        <View
+          style={{
+            ...styles.instructionChipsView,
+            backgroundColor: "#FDFCFA",
           }}
-          style={{ borderWidth: 1, borderColor: "black" }}
         >
-          Edit
-        </Button>
+          {medications}
+        </View>
+        <Divider style={{ marginTop: 10 }} />
+        <View style={styles.routineButtonsView}>
+          <Button
+            onPress={() => {
+              setCurrentRoutine(routine);
+              setFABExtended(false);
+              setRoutineFormVisible(true);
+            }}
+            style={{ backgroundColor: "#597683" }}
+            textColor="#fafafa"
+          >
+            Edit
+          </Button>
+          <Button onPress={() => onDeleteRoutine()}>Delete</Button>
+        </View>
       </View>
     </List.Accordion>
   );

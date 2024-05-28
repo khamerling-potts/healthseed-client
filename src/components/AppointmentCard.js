@@ -152,8 +152,13 @@ function AppointmentCard({
                   setCurrentAppt(appointment);
                 }}
                 title="Edit"
+                leadingIcon="pencil"
               />
-              <Menu.Item onPress={() => onDeleteAppt()} title="Delete" />
+              <Menu.Item
+                onPress={() => onDeleteAppt()}
+                title="Delete"
+                leadingIcon="delete"
+              />
             </Menu>
           </View>
         </View>

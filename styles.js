@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "100%",
     backgroundColor: "#fafafa",
+    borderRadius: 5,
   },
   buttonContainer: {
     margin: 10,
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   addFAB: {
-    bottom: 20,
+    bottom: 30,
     right: 20,
     position: "absolute",
   },
@@ -270,6 +271,7 @@ const styles = StyleSheet.create({
     maxHeight: "90%",
     maxWidth: "90%",
     marginTop: 10,
+    // backgroundColor: "#FDFCFA",
   },
   routinesPage: {
     flex: 1,
@@ -279,23 +281,33 @@ const styles = StyleSheet.create({
     // necessary to fill entire width of component
     width: windowWidth * 0.9,
     paddingLeft: 0,
-    borderWidth: 5,
-    borderColor: "#FDFCFA",
-    backgroundColor: "#E0ECD5",
-    shadowOffset: { width: 0, height: -22 },
+    // borderBottomWidth: 1,
+    // borderColor: "#737373",
+    borderRadius: 5,
+    marginTop: 5,
+    // backgroundColor: "#F2F7F6",
+    backgroundColor: "#DCE4E8",
+  },
+  routineInfoView: {
+    borderWidth: 1,
+    borderTopWidth: 0,
+    justifyContent: "center",
+    borderColor: "#DCE4E8",
+    backgroundColor: "#FDFCFA",
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
   routineItem: {
     paddingLeft: 0,
     paddingRight: 0,
-    backgroundColor: "#FDFCFA",
   },
   routineButtonsView: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
-    paddingLeft: 0,
+    justifyContent: "space-between",
     paddingVertical: 10,
-    backgroundColor: "#FDFCFA",
   },
   segmentedButtons: {},
   badgesView: {
@@ -318,6 +330,11 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     borderWidth: 1,
     margin: 10,
+  },
+  apptFormDateView: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   providerCardView: {
     flexDirection: "row",
@@ -399,7 +416,7 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: "#597683",
     width: "80%",
-    marginTop: 20,
+    marginTop: 15,
     alignSelf: "center",
   },
   logoutButton: {

@@ -34,11 +34,13 @@ export default function App() {
       onSecondaryContainer: "#2C4438",
       primaryContainer: "#AFC9DC",
       onPrimaryContainer: "#284B6D",
-      surfaceVariant: "#DCE4E8",
+      surfaceVariant: "#F2F7F6",
       onSurfaceVariant: "#40484B",
+      background: "white",
       elevation: {
         ...DefaultPaperTheme.colors.elevation,
         level1: "#FDFCFA",
+        level2: "#EBEDF0",
       },
     },
   };

@@ -108,14 +108,14 @@ function InstructionForm({
           {instruction ? (
             <Text
               variant="titleMedium"
-              style={{ textAlign: "center", marginBottom: 10 }}
+              style={{ textAlign: "center", marginBottom: 20 }}
             >
               Edit your {instruction.medication.name} instruction below
             </Text>
           ) : (
             <Text
               variant="titleMedium"
-              style={{ textAlign: "center", marginBottom: 10 }}
+              style={{ textAlign: "center", marginBottom: 20 }}
             >
               Add instruction for {medication.name} below
             </Text>

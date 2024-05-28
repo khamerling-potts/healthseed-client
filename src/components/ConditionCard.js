@@ -73,8 +73,13 @@ function ConditionCard({
                   setCurrentCondition(condition);
                 }}
                 title="Edit"
+                leadingIcon="pencil"
               />
-              <Menu.Item onPress={() => onDeleteCondition()} title="Delete" />
+              <Menu.Item
+                onPress={() => onDeleteCondition()}
+                title="Delete"
+                leadingIcon="delete"
+              />
             </Menu>
           )}
         />

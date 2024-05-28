@@ -134,10 +134,12 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 variant="titleMedium"
                 style={{ marginBottom: 10, textAlign: "center" }}
               >
-                Fill out routine details below
+                {routine
+                  ? "Edit routine details below"
+                  : "Fill out routine details below"}
               </Text>
               <TextInput
-                placeholder="Routine title"
+                label="Routine title"
                 onChangeText={handleChange("title")}
                 onBlur={handleBlur("title")}
                 value={values.title}
@@ -150,7 +152,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 {errors.title}
               </HelperText>
               <TextInput
-                placeholder="Description of your routine"
+                label="Description of your routine"
                 onChangeText={handleChange("notes")}
                 onBlur={handleBlur("notes")}
                 value={values.notes}
@@ -184,6 +186,8 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                   "#e9c46a",
                 ]}
                 listMode="SCROLLVIEW"
+                dropDownContainerStyle={{ borderColor: "#737373" }}
+                style={{ borderColor: "#737373" }}
               />
               <SegmentedButtons
                 style={{ marginTop: 20 }}
@@ -206,7 +210,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                 multiSelect
                 buttons={[
                   {
-                    icon: "circle",
+                    // icon: "circle",
                     value: "any time",
                     label: "Any time",
                     showSelectedCheck: true,
@@ -214,7 +218,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                     uncheckedColor: "green",
                   },
                   {
-                    icon: "circle",
+                    // icon: "circle",
                     value: "morning",
                     label: "Morning",
                     showSelectedCheck: true,
@@ -222,7 +226,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                     uncheckedColor: "goldenrod",
                   },
                   {
-                    icon: "circle",
+                    // icon: "circle",
                     value: "afternoon",
                     label: "Afternoon",
                     showSelectedCheck: true,
@@ -230,7 +234,7 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                     uncheckedColor: "indianred",
                   },
                   {
-                    icon: "circle",
+                    // icon: "circle",
                     value: "evening",
                     label: "Evening",
                     showSelectedCheck: true,

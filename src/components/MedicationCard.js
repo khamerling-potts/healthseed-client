@@ -84,7 +84,6 @@ function MedicationCard({ medication }) {
           <Card.Content style={styles.cardContent}>
             <Card.Title
               title={medication.name}
-              subtitle="subtitle"
               right={(props) => (
                 <Menu
                   visible={menuVisible}

@@ -184,6 +184,7 @@ function MedicationForm({
                   onBlur={handleBlur("dose1")}
                   value={values.dose1}
                   label="Dosage"
+                  placeholder="E.g. 2 tablets, 5mg"
                   style={styles.dosageInput}
                 ></TextInput>
                 <HelperText
@@ -227,7 +228,8 @@ function MedicationForm({
                   onChangeText={handleChange("dose2")}
                   onBlur={handleBlur("dose2")}
                   value={values.dose2}
-                  placeholder="Enter dosage here"
+                  label="Dosage"
+                  placeholder="E.g. 2 tablets, 5mg"
                   style={styles.dosageInput}
                 ></TextInput>
                 <HelperText
@@ -270,7 +272,8 @@ function MedicationForm({
                   onChangeText={handleChange("dose3")}
                   onBlur={handleBlur("dose3")}
                   value={values.dose3}
-                  placeholder="Enter dosage here"
+                  label="Dosage"
+                  placeholder="E.g. 2 tablets, 5mg"
                   style={styles.dosageInput}
                 ></TextInput>
                 <HelperText

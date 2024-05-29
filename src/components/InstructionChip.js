@@ -3,11 +3,13 @@ import styles from "../../styles";
 import { useContext, useState } from "react";
 import InstructionForm from "./InstructionForm";
 import { View, ScrollView, KeyboardAvoidingView } from "react-native";
-import { Modal, Portal } from "react-native-paper";
+import { Modal, Portal, Text } from "react-native-paper";
 import {
   MedicationsContext,
   MedicationsProvider,
 } from "../context/medications";
+import { InstructionsContext } from "../context/instructions";
+import { RoutinesContext } from "../context/routines";
 
 function InstructionChip({ instruction, page }) {
   const icons = {
@@ -17,6 +19,9 @@ function InstructionChip({ instruction, page }) {
   };
   const [instructionFormVisible, setInstructionFormVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
+  const { fetchInstructions } = useContext(InstructionsContext);
+  const { fetchRoutines } = useContext(RoutinesContext);
+
   return (
     <>
       <Chip
@@ -43,6 +48,8 @@ function InstructionChip({ instruction, page }) {
             setInstructionFormVisible={setInstructionFormVisible}
             medications={medications}
             setMedications={setMedications}
+            fetchInstructions={fetchInstructions}
+            fetchRoutines={fetchRoutines}
           />
         </Modal>
       </Portal>

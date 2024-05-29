@@ -13,6 +13,8 @@ import {
 import { MedicationsContext } from "../context/medications";
 import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
+import { RoutinesContext } from "../context/routines";
+import { InstructionsContext } from "../context/instructions";
 
 function MedicationForm({
   setMedicationFormVisible,
@@ -22,6 +24,8 @@ function MedicationForm({
 }) {
   const [showDropDown, setShowDropDown] = useState([false, false, false]);
   const { medications, setMedications } = useContext(MedicationsContext);
+  const { fetchRoutines } = useContext(RoutinesContext);
+  const { fetchInstructions } = useContext(InstructionsContext);
 
   //conditionally assigning fetch properties based on whether adding or editing medication
   const URL = medication
@@ -123,7 +127,10 @@ function MedicationForm({
                   setMedicationFormVisible(false);
                   setFABExtended(true);
 
-                  resetForm();
+                  //must refetch routines and instructions because their medications were modified
+                  console.log("calling fetch routines");
+                  fetchRoutines();
+                  fetchInstructions();
                 });
               } else {
                 r.json().then((err) => console.log(err));

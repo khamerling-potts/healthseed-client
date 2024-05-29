@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, ScrollView, KeyboardAvoidingView } from "react-native";
 import styles from "../../styles";
 import { Formik } from "formik";
@@ -13,13 +13,14 @@ function InstructionForm({
   setInstructionFormVisible,
   medications,
   setMedications,
+  fetchInstructions,
+  fetchRoutines,
 }) {
+  console.log("function", fetchInstructions);
   const [showDropDown, setShowDropDown] = useState(false);
   const URL = instruction
     ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions/${instruction.id}`
     : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions`;
-
-  console.log(medications);
 
   const timeList = [
     {
@@ -37,12 +38,14 @@ function InstructionForm({
     { label: "None", value: "" },
   ];
 
-  // Updates medications state after a medication's instruction is edited
+  // Updates medications state after a medication's instruction is edited. Refreshes routines and instructions.
   function handleEditMedication(editedMedication) {
     const updatedMedications = medications.filter(
       (medication) => medication.id !== editedMedication.id
     );
     setMedications([...updatedMedications, editedMedication]);
+    console.log(fetchInstructions);
+    console.log(fetchRoutines);
   }
 
   // Deletes an instruction from the server and updates corresponding medication state

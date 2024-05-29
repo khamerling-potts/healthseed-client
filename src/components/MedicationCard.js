@@ -24,6 +24,8 @@ import {
 import MedicationForm from "./MedicationForm";
 import InstructionChip from "./InstructionChip";
 import InstructionForm from "./InstructionForm";
+import { RoutinesContext } from "../context/routines";
+import { InstructionsContext } from "../context/instructions";
 
 function MedicationCard({
   medication,
@@ -34,6 +36,8 @@ function MedicationCard({
   const [menuVisible, setMenuVisible] = useState(false);
   const [instructionFormVisible, setInstructionFormVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
+  const { fetchRoutines } = useContext(RoutinesContext);
+  const { fetchInstructions } = useContext(InstructionsContext);
   const id = medication.id;
 
   const instructionChips = medication.instructions.map((instruction) => (
@@ -55,6 +59,9 @@ function MedicationCard({
         setMedications(
           medications.filter((medication) => medication.id !== id)
         );
+        //must refetch routines and instructions because their medications were modified
+        fetchRoutines();
+        fetchInstructions();
       } else {
         r.json().then((err) => console.log(err));
       }
@@ -75,6 +82,8 @@ function MedicationCard({
             setInstructionFormVisible={setInstructionFormVisible}
             medications={medications}
             setMedications={setMedications}
+            fetchInstructions={fetchInstructions}
+            fetchRoutines={fetchRoutines}
           />
         </Modal>
       </Portal>

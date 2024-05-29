@@ -18,9 +18,11 @@ import {
   isPossiblePhoneNumber,
   isValidPhoneNumber,
 } from "libphonenumber-js";
+import { AppointmentsContext } from "../context/appointments";
 
 function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
   const { providers, setProviders } = useContext(ProvidersContext);
+  const { fetchAppointments } = useContext(AppointmentsContext);
 
   //conditionally assigning fetch properties based on whether adding or editing provider
   const URL = provider
@@ -99,7 +101,9 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                   }
                   setProviderFormVisible(false);
                   setFABExtended(true);
-                  console.log(provider);
+
+                  //must refetch appointments because their providers were modified
+                  fetchAppointments();
                 });
               } else {
                 r.json().then((err) => console.log(err));
@@ -138,6 +142,7 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
                 onBlur={handleBlur("address")}
                 value={values.address}
                 label="Provider address"
+                multiline
                 style={{ width: "100%" }}
               ></TextInput>
               <HelperText

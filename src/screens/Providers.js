@@ -20,12 +20,14 @@ import {
   isPossiblePhoneNumber,
   isValidPhoneNumber,
 } from "libphonenumber-js";
+import { AppointmentsContext } from "../context/appointments";
 
 function Providers() {
   const { providers, setProviders } = useContext(ProvidersContext);
   const [providerFormVisible, setProviderFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
   const [currentProvider, setCurrentProvider] = useState(null);
+  const { appointments, setAppointments } = useContext(AppointmentsContext);
 
   const providersToDisplay = providers
     .sort((a, b) => a.id - b.id)

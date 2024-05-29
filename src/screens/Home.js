@@ -61,7 +61,10 @@ function Home({ navigation }) {
   useEffect(() => {
     if (markedDates[today]) {
       setSelectedAppointments(markedDates[today].appointments);
+    } else {
+      setSelectedAppointments([]);
     }
+    console.log("appointments changing");
   }, [appointments]);
 
   const apptsToDisplay = selectedAppointments

@@ -18,8 +18,7 @@ import styles from "../../styles";
 
 function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
   const { routines, setRoutines } = useContext(RoutinesContext);
-  const { setInstructions } = useContext(InstructionsContext);
-  const { instructions } = useContext(InstructionsContext);
+  const { instructions, setInstructions } = useContext(InstructionsContext);
   const [dropDownValue, setDropDownValue] = useState(
     routine && routine.instructions
       ? routine.instructions.map((instruction) => `${instruction.id}`)

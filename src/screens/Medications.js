@@ -6,6 +6,7 @@ import MedicationCard from "../components/MedicationCard";
 import { MedicationsContext } from "../context/medications";
 import MedicationForm from "../components/MedicationForm";
 import { InstructionsContext } from "../context/instructions";
+import { RoutinesContext } from "../context/routines";
 
 function Medications() {
   const { medications, setMedications } = useContext(MedicationsContext);
@@ -13,6 +14,7 @@ function Medications() {
   const [medicationFormVisible, setMedicationFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
   const [currentMedication, setCurrentMedication] = useState(null);
+  const { routines, setRoutines } = useContext(RoutinesContext);
 
   const medicationsToDisplay = medications
     .sort((a, b) => a.id - b.id)

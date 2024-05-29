@@ -18,6 +18,7 @@ import {
   isValidPhoneNumber,
 } from "libphonenumber-js";
 import { View } from "react-native";
+import { AppointmentsContext } from "../context/appointments";
 
 function ProviderCard({
   provider,
@@ -28,6 +29,7 @@ function ProviderCard({
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { providers, setProviders } = useContext(ProvidersContext);
+  const { fetchAppointments } = useContext(AppointmentsContext);
   const id = provider.id;
 
   function onDeleteProvider() {
@@ -39,6 +41,9 @@ function ProviderCard({
     ).then((r) => {
       if (r.ok) {
         setProviders(providers.filter((provider) => provider.id !== id));
+
+        //must refetch appointments to reflect change in providers. associated appts are deleted.
+        fetchAppointments();
       } else {
         r.json().then((err) => console.log(err));
       }

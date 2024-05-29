@@ -35,9 +35,12 @@ function ConditionCard({
   const id = condition.id;
 
   function onDeleteCondition() {
-    fetch(`http://127.0.0.1:5555/conditions/${condition.id}`, {
-      method: "DELETE",
-    }).then((r) => {
+    fetch(
+      `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/conditions/${condition.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((r) => {
       if (r.ok) {
         setConditions(conditions.filter((condition) => condition.id !== id));
       } else {

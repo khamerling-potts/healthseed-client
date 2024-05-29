@@ -18,8 +18,10 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
   const { conditions, setConditions } = useContext(ConditionsContext);
 
   const URL = condition
-    ? `http://127.0.0.1:5555/conditions${"/" + condition.id}`
-    : `http://127.0.0.1:5555/conditions`;
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/conditions${
+        "/" + condition.id
+      }`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/conditions`;
   const method = condition ? "PATCH" : "POST";
 
   function handleEditCondition(editedCondition) {

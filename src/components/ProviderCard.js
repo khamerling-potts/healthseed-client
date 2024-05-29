@@ -31,9 +31,12 @@ function ProviderCard({
   const id = provider.id;
 
   function onDeleteProvider() {
-    fetch(`http://127.0.0.1:5555/providers/${provider.id}`, {
-      method: "DELETE",
-    }).then((r) => {
+    fetch(
+      `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/providers/${provider.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((r) => {
       if (r.ok) {
         setProviders(providers.filter((provider) => provider.id !== id));
       } else {
@@ -124,78 +127,3 @@ function ProviderCard({
 }
 
 export default ProviderCard;
-
-{
-  /* <Portal>
-        <Modal
-          visible={modalVisible}
-          onDismiss={() => setModalVisible(false)}
-          contentContainerStyle={styles.formModal}
-        >
-          <TextInput
-            onChangeText={formik.handleChange("name")}
-            onBlur={formik.handleBlur("name")}
-            value={formik.values.name}
-          />
-          <TextInput
-            onChangeText={formik.handleChange("address")}
-            onBlur={formik.handleBlur("address")}
-            value={formik.values.address}
-          />
-          <TextInput
-            onChangeText={formik.handleChange("countryCode")}
-            onBlur={formik.handleBlur("countryCode")}
-            value={formik.values.countryCode}
-            left={<TextInput.Icon icon="plus" />}
-          />
-          <TextInput
-            onChangeText={formik.handleChange("phone")}
-            onBlur={formik.handleBlur("phone")}
-            value={formik.values.phone}
-          />
-          <Button onPress={formik.handleSubmit}>Save</Button>
-        </Modal>
-      </Portal> */
-}
-
-// const formik = useFormik({
-//   initialValues: {
-//     name: provider.name,
-//     address: provider.address,
-//     countryCode: parsePhoneNumber(provider.phone).countryCallingCode,
-//     phone: parsePhoneNumber(provider.phone).nationalNumber,
-//   },
-//   validationSchema: Yup.object({
-//     //Add phone validation here
-//     name: Yup.string().required("Name required"),
-//   }),
-//   onSubmit: (values) => {
-//     const configObj = {
-//       method: "PATCH",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(
-//         {
-//           ...values,
-//           phone: "+" + values.countryCode + values.phone,
-//         },
-//         null,
-//         2
-//       ),
-//     };
-//     fetch(`http://127.0.0.1:5555/providers/${provider.id}`, configObj).then(
-//       (r) => {
-//         if (r.ok) {
-//           r.json().then((provider) => {
-//             console.log(provider);
-//             handleEditProvider(provider);
-//             setModalVisible(false);
-//           });
-//         } else {
-//           r.json().then((err) => console.log(err));
-//         }
-//       }
-//     );
-//   },
-// });

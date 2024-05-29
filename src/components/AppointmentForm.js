@@ -58,8 +58,10 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
 
   //conditionally assigning fetch properties based on whether adding or editing appt
   const URL = appointment
-    ? `http://127.0.0.1:5555/appointments${"/" + appointment.id}`
-    : `http://127.0.0.1:5555/appointments`;
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/appointments${
+        "/" + appointment.id
+      }`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/appointments`;
   const method = appointment ? "PATCH" : "POST";
 
   function assignProvidersList(providers) {

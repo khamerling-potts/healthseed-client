@@ -24,8 +24,10 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
 
   //conditionally assigning fetch properties based on whether adding or editing provider
   const URL = provider
-    ? `http://127.0.0.1:5555/providers${"/" + provider.id}`
-    : `http://127.0.0.1:5555/providers`;
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/providers${
+        "/" + provider.id
+      }`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/providers`;
   const method = provider ? "PATCH" : "POST";
 
   function handleEditProvider(editedProvider) {

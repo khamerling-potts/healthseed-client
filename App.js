@@ -44,7 +44,6 @@ export default function App() {
       },
     },
   };
-  console.log(paperTheme);
 
   return (
     <PaperProvider theme={paperTheme}>

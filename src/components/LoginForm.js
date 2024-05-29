@@ -29,7 +29,10 @@ function LoginForm() {
         },
         body: JSON.stringify(values, null, 2),
       };
-      fetch("http://127.0.0.1:5555/login", configObj).then((r) => {
+      fetch(
+        "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/login",
+        configObj
+      ).then((r) => {
         if (r.ok) {
           r.json().then((user) => setUser(user));
         } else {

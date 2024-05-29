@@ -17,7 +17,10 @@ function Profile() {
   });
 
   function handleLogout(e) {
-    fetch("http://127.0.0.1:5555/logout", { method: "DELETE" }).then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/logout",
+      { method: "DELETE" }
+    ).then((r) => {
       if (r.ok) {
         setUser(null);
         setLoginMethod("none");

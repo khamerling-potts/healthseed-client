@@ -16,8 +16,8 @@ function InstructionForm({
 }) {
   const [showDropDown, setShowDropDown] = useState(false);
   const URL = instruction
-    ? `http://127.0.0.1:5555/instructions/${instruction.id}`
-    : `http://127.0.0.1:5555/instructions`;
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions/${instruction.id}`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions`;
 
   console.log(medications);
 

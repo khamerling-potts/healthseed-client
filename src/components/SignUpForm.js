@@ -27,7 +27,10 @@ function SignUpForm() {
       },
       body: JSON.stringify({ username: newUsername }),
     };
-    fetch("http://127.0.0.1:5555/check_username", configObj).then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/check_username",
+      configObj
+    ).then((r) => {
       if (r.ok) {
         r.json().then((data) => {
           setUsernameTaken(false);
@@ -63,7 +66,10 @@ function SignUpForm() {
           2
         ),
       };
-      fetch("http://127.0.0.1:5555/users", configObj).then((r) => {
+      fetch(
+        "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/users",
+        configObj
+      ).then((r) => {
         if (r.ok) {
           r.json().then((user) => setUser(user));
         } else {

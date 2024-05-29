@@ -49,9 +49,12 @@ function RoutineComponent({
 
   // Deletes a routine from the server and updates instructions and routines state
   function onDeleteRoutine() {
-    fetch(`http://127.0.0.1:5555/routines/${routine.id}`, {
-      method: "DELETE",
-    }).then((r) => {
+    fetch(
+      `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/routines/${routine.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((r) => {
       if (r.ok) {
         r.json().then((instructions) => {
           setInstructions(instructions);

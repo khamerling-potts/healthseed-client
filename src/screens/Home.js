@@ -70,7 +70,9 @@ function Home({ navigation }) {
 
   // Setting global contexts
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/medications").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/medications"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((medications) => {
           setMedications(medications);
@@ -81,7 +83,9 @@ function Home({ navigation }) {
       }
     });
 
-    fetch("http://127.0.0.1:5555/instructions").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((instructions) => {
           setInstructions(instructions);
@@ -92,7 +96,9 @@ function Home({ navigation }) {
       }
     });
 
-    fetch("http://127.0.0.1:5555/conditions").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/conditions"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((conditions) => {
           setConditions(conditions);
@@ -103,7 +109,9 @@ function Home({ navigation }) {
       }
     });
 
-    fetch("http://127.0.0.1:5555/providers").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/providers"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((providers) => {
           setProviders(providers);
@@ -114,7 +122,9 @@ function Home({ navigation }) {
       }
     });
 
-    fetch("http://127.0.0.1:5555/appointments").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/appointments"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((appointments) => {
           setAppointments(appointments);
@@ -125,7 +135,9 @@ function Home({ navigation }) {
       }
     });
 
-    fetch("http://127.0.0.1:5555/routines").then((r) => {
+    fetch(
+      "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/routines"
+    ).then((r) => {
       if (r.ok) {
         r.json().then((routines) => {
           setRoutines(routines);

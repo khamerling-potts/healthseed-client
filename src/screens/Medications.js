@@ -10,29 +10,35 @@ import { InstructionsContext } from "../context/instructions";
 function Medications() {
   const { medications, setMedications } = useContext(MedicationsContext);
   const { instructions, setInstructions } = useContext(InstructionsContext);
-  const [addFormVisible, setAddFormVisible] = useState(false);
+  const [medicationFormVisible, setMedicationFormVisible] = useState(false);
   const [FABExtended, setFABExtended] = useState(true);
+  const [currentMedication, setCurrentMedication] = useState(null);
 
   const medicationsToDisplay = medications
     .sort((a, b) => a.id - b.id)
     .map((medication) => (
-      <MedicationCard medication={medication} key={medication.id} />
+      <MedicationCard
+        medication={medication}
+        key={medication.id}
+        setMedicationFormVisible={setMedicationFormVisible}
+        setFABExtended={setFABExtended}
+        setCurrentMedication={setCurrentMedication}
+      />
     ));
 
   return (
     <SafeAreaView style={styles.medicationsPage}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
-        {/* <Text>This is the Medications screen</Text> */}
-
         <ScrollView style={styles.medicationsScrollView}>
           {medicationsToDisplay}
         </ScrollView>
 
-        {addFormVisible ? (
+        {medicationFormVisible ? (
           <MedicationForm
-            setAddFormVisible={setAddFormVisible}
+            setMedicationFormVisible={setMedicationFormVisible}
             setFABExtended={setFABExtended}
             method="POST"
+            medication={currentMedication}
           />
         ) : null}
       </KeyboardAvoidingView>
@@ -43,10 +49,11 @@ function Medications() {
         onPress={() => {
           if (FABExtended) {
             setFABExtended(false);
-            setAddFormVisible(true);
+            setCurrentMedication(null);
+            setMedicationFormVisible(true);
           } else {
             setFABExtended(true);
-            setAddFormVisible(false);
+            setMedicationFormVisible(false);
           }
         }}
         // visible={visible}

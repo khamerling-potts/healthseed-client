@@ -15,14 +15,21 @@ import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
 
 function MedicationForm({
-  setAddFormVisible,
+  setMedicationFormVisible,
   setFABExtended,
   setModalVisible,
-  method,
   medication,
 }) {
   const [showDropDown, setShowDropDown] = useState([false, false, false]);
   const { medications, setMedications } = useContext(MedicationsContext);
+
+  //conditionally assigning fetch properties based on whether adding or editing medication
+  const URL = medication
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/medications${
+        "/" + medication.id
+      }`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/medications`;
+  const method = medication ? "PATCH" : "POST";
 
   function handleEditMedication(editedMedication) {
     const updatedMedications = medications.filter(
@@ -87,29 +94,33 @@ function MedicationForm({
       <ScrollView>
         <Formik
           initialValues={{
-            name: "",
+            name: medication ? medication.name : "",
             time1: "",
             dose1: "",
             time2: "",
             dose2: "",
             time3: "",
             dose3: "",
+            notes: medication ? medication.notes : "",
           }}
           validate={validate}
           onSubmit={(values, { resetForm }) => {
             const configObj = {
-              method: "POST",
+              method: method,
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(values, null, 2),
             };
-            fetch(`http://127.0.0.1:5555/medications`, configObj).then((r) => {
+            fetch(URL, configObj).then((r) => {
               if (r.ok) {
                 r.json().then((medication) => {
-                  console.log(medication);
-                  setMedications([...medications, medication]);
-                  setAddFormVisible(false);
+                  if (method === "POST") {
+                    setMedications([...medications, medication]);
+                  } else {
+                    handleEditMedication(medication);
+                  }
+                  setMedicationFormVisible(false);
                   setFABExtended(true);
 
                   resetForm();
@@ -118,7 +129,6 @@ function MedicationForm({
                 r.json().then((err) => console.log(err));
               }
             });
-            //   resetForm();
           }}
         >
           {({
@@ -150,140 +160,154 @@ function MedicationForm({
               >
                 {errors.name}
               </HelperText>
-              <List.Subheader numberOfLines={2}>
-                Add up to 3 medication instructions. More can be added later.
-              </List.Subheader>
-              <List.Accordion
-                title="Instruction 1"
-                style={styles.instructionAccordion}
-              >
-                <Text />
-                <DropDown
-                  label={"Select time taken"}
-                  mode={"outlined"}
-                  visible={showDropDown[0]}
-                  showDropDown={() => setShowDropDown([true, false, false])}
-                  onDismiss={() => setShowDropDown([false, false, false])}
-                  value={values.time1}
-                  setValue={handleChange("time1")}
-                  onBlur={handleBlur("time1")}
-                  list={timeList}
-                  inputProps={{ style: styles.timeDropDown }}
-                  dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
-                />
-                <HelperText
-                  visible={errors.time1}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.time1}
-                </HelperText>
 
-                <TextInput
-                  onChangeText={handleChange("dose1")}
-                  onBlur={handleBlur("dose1")}
-                  value={values.dose1}
-                  label="Dosage"
-                  placeholder="E.g. 2 tablets, 5mg"
-                  style={styles.dosageInput}
-                ></TextInput>
-                <HelperText
-                  visible={errors.dose1}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.dose1}
-                </HelperText>
-                <Divider style={styles.divider} />
-              </List.Accordion>
+              <TextInput
+                onChangeText={handleChange("notes")}
+                onBlur={handleBlur("notes")}
+                value={values.notes}
+                label="Optional notes"
+                style={styles.medicationName}
+                multiline
+              ></TextInput>
 
-              <List.Accordion
-                title="Instruction 2"
-                style={styles.instructionAccordion}
-              >
-                <Text />
+              {/* 3 instruction forms will be visible when adding a new med, but not when editing */}
+              {!medication ? (
+                <>
+                  <List.Subheader numberOfLines={2}>
+                    Add up to 3 medication instructions. More can be added
+                    later.
+                  </List.Subheader>
+                  <List.Accordion
+                    title="Instruction 1"
+                    style={styles.instructionAccordion}
+                  >
+                    <Text />
+                    <DropDown
+                      label={"Select time taken"}
+                      mode={"outlined"}
+                      visible={showDropDown[0]}
+                      showDropDown={() => setShowDropDown([true, false, false])}
+                      onDismiss={() => setShowDropDown([false, false, false])}
+                      value={values.time1}
+                      setValue={handleChange("time1")}
+                      onBlur={handleBlur("time1")}
+                      list={timeList}
+                      inputProps={{ style: styles.timeDropDown }}
+                      dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
+                    />
+                    <HelperText
+                      visible={errors.time1}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.time1}
+                    </HelperText>
 
-                <DropDown
-                  label={"Select time taken"}
-                  mode={"outlined"}
-                  visible={showDropDown[1]}
-                  showDropDown={() => setShowDropDown([false, true, false])}
-                  onDismiss={() => setShowDropDown([false, false, false])}
-                  value={values.time2}
-                  setValue={handleChange("time2")}
-                  onBlur={handleBlur("time2")}
-                  list={timeList}
-                  inputProps={{ style: styles.timeDropDown }}
-                  dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
-                />
-                <HelperText
-                  visible={errors.time2}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.time2}
-                </HelperText>
+                    <TextInput
+                      onChangeText={handleChange("dose1")}
+                      onBlur={handleBlur("dose1")}
+                      value={values.dose1}
+                      label="Dosage"
+                      placeholder="E.g. 2 tablets, 5mg"
+                      style={styles.dosageInput}
+                    ></TextInput>
+                    <HelperText
+                      visible={errors.dose1}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.dose1}
+                    </HelperText>
+                    <Divider style={styles.divider} />
+                  </List.Accordion>
+                  <List.Accordion
+                    title="Instruction 2"
+                    style={styles.instructionAccordion}
+                  >
+                    <Text />
 
-                <TextInput
-                  onChangeText={handleChange("dose2")}
-                  onBlur={handleBlur("dose2")}
-                  value={values.dose2}
-                  label="Dosage"
-                  placeholder="E.g. 2 tablets, 5mg"
-                  style={styles.dosageInput}
-                ></TextInput>
-                <HelperText
-                  visible={errors.dose2}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.dose2}
-                </HelperText>
-                <Divider style={styles.divider} />
-              </List.Accordion>
+                    <DropDown
+                      label={"Select time taken"}
+                      mode={"outlined"}
+                      visible={showDropDown[1]}
+                      showDropDown={() => setShowDropDown([false, true, false])}
+                      onDismiss={() => setShowDropDown([false, false, false])}
+                      value={values.time2}
+                      setValue={handleChange("time2")}
+                      onBlur={handleBlur("time2")}
+                      list={timeList}
+                      inputProps={{ style: styles.timeDropDown }}
+                      dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
+                    />
+                    <HelperText
+                      visible={errors.time2}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.time2}
+                    </HelperText>
 
-              <List.Accordion
-                title="Instruction 3"
-                style={styles.instructionAccordion}
-              >
-                <Text />
-                <DropDown
-                  label={"Select time taken"}
-                  mode={"outlined"}
-                  visible={showDropDown[2]}
-                  showDropDown={() => setShowDropDown([false, false, true])}
-                  onDismiss={() => setShowDropDown([false, false, false])}
-                  value={values.time3}
-                  setValue={handleChange("time3")}
-                  onBlur={handleBlur("time3")}
-                  list={timeList}
-                  inputProps={{ style: styles.timeDropDown }}
-                  dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
-                />
-                <HelperText
-                  visible={errors.time3}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.time3}
-                </HelperText>
+                    <TextInput
+                      onChangeText={handleChange("dose2")}
+                      onBlur={handleBlur("dose2")}
+                      value={values.dose2}
+                      label="Dosage"
+                      placeholder="E.g. 2 tablets, 5mg"
+                      style={styles.dosageInput}
+                    ></TextInput>
+                    <HelperText
+                      visible={errors.dose2}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.dose2}
+                    </HelperText>
+                    <Divider style={styles.divider} />
+                  </List.Accordion>
+                  <List.Accordion
+                    title="Instruction 3"
+                    style={styles.instructionAccordion}
+                  >
+                    <Text />
+                    <DropDown
+                      label={"Select time taken"}
+                      mode={"outlined"}
+                      visible={showDropDown[2]}
+                      showDropDown={() => setShowDropDown([false, false, true])}
+                      onDismiss={() => setShowDropDown([false, false, false])}
+                      value={values.time3}
+                      setValue={handleChange("time3")}
+                      onBlur={handleBlur("time3")}
+                      list={timeList}
+                      inputProps={{ style: styles.timeDropDown }}
+                      dropDownItemSelectedStyle={{ backgroundColor: "#DCE4E8" }}
+                    />
+                    <HelperText
+                      visible={errors.time3}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.time3}
+                    </HelperText>
 
-                <TextInput
-                  onChangeText={handleChange("dose3")}
-                  onBlur={handleBlur("dose3")}
-                  value={values.dose3}
-                  label="Dosage"
-                  placeholder="E.g. 2 tablets, 5mg"
-                  style={styles.dosageInput}
-                ></TextInput>
-                <HelperText
-                  visible={errors.dose3}
-                  type="error"
-                  style={styles.helperText}
-                >
-                  {errors.dose3}
-                </HelperText>
-              </List.Accordion>
+                    <TextInput
+                      onChangeText={handleChange("dose3")}
+                      onBlur={handleBlur("dose3")}
+                      value={values.dose3}
+                      label="Dosage"
+                      placeholder="E.g. 2 tablets, 5mg"
+                      style={styles.dosageInput}
+                    ></TextInput>
+                    <HelperText
+                      visible={errors.dose3}
+                      type="error"
+                      style={styles.helperText}
+                    >
+                      {errors.dose3}
+                    </HelperText>
+                  </List.Accordion>
+                </>
+              ) : null}
 
               <Button
                 onPress={handleSubmit}
@@ -301,52 +325,3 @@ function MedicationForm({
 }
 
 export default MedicationForm;
-
-// const formik = useFormik({
-//     initialValues: {
-//       name: medication ? medication.name : "",
-//       time1: instructions && instructions[0] ? instructions[0].time : "",
-//       dose1: instructions && instructions[0] ? instructions[0].dose : "",
-//       time2: instructions && instructions[1] ? instructions[1].time : "",
-//       dose2: instructions && instructions[1] ? instructions[1].dose : "",
-//       time3: instructions && instructions[2] ? instructions[2].time : "",
-//       dose3: instructions && instructions[2] ? instructions[2].dose : "",
-//     },
-//     validationSchema: Yup.object({
-//       name: Yup.string().required("Name required"),
-//     }),
-//     onSubmit: (values, { resetForm }) => {
-//       const configObj = {
-//         method: method,
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(values, null, 2),
-//       };
-//       fetch(
-//         `http://127.0.0.1:5555/medications${
-//           medication ? "/" + medication.id : ""
-//         }`,
-//         configObj
-//       ).then((r) => {
-//         if (r.ok) {
-//           r.json().then((medication) => {
-//             console.log(medication);
-//             if (method === "POST") {
-//               setMedications([...medications, medication]);
-//               setAddFormVisible(false);
-//               setFABExtended(true);
-//             } else if (method === "PATCH") {
-//               handleEditMedication(medication);
-//               setModalVisible(false);
-//             }
-
-//             resetForm();
-//           });
-//         } else {
-//           r.json().then((err) => console.log(err));
-//         }
-//       });
-//       //   resetForm();
-//     },
-//   });

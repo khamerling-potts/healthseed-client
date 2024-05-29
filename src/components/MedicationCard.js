@@ -25,11 +25,15 @@ import MedicationForm from "./MedicationForm";
 import InstructionChip from "./InstructionChip";
 import InstructionForm from "./InstructionForm";
 
-function MedicationCard({ medication }) {
+function MedicationCard({
+  medication,
+  setMedicationFormVisible,
+  setFABExtended,
+  setCurrentMedication,
+}) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [instructionFormVisible, setInstructionFormVisible] = useState(false);
   const { medications, setMedications } = useContext(MedicationsContext);
-  const [editFormVisible, setEditFormVisible] = useState(false);
   const id = medication.id;
 
   const instructionChips = medication.instructions.map((instruction) => (
@@ -40,17 +44,13 @@ function MedicationCard({ medication }) {
     />
   ));
 
-  function handleEditMedication(editedMedication) {
-    const updatedMedications = medications.filter(
-      (medication) => medication.id !== editedMedication.id
-    );
-    setMedications([...updatedMedications, editedMedication]);
-  }
-
-  function deleteMedication() {
-    fetch(`http://127.0.0.1:5555/medications/${medication.id}`, {
-      method: "DELETE",
-    }).then((r) => {
+  function onDeleteMedication() {
+    fetch(
+      `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/medications/${medication.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((r) => {
       if (r.ok) {
         setMedications(
           medications.filter((medication) => medication.id !== id)
@@ -79,236 +79,143 @@ function MedicationCard({ medication }) {
         </Modal>
       </Portal>
 
-      {!editFormVisible ? (
-        <Card style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Card.Title
-              title={medication.name}
-              right={(props) => (
-                <Menu
-                  visible={menuVisible}
-                  onDismiss={() => setMenuVisible(false)}
-                  anchor={
-                    <IconButton
-                      {...props}
-                      icon="dots-vertical"
-                      onPress={() => {
-                        setMenuVisible(true);
-                      }}
-                    />
-                  }
-                >
-                  <Menu.Item
+      {/* {!editFormVisible ? ( */}
+      <Card style={styles.card}>
+        <Card.Content style={styles.cardContent}>
+          <Card.Title
+            title={medication.name}
+            titleStyle={{ paddingVertical: 5 }}
+            subtitle={`Notes: ${medication.notes ? medication.notes : ""}`}
+            subtitleNumberOfLines={0}
+            subtitleStyle={{ paddingBottom: 5 }}
+            right={(props) => (
+              <Menu
+                visible={menuVisible}
+                onDismiss={() => setMenuVisible(false)}
+                anchor={
+                  <IconButton
+                    {...props}
+                    icon="dots-vertical"
                     onPress={() => {
-                      setMenuVisible(false);
-                      setEditFormVisible(true);
+                      setMenuVisible(true);
                     }}
-                    title="Edit"
-                    leadingIcon="pencil"
                   />
-                  <Menu.Item
-                    onPress={() => deleteMedication()}
-                    title="Delete"
-                    leadingIcon="delete"
-                  />
-                </Menu>
-              )}
-            />
-          </Card.Content>
-          <View style={styles.instructionChipsView}>
-            {instructionChips}
-            {instructionChips.length ? (
-              <Chip
-                style={styles.instructionChip}
-                onPress={() => setInstructionFormVisible(true)}
+                }
               >
-                <Icon source="plus" size={20} />
-              </Chip>
-            ) : (
-              <Chip
-                icon="plus"
-                style={styles.instructionChip}
-                onPress={() => setInstructionFormVisible(true)}
-              >
-                Add instructions
-              </Chip>
+                <Menu.Item
+                  onPress={() => {
+                    setMenuVisible(false);
+                    setMedicationFormVisible(true);
+                    setFABExtended(false);
+                    setCurrentMedication(medication);
+                  }}
+                  title="Edit"
+                  leadingIcon="pencil"
+                />
+                <Menu.Item
+                  onPress={() => onDeleteMedication()}
+                  title="Delete"
+                  leadingIcon="delete"
+                />
+              </Menu>
             )}
-          </View>
-        </Card>
-      ) : (
-        <Formik
-          initialValues={{
-            name: medication.name,
-          }}
-          validationSchema={Yup.object({
-            name: Yup.string().required("Medication name required"),
-          })}
-          onSubmit={(values, { resetForm }) => {
-            const configObj = {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(values, null, 2),
-            };
-            fetch(
-              `http://127.0.0.1:5555/medications/${medication.id}`,
-              configObj
-            ).then((r) => {
-              if (r.ok) {
-                r.json().then((medication) => {
-                  handleEditMedication(medication);
-                  setEditFormVisible(false);
-                  resetForm();
-                });
-              } else {
-                r.json().then((err) => console.log(err));
-              }
-            });
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <>
-              <TextInput
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-                placeholder="Enter medication name here"
-                style={styles.card}
-                autoFocus={true}
-                right={<TextInput.Icon icon="check" onPress={handleSubmit} />}
-              ></TextInput>
-              <HelperText
-                visible={errors.name}
-                type="error"
-                style={styles.helperText}
-              >
-                {errors.name}
-              </HelperText>
-            </>
+          />
+        </Card.Content>
+        <View style={styles.instructionChipsView}>
+          {instructionChips}
+          {instructionChips.length ? (
+            <Chip
+              style={styles.instructionChip}
+              onPress={() => setInstructionFormVisible(true)}
+            >
+              <Icon source="plus" size={20} />
+            </Chip>
+          ) : (
+            <Chip
+              icon="plus"
+              style={styles.instructionChip}
+              onPress={() => setInstructionFormVisible(true)}
+            >
+              Add instructions
+            </Chip>
           )}
-        </Formik>
-      )}
+        </View>
+      </Card>
     </>
   );
 }
 
 export default MedicationCard;
 
-{
-  /* <Formik
-              key={"key1"}
-              initialValues={{
-                name: medication.name,
-              }}
-              validationSchema={Yup.object({
-                name: Yup.string().required("Medication name required"),
-              })}
-              validateOnChange={false}
-              onSubmit={(values, { resetForm }) => {
-                const configObj = {
-                  method: "PATCH",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(values, null, 2),
-                };
-                fetch(
-                  `http://127.0.0.1:5555/medications/${medication.id}`,
-                  configObj
-                ).then((r) => {
-                  if (r.ok) {
-                    r.json().then((medication) => {
-                      handleEditMedication(medication);
-                      setEditFormVisible(false);
-                      resetForm();
-                    });
-                  } else {
-                    r.json().then((err) => console.log(err));
-                  }
-                });
-              }}
-            >
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-              }) => (
-                <>
-                  <Card.Title
-                    key={"key2"}
-                    title={
-                      <Text>
-                        <TextInput
-                          onChangeText={() => {
-                            console.log(editInputRef.current);
-                            handleChange("name");
-                          }}
-                          onBlur={handleBlur("name")}
-                          value={values.name}
-                          placeholder="Enter medication name here"
-                          style={styles.editMedicationInput}
-                          ref={editInputRef}
-                          autoFocus={true}
-                        ></TextInput>
-                        <HelperText
-                          visible={errors.name}
-                          type="error"
-                          style={styles.helperText}
-                        >
-                          {errors.name}
-                        </HelperText>
-                      </Text>
-                    }
-                    subtitle="subtitle"
-                    right={(props) => (
-                      <IconButton
-                        {...props}
-                        icon="check"
-                        onPress={handleSubmit}
-                      />
-                    )}
-                  ></Card.Title>
-                </>
-              )}
-            </Formik> */
-}
+// ) : (
+//   <Formik
+//     initialValues={{
+//       name: medication.name,
+//       notes: medication.notes,
+//     }}
+//     validationSchema={Yup.object({
+//       name: Yup.string().required("Medication name required"),
+//     })}
+//     onSubmit={(values, { resetForm }) => {
+//       const configObj = {
+//         method: "PATCH",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(values, null, 2),
+//       };
+//       fetch(
+//         `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/medications/${medication.id}`,
+//         configObj
+//       ).then((r) => {
+//         if (r.ok) {
+//           r.json().then((medication) => {
+//             handleEditMedication(medication);
+//             setEditFormVisible(false);
+//             resetForm();
+//           });
+//         } else {
+//           r.json().then((err) => console.log(err));
+//         }
+//       });
+//     }}
+//   >
+//     {({
+//       handleChange,
+//       handleBlur,
+//       handleSubmit,
+//       values,
+//       errors,
+//       touched,
+//     }) => (
+//       <>
+//         <TextInput
+//           onChangeText={handleChange("name")}
+//           onBlur={handleBlur("name")}
+//           value={values.name}
+//           label="Medication name"
+//           style={styles.card}
+//           autoFocus={true}
+//           right={<TextInput.Icon icon="check" onPress={handleSubmit} />}
+//         ></TextInput>
+//         <HelperText
+//           visible={errors.name}
+//           type="error"
+//           style={styles.helperText}
+//         >
+//           {errors.name}
+//         </HelperText>
 
-{
-  /* <Portal>
-        <Modal
-          visible={modalVisible}
-          onDismiss={() => setModalVisible(false)}
-          contentContainerStyle={styles.formModal}
-        > */
-}
-{
-  /* <MedicationForm
-            setModalVisible={setModalVisible}
-            medication={medication}
-            method="PATCH"
-            medications={medications}
-            setMedications={setMedications}
-          /> */
-}
-
-{
-  /* <TextInput
-            onChangeText={formik.handleChange("name")}
-            onBlur={formik.handleBlur("name")}
-            value={formik.values.name}
-          />
-          <Button onPress={formik.handleSubmit}>Save</Button>
-        </Modal>
-      </Portal> */
-}
+//         <TextInput
+//           onChangeText={handleChange("notes")}
+//           onBlur={handleBlur("notes")}
+//           value={values.notes}
+//           label="Medication notes"
+//           style={styles.card}
+//           right={<TextInput.Icon icon="check" onPress={handleSubmit} />}
+//         ></TextInput>
+//       </>
+//     )}
+//   </Formik>
+// )
+//  }

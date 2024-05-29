@@ -48,9 +48,12 @@ function AppointmentCard({
   };
 
   function onDeleteAppt() {
-    fetch(`http://127.0.0.1:5555/appointments/${appointment.id}`, {
-      method: "DELETE",
-    }).then((r) => {
+    fetch(
+      `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/appointments/${appointment.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((r) => {
       if (r.ok) {
         setAppointments(
           appointments.filter((appt) => appt.id !== appointment.id)

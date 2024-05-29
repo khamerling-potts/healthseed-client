@@ -33,8 +33,10 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
 
   //conditionally assigning fetch properties based on whether adding or editing routine
   const URL = routine
-    ? `http://127.0.0.1:5555/routines${"/" + routine.id}`
-    : `http://127.0.0.1:5555/routines`;
+    ? `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/routines${
+        "/" + routine.id
+      }`
+    : `https://healthseed-flask-backend-94c8efc27481.herokuapp.com/routines`;
   const method = routine ? "PATCH" : "POST";
 
   function assignInstructionsList(instructions) {
@@ -110,7 +112,9 @@ function RoutineForm({ setRoutineFormVisible, setFABExtended, routine }) {
                   setRoutineFormVisible(false);
                   setFABExtended(true);
                   //Must also set instructions state bc routine ids were modified
-                  fetch("http://127.0.0.1:5555/instructions")
+                  fetch(
+                    "https://healthseed-flask-backend-94c8efc27481.herokuapp.com/instructions"
+                  )
                     .then((r) => r.json())
                     .then((instructions) => setInstructions(instructions));
                   resetForm();

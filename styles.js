@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   homeScrollView: {
     backgroundColor: "white",
-
+    overflow: "scroll",
     // maxHeight: "95%",
     // borderWidth: 1,
     // maxWidth: "90%",
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   calendarTheme: {
     backgroundColor: "#ffffff",
-    calendarBackground: "#fafafa",
+    calendarBackground: "#FDFCFA",
     textSectionTitleColor: "#886F66",
     selectedDayBackgroundColor: "#886F66",
     selectedDayTextColor: "white",
@@ -103,9 +103,10 @@ const styles = StyleSheet.create({
     // dayTextColor: "#FF4125",
   },
   homeRoutines: {
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     width: "95%",
+    // borderColor: "transparent",
   },
   homeRoutinesText: {
     color: "#2d4150",
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     top: -95,
   },
   conditionsScrollView: {
-    maxHeight: "95%",
+    maxHeight: "90%",
     maxWidth: "95%",
   },
   profileTopView: {
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
   formScrollView: {
     // maxWidth: "100%",
     width: windowWidth * 0.95,
-    padding: 10,
+    // padding: 10,
   },
   formView: { alignItems: "center" },
   saveButton: {

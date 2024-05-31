@@ -155,7 +155,7 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
             <>
               <Text
                 variant="titleMedium"
-                style={{ marginBottom: 10, textAlign: "center" }}
+                style={{ marginVertical: 10, textAlign: "center" }}
               >
                 {appointment
                   ? "Edit appointment details below"
@@ -169,7 +169,7 @@ function AppointmentForm({ setApptFormVisible, setFABExtended, appointment }) {
                   mode={"datetime"}
                   is24Hour={true}
                   onChange={onDateTimeChange}
-                  accentColor="#3A4954"
+                  // accentColor="#3A4954"
                 />
               </View>
 

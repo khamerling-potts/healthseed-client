@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "hello-world",
-    "slug": "hello-world",
+    "slug": "healthseed",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,8 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "3ddae195-acc4-4ac5-8015-6cc2c0ec1c18"
+        "projectId": "b7592e5e-5f8c-45e5-aaae-f7a46cef8734"
       }
-    }
+    },
+    "owner": "khamerling-potts"
   }
 }

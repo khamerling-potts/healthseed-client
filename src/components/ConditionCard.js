@@ -54,6 +54,7 @@ function ConditionCard({
       <Card.Content style={styles.cardContent}>
         <Card.Title
           title={condition.description}
+          titleNumberOfLines={0}
           right={(props) => (
             <Menu
               visible={menuVisible}

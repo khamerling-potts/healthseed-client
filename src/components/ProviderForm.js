@@ -120,8 +120,10 @@ function ProviderForm({ setProviderFormVisible, setFABExtended, provider }) {
             touched,
           }) => (
             <View style={{ alignItems: "center" }}>
-              <Text variant="titleMedium" style={{ marginBottom: 10 }}>
-                Fill out provider details below:
+              <Text variant="titleMedium" style={{ marginVertical: 10 }}>
+                {provider
+                  ? "Edit provider details below:"
+                  : "Fill out provider details below:"}
               </Text>
               <TextInput
                 onChangeText={handleChange("name")}

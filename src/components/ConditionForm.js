@@ -32,7 +32,7 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
   }
 
   const validationSchema = Yup.object().shape({
-    description: Yup.string().required("Required"),
+    description: Yup.string().required("Description required"),
   });
 
   return (
@@ -84,6 +84,14 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
             touched,
           }) => (
             <>
+              <Text
+                variant="titleMedium"
+                style={{ marginBottom: 20, textAlign: "center" }}
+              >
+                {condition
+                  ? "Edit condition description below:"
+                  : "Fill out condition description below"}
+              </Text>
               <TextInput
                 label="Condition description"
                 onChangeText={handleChange("description")}
@@ -103,7 +111,7 @@ function ConditionForm({ setConditionFormVisible, setFABExtended, condition }) {
 
               <Button
                 onPress={handleSubmit}
-                style={styles.saveButton}
+                style={{ ...styles.saveButton, marginTop: 0 }}
                 textColor="#fafafa"
               >
                 Save

@@ -45,7 +45,13 @@ function Providers() {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.providersScrollView}>
-          {providersToDisplay}
+          {providersToDisplay.length ? (
+            providersToDisplay
+          ) : (
+            <Text style={{ marginTop: 20 }}>
+              You have not logged any providers
+            </Text>
+          )}
         </ScrollView>
         {providerFormVisible ? (
           <ProviderForm

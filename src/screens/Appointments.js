@@ -67,7 +67,21 @@ function Appointments() {
 
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.apptsScrollView}>
-          {view === "upcoming" ? upcomingAppointments : pastAppointments}
+          {view === "upcoming" ? (
+            upcomingAppointments.length ? (
+              upcomingAppointments
+            ) : (
+              <Text style={{ alignSelf: "center", marginTop: 20 }}>
+                You have no upcoming appointments
+              </Text>
+            )
+          ) : pastAppointments.length ? (
+            pastAppointments
+          ) : (
+            <Text style={{ alignSelf: "center", marginTop: 20 }}>
+              You have no past appointments
+            </Text>
+          )}
         </ScrollView>
         {apptFormVisible ? (
           <AppointmentForm

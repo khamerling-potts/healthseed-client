@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, KeyboardAvoidingView } from "react-native";
 import styles from "../../styles";
-import { AnimatedFAB } from "react-native-paper";
+import { AnimatedFAB, Text } from "react-native-paper";
 import MedicationCard from "../components/MedicationCard";
 import { MedicationsContext } from "../context/medications";
 import MedicationForm from "../components/MedicationForm";
@@ -32,7 +32,13 @@ function Medications() {
     <SafeAreaView style={styles.medicationsPage}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.medicationsScrollView}>
-          {medicationsToDisplay}
+          {medicationsToDisplay.length ? (
+            medicationsToDisplay
+          ) : (
+            <Text style={{ marginTop: 20 }}>
+              You have not logged any medications
+            </Text>
+          )}
         </ScrollView>
 
         {medicationFormVisible ? (

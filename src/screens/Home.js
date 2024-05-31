@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Button, Divider, Icon, Surface, Text } from "react-native-paper";
 import { UserContext, UserProvider } from "../context/user";
@@ -168,82 +169,88 @@ function Home({ navigation }) {
 
   return (
     <SafeAreaView style={{ ...styles.container, justifyContent: "center" }}>
-      {medicationsLoading ||
-      instructionsLoading ||
-      conditionsLoading ||
-      providersLoading ||
-      appointmentsLoading ||
-      routinesLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <ScrollView
-          style={styles.homeScrollView}
-          contentContainerStyle={{ alignItems: "center" }}
-        >
-          <HomeCalendar
-            navigation={navigation}
-            markedDates={markedDates}
-            setSelectedAppointments={setSelectedAppointments}
-            selectedDay={selectedDay}
-            setSelectedDay={setSelectedDay}
-          />
-          <View style={styles.homeHeaderView}>
-            {selectedAppointments.length === 0 ? (
-              <Text style={{ fontWeight: "bold", color: "#737373" }}>
-                No appointments on {selectedDay}
-              </Text>
-            ) : (
-              <Text style={{ fontWeight: "bold", color: "#597683" }}>
-                Appointments ({selectedDay})
-              </Text>
-            )}
-            {selectedAppointments.length > 1 ? (
-              <Button
-                onPress={() => navigation.navigate("Appointments")}
-                textColor="#006A6A"
-                style={styles.homePageButton}
+      {/* This keyboard avoiding view w/ offset is necessary to make sure content doesn't scroll past nav. */}
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
+        {medicationsLoading ||
+        instructionsLoading ||
+        conditionsLoading ||
+        providersLoading ||
+        appointmentsLoading ||
+        routinesLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <ScrollView
+            style={styles.homeScrollView}
+            contentContainerStyle={{ alignItems: "center" }}
+          >
+            <HomeCalendar
+              navigation={navigation}
+              markedDates={markedDates}
+              setSelectedAppointments={setSelectedAppointments}
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+            />
+            <View style={styles.homeHeaderView}>
+              {selectedAppointments.length === 0 ? (
+                <Text style={{ fontWeight: "bold", color: "#737373" }}>
+                  No appointments on {selectedDay}
+                </Text>
+              ) : (
+                <Text style={{ fontWeight: "bold", color: "#597683" }}>
+                  Appointments ({selectedDay})
+                </Text>
+              )}
+              {selectedAppointments.length > 1 ? (
+                <Button
+                  onPress={() => navigation.navigate("Appointments")}
+                  textColor="#006A6A"
+                  style={styles.homePageButton}
+                >
+                  +{selectedAppointments.length - 1} more
+                </Button>
+              ) : (
+                <Button
+                  style={styles.homePageButton}
+                  onPress={() => navigation.navigate("Appointments")}
+                  textColor="#006A6A"
+                >
+                  See All
+                </Button>
+              )}
+            </View>
+            {apptsToDisplay[0]}
+
+            <Divider style={styles.divider} />
+
+            {/* Display number of routines and up to 3 routine titles for each time category */}
+            <View style={styles.homeHeaderView}>
+              <Text
+                variant="titleMedium"
+                style={{ fontWeight: "bold", color: "#597683" }}
               >
-                +{selectedAppointments.length - 1} more
-              </Button>
-            ) : (
+                Your Routines - Overview
+              </Text>
               <Button
+                onPress={() => navigation.navigate("Routines")}
                 style={styles.homePageButton}
-                onPress={() => navigation.navigate("Appointments")}
                 textColor="#006A6A"
               >
                 See All
               </Button>
-            )}
-          </View>
-          {apptsToDisplay[0]}
+            </View>
 
-          <Divider style={styles.divider} />
-
-          {/* Display number of routines and up to 3 routine titles for each time category */}
-          <View style={styles.homeHeaderView}>
-            <Text
-              variant="titleMedium"
-              style={{ fontWeight: "bold", color: "#597683" }}
-            >
-              Your Routines - Overview
-            </Text>
-            <Button
-              onPress={() => navigation.navigate("Routines")}
-              style={styles.homePageButton}
-              textColor="#006A6A"
-            >
-              See All
-            </Button>
-          </View>
-
-          <View style={styles.homeRoutines}>
-            <HomeRoutinePreview routines={morningRoutines} time="morning" />
-            <HomeRoutinePreview routines={afternoonRoutines} time="afternoon" />
-            <HomeRoutinePreview routines={eveningRoutines} time="evening" />
-            <HomeRoutinePreview routines={anytimeRoutines} time="any time" />
-          </View>
-        </ScrollView>
-      )}
+            <View style={styles.homeRoutines}>
+              <HomeRoutinePreview routines={morningRoutines} time="morning" />
+              <HomeRoutinePreview
+                routines={afternoonRoutines}
+                time="afternoon"
+              />
+              <HomeRoutinePreview routines={eveningRoutines} time="evening" />
+              <HomeRoutinePreview routines={anytimeRoutines} time="any time" />
+            </View>
+          </ScrollView>
+        )}
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

@@ -2,14 +2,7 @@ import { Surface, Text, Icon } from "react-native-paper";
 import { View } from "react-native";
 import styles from "../../styles";
 
-function HomeRoutinePreview({
-  morningRoutines,
-  afternoonRoutines,
-  eveningRoutines,
-  anytimeRoutines,
-  routines,
-  time,
-}) {
+function HomeRoutinePreview({ routines, time }) {
   const icons = {
     morning: "weather-sunset",
     afternoon: "weather-sunny",
@@ -44,7 +37,6 @@ function HomeRoutinePreview({
             <Text style={{ fontWeight: "bold", color: "#674E82" }}>
               {routines.slice(0, 4).join(", ")}
             </Text>
-            ...
           </Text>
         ) : null}
       </>

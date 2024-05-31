@@ -49,7 +49,13 @@ function Conditions() {
           style={styles.conditionsScrollView}
           contentContainerStyle={{ alignItems: "center" }}
         >
-          {conditionsToDisplay}
+          {conditionsToDisplay.length ? (
+            conditionsToDisplay
+          ) : (
+            <Text style={{ marginTop: 20 }}>
+              You have not logged any conditions
+            </Text>
+          )}
         </ScrollView>
         {conditionFormVisible ? (
           <ConditionForm
@@ -77,7 +83,7 @@ function Conditions() {
         // visible={visible}
         animateFrom={"right"}
         iconMode={"dynamic"}
-        style={styles.addFAB}
+        style={{ bottom: 20, right: 20 }}
       />
     </SafeAreaView>
   );

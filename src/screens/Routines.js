@@ -87,7 +87,13 @@ function Routines() {
       ) : null}
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={110}>
         <ScrollView style={styles.routinesScrollView}>
-          {routinesToDisplay}
+          {routinesToDisplay.length ? (
+            routinesToDisplay
+          ) : (
+            <Text style={{ marginTop: 20 }}>
+              You have not logged any routines
+            </Text>
+          )}
         </ScrollView>
         {routineFormVisible ? (
           <RoutineForm

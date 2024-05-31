@@ -151,7 +151,9 @@ function MedicationForm({
                 variant="titleMedium"
                 style={{ marginBottom: 10, textAlign: "center" }}
               >
-                Fill out medication details below:
+                {medication
+                  ? "Edit medication details below:"
+                  : "Fill out medication details below"}
               </Text>
               <TextInput
                 onChangeText={handleChange("name")}

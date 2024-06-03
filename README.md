@@ -62,6 +62,18 @@ Users can keep track of their daily habits by creating routines. Routines includ
 
 <img src='https://github.com/khamerling-potts/healthseed-client/blob/main/assets/gifs/routines2.GIF?raw=true' style='height: 600px'/>
 
+### Appointments
+
+Users can keep track of appointments by logging their date, time, provider, and location. This page features intuitive date/time pickers, dropdowns, and suggested addresses.
+
+#### Adding appointments
+
+<img src='https://github.com/khamerling-potts/healthseed-client/blob/main/assets/gifs/appointments1.GIF?raw=true' style='height: 600px'/>
+
+#### Editing and deleting appointments
+
+<img src='https://github.com/khamerling-potts/healthseed-client/blob/main/assets/gifs/appointments2.GIF?raw=true' style='height: 600px'/>
+
 ### Profile
 
 Users can navigate to the profile page from the app overview and view their account information or log out.

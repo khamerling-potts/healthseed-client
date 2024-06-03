@@ -6,7 +6,7 @@ Healthseed is a mobile application allowing users to keep track of their medicat
 
 I built [Healthseed's backend](https://github.com/khamerling-potts/healthseed-flask-backend) (deployed on [Heroku](heroku.com)) using Python, Flask-SQLAlchemy, and PostgreSQL on [Render](render.com). The client (this repo) was built with JavaScript, React Native, and Expo - designed specifically for iOS. Client side routing was made possible with [React Navigation](https://reactnavigation.org/). Front end styling was developed using [React Native Paper](https://reactnativepaper.com/) in addition to many other open-source libraries (such as dropdown picker, libphonenumber, and datetimepicker).
 
-## Features
+## Features (gifs may take a minute to load)
 
 ### Create an Account/Login
 
